@@ -18,3 +18,49 @@ form {
   gap: 1rem;
 
 }
+
+
+#root {
+  display: grid;
+  gap: 1rem;
+}
+
+nav {
+  background-color: lightgrey;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+
+
+main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+#feed {
+  background-color: lightblue;
+}
+
+#tasks {
+  background-color: lightyellow;
+}
+
+footer {
+  background-color: lightpink;
+}
+
+
+
+
+
+
+
