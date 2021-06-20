@@ -1,6 +1,6 @@
 :root {
   --blue: #5075ff;
-  --transparentwhite: #ffffffe6;
+  --transparentwhite: #ffffffe6 ;
 }
 
 
@@ -109,21 +109,27 @@ nav a {
 
 #taskInput {
   display: grid;
-  grid-template-columns: 2fr 1fr max-content;
+  grid-template-columns: 1fr max-content max-content;
   gap: 1rem;
+  border-bottom: 1px solid lightgray;
 }
 
 #taskInput i {
   position: relative;
   top: 3px;
   color: var(--blue);
+  font-size: .9em;
 }
 
 #taskInput input {
   outline: none;
   border: none;
-  border-bottom: 1px solid lightgray;
   background-color: inherit;
+  font-style: italic;
+}
+
+#taskInput .inputTaskFinish {
+  width: 3rem;
 }
 
 /*.task {
