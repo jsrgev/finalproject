@@ -25,6 +25,10 @@ form {
   gap: 1rem;
 }
 
+nav, #main, footer {
+  padding: 1rem;
+}
+
 nav {
   background-color: lightgrey;
 }
@@ -36,14 +40,16 @@ nav ul {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
+  justify-items: center;
 }
 
 
 
-main {
+#splitMain {
   display: grid;
   gap: 1rem;
   grid-template-columns: 2fr 1fr;
+  padding: 0;
 }
 
 #feed {

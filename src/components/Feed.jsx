@@ -1,13 +1,13 @@
 import React from 'react';
-import Post from './Post.jsx';
+import PostDisplay from './PostDisplay.jsx';
 
 class Feed extends React.Component {
 	render () {
 		return (
 
 			<div id="feed">
-				<Post />
-				<Post />
+				<PostDisplay />
+				<PostDisplay />
 			</div>
 
 		)

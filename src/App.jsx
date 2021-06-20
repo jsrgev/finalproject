@@ -2,9 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import './App.css';
 import NavBar from './components/NavBar.jsx';
-import Feed from './components/Feed.jsx';
-import Tasks from './components/Tasks.jsx';
+import SplitDisplay from './components/SplitDisplay.jsx';
+import Profile from './components/Profile.jsx';
+import Account from './components/Account.jsx';
 import Footer from './components/Footer.jsx';
+import { Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
   constructor(){
@@ -14,10 +16,9 @@ class App extends React.Component {
     return (
       <>
         <NavBar />
-        <main>
-          <Feed />
-          <Tasks />
-        </main>
+          <Route exact path="/" component={SplitDisplay} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/account" component={Account} />
         <Footer />
       </>
       );
