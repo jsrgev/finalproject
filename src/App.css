@@ -16,7 +16,6 @@ form {
   display: grid;
   grid-template-columns: 10rem;
   gap: 1rem;
-
 }
 
 
@@ -25,7 +24,7 @@ form {
   gap: 1rem;
 }
 
-nav, #main, footer {
+nav, #main, #feed, #taskList, footer {
   padding: 1rem;
 }
 
@@ -56,16 +55,44 @@ nav ul {
   background-color: lightblue;
 }
 
-#tasks {
+/* TASKS */
+
+#taskList  {
   background-color: lightyellow;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: flex-start;
+  gap: 1rem;
 }
+
+.Collapsible {
+  background-color: #fff;
+}
+
+span.Collapsible__trigger {
+  display: block;
+  border-bottom: 1px solid lightgray;
+}
+
+.Collapsible__contentOuter {
+  /*background-color: #fff;*/
+}
+
+
+
 
 footer {
   background-color: lightpink;
 }
 
+.postDisplay {
+  background-color: #fff;
 
+}
 
+.task {
+  background-color: #fff;
+}
 
 
 

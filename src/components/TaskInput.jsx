@@ -2,6 +2,7 @@ import React from 'react';
 
 class TaskInput extends React.Component {
 	render () {
+		
 		return (
 			<div>
 				<input placeholder="New item" />
