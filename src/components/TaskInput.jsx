@@ -2,11 +2,11 @@ import React from 'react';
 
 class TaskInput extends React.Component {
 	render () {
-		
 		return (
-			<div>
+			<div id="taskInput">
 				<input placeholder="New item" />
-				<button><i className="fas fa-plus"></i></button>
+				<input placeholder="Finish" />
+				<i className="fas fa-plus"></i>
 			</div>
 		)
 	}

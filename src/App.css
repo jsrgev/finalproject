@@ -1,3 +1,11 @@
+:root {
+  --blue: #5075ff;
+  --transparentwhite: #ffffffe6;
+}
+
+
+/* MAIN LAYOUT */
+
 html {
   font-size: 16px;
 }
@@ -8,8 +16,13 @@ body, input {
 }
 
 body {
+  min-height: 100vh;
+  box-sizing: border-box;
   margin: 0;
   padding:  2rem 3rem;
+  background:
+    radial-gradient(circle at 28.56% 78.55%, #1CD8D2, transparent 84%),radial-gradient(circle at 91.45% 15.32%, #93EDC7, transparent 100%),radial-gradient(circle at 82.83% 61.29%, #3333ff, transparent 81%);
+    /*,radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%)*/
 }
 
 form {
@@ -24,26 +37,6 @@ form {
   gap: 1rem;
 }
 
-nav, #main, #feed, #taskList, footer {
-  padding: 1rem;
-}
-
-nav {
-  background-color: lightgrey;
-}
-
-nav ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  justify-items: center;
-}
-
-
-
 #splitMain {
   display: grid;
   gap: 1rem;
@@ -51,22 +44,95 @@ nav ul {
   padding: 0;
 }
 
+
+/* NAV */
+
+nav, #main, #feed, #taskList, #profile, #account, footer {
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+nav {
+  background-color: var(--transparentwhite);
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr max-content max-content;
+  gap: 1rem;
+  justify-items: left;
+}
+
+nav a {
+  font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+
+/* FEED, POSTS */
+
+
+
 #feed {
-  background-color: lightblue;
+  background-color: var(--transparentwhite);
+}
+
+.postDisplay {
+  /*background-color: #fff;*/
+}
+
+
+/* PROFILE */
+
+#profile {
+  background-color: var(--transparentwhite);
+}
+
+/* ACCOUNT */
+
+#account {
+  background-color: var(--transparentwhite);
 }
 
 /* TASKS */
 
 #taskList  {
-  background-color: lightyellow;
+  background-color: #ffffe6f2;
   display: grid;
   grid-template-columns: 1fr;
   align-content: flex-start;
   gap: 1rem;
 }
 
-.Collapsible {
+#taskInput {
+  display: grid;
+  grid-template-columns: 2fr 1fr max-content;
+  gap: 1rem;
+}
+
+#taskInput i {
+  position: relative;
+  top: 3px;
+  color: var(--blue);
+}
+
+#taskInput input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  background-color: inherit;
+}
+
+/*.task {
   background-color: #fff;
+}*/
+
+
+.Collapsible {
+  /*background-color: #fff;*/
 }
 
 span.Collapsible__trigger {
@@ -81,18 +147,13 @@ span.Collapsible__trigger {
 
 
 
+/* FOOTER */
+
+
 footer {
-  background-color: lightpink;
+  background-color: var(--transparentwhite);
 }
 
-.postDisplay {
-  background-color: #fff;
-
-}
-
-.task {
-  background-color: #fff;
-}
 
 
 
