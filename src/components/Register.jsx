@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import './App.css';
+import '../App.css';
 
 class RegisterForm extends React.Component {
   constructor(){
@@ -51,40 +51,43 @@ class RegisterForm extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div>
-          <div>
+          <main id="register">
             <form onSubmit={this.onSubmit}>
+              <div><label>First Name</label>
               <input type="text"
-              placeholder="First Name"
               onChange={this.changeFirstName}
               value={this.state.firstName}
-              />
+              /></div>
+              <div><label>Last Name</label>
               <input type="text"
-              placeholder="Last Name"
               onChange={this.changeLastName}
               value={this.state.lastName}
-              />
+              /></div>
+              <div><label>Username</label>
               <input type="text"
-              placeholder="Username"
               onChange={this.changeUsername}
               value={this.state.username}
-              />
+              /></div>
+              <div><label>Email</label>
               <input type="email"
-              placeholder="Email"
               onChange={this.changeEmail}
               value={this.state.email}
-              />
+              /></div>
+              <div><label>Password</label>
               <input type="password"
-              placeholder="Password"
               onChange={this.changePassword}
               value={this.state.password}
-              />
-              <input type="submit" value='submit' />
+              /></div>
+              <div><label>Confirm password</label>
+              <input type="password"
+              // onChange={this.changePassword}
+              // value={this.state.confirmPassword}
+              /></div>
+              <div id="submitDiv">
+                <input type="submit" value='Submit' />
+              </div>
             </form>
-          </div>
-        </div>
-      </div>
+          </main>
       );
   }
 }

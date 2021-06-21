@@ -37,6 +37,11 @@ form {
   gap: 1rem;
 }
 
+nav, main, #feed, #taskList, footer {
+  padding: 1rem;
+  border-radius: 10px;
+}
+
 #splitMain {
   display: grid;
   gap: 1rem;
@@ -45,12 +50,8 @@ form {
 }
 
 
-/* NAV */
 
-nav, #main, #feed, #taskList, #profile, #account, footer {
-  padding: 1rem;
-  border-radius: 10px;
-}
+/* NAV */
 
 nav {
   background-color: var(--transparentwhite);
@@ -61,7 +62,7 @@ nav ul {
   margin: 0;
   list-style-type: none;
   display: grid;
-  grid-template-columns: 1fr max-content max-content;
+  grid-template-columns: 1fr max-content max-content max-content max-content;
   gap: 1rem;
   justify-items: left;
 }
@@ -72,9 +73,9 @@ nav a {
   text-decoration: none;
 }
 
+
+  
 /* FEED, POSTS */
-
-
 
 #feed {
   background-color: var(--transparentwhite);
@@ -85,17 +86,53 @@ nav a {
 }
 
 
+
+/* REGISTER */
+
+#register {
+  background-color: var(--transparentwhite);
+}
+
+#register form {
+  width: min-content;
+  display: grid;
+  gap: .5rem 3rem;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+}
+
+#register form div:not(#submitDiv) {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 7.5rem 10rem;
+}
+
+#submitDiv {
+  grid-column: span 2;
+}
+
+#submitDiv input {
+  margin:  1rem auto 0;
+  display: block;
+}
+
+
+
 /* PROFILE */
 
 #profile {
   background-color: var(--transparentwhite);
 }
 
+
+
 /* ACCOUNT */
 
 #account {
   background-color: var(--transparentwhite);
 }
+
+
 
 /* TASKS */
 
