@@ -5,11 +5,22 @@ const dotenv = require('dotenv');
 const routesUrls = require('./routes/routes');
 const cors = require('cors');
 
+// from traversey
+const expressLayouts = require('express-ejs-layouts');
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
+// body parser
+app.use(express.urlencoded({ extended: false}));
+
+
+// traversey up to here
+
 dotenv.config();
 
-mongoose.connect(process.env.DATABASE_ACCESS,()=>{
-	console.log("Database connected");
-})
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true })
+.then(()=>console.log("Database connected"))
+.catch(err=>console.log(err))
 
 app.use(express.json());
 app.use(cors());

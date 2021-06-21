@@ -10,7 +10,9 @@ class RegisterForm extends React.Component {
       lastName: "",
       username: "",
       email: "",
-      password: ""
+      password: "",
+      password2: "",
+      errors: []
     }
   }
   changeFirstName = (e) => {
@@ -28,6 +30,9 @@ class RegisterForm extends React.Component {
   changePassword = (e) => {
     this.setState({password:e.target.value})
   }
+  changePassword2 = (e) => {
+    this.setState({password2:e.target.value})
+  }
   onSubmit = (e) => {
     e.preventDefault();
     const registered = {
@@ -35,23 +40,51 @@ class RegisterForm extends React.Component {
       lastName: this.state.lastName,
       username: this.state.username,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      password2: this.state.password2
     }
-    console.log(registered);
+    // console.log(registered);
     axios.post('http://localhost:4000/app/register', registered)
-    .then(response=>console.log(response))
+    .then(response=> {
+      if (response.data) {
+        // let errors = response.data;
+        this.setState({errors:response.data});
+    }
+  })
+    .catch(err=>console.log(err))
 
-    this.setState({
-      firstName: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: ""
-    })
+    // this.setState({
+    //   firstName: "",
+    //   lastName: "",
+    //   username: "",
+    //   email: "",
+    //   password: "",
+    //   password2: "",
+    //   errors: []
+    // })
   }
   render() {
+
+    let errorDisplay = this.state.errors && (
+
+        <div className="errorDisplay">
+
+        {
+          this.state.errors.map((item,i) => {
+          return <div key={i}>{item.msg}</div>
+        })
+        }
+
+        </div>
+      )
+    this.state.errors.map((item,i) => {
+      return (
+        <div className="errorDisplay" key={i}>{item.msg}</div>
+        )
+    });
     return (
           <main id="register">
+            {errorDisplay}
             <form onSubmit={this.onSubmit}>
               <div><label>First Name</label>
               <input type="text"
@@ -80,8 +113,8 @@ class RegisterForm extends React.Component {
               /></div>
               <div><label>Confirm password</label>
               <input type="password"
-              // onChange={this.changePassword}
-              // value={this.state.confirmPassword}
+              onChange={this.changePassword2}
+              value={this.state.password2}
               /></div>
               <div id="submitDiv">
                 <input type="submit" value='Submit' />

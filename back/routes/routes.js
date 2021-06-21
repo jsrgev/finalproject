@@ -1,18 +1,38 @@
-const express = require('express');
+ const express = require('express');
 const router = express();
 const signUpTemplateCopy = require('../models/RegisterModels');
 const bcrypt = require('bcrypt');
 
 router.post('/register', async (req,res) => {
 
-	const saltPassword = await bcrypt.genSalt(10);
-	const securePassword = await await bcrypt.hash(req.body.password, saltPassword);
+	const {firstName, lastName, username, email, password, password2} = req.body;
+	let errors = [];
 
+	// Check form for errors
+	if (!firstName || !lastName || !email || !username || !password || !password2) {
+		errors.push ({msg: 'Please fill in all fields.'})
+	}
+	if (password !== password2 && password.length>0 && password2.length>0) {
+		errors.push ({msg: 'Please do not match.'})
+	}
+	if (password.length<6 && password.length>0) {
+		errors.push ({msg: 'Password must be at least 6 characters.'})
+	}
+
+	if (errors.length > 0) {
+		console.log(errors);
+		res.send(errors);
+		return;
+	}
+
+	// encrypt password
+	const saltPassword = await bcrypt.genSalt(10);
+	const securePassword = await await bcrypt.hash(password, saltPassword);
 	const signedUpUser = new signUpTemplateCopy({
-		firstName:req.body.firstName,
-		lastName:req.body.lastName,
-		username:req.body.username,
-		email:req.body.email,
+		firstName,
+		lastName,
+		username,
+		email,
 		password:securePassword
 	});
 	signedUpUser.save()

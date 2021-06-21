@@ -5,6 +5,7 @@ import NavBar from './components/NavBar.jsx';
 import SplitDisplay from './components/SplitDisplay.jsx';
 import Profile from './components/Profile.jsx';
 import About from './components/About.jsx';
+import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Account from './components/Account.jsx';
 import Footer from './components/Footer.jsx';
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route exact path="/" component={SplitDisplay} />
           <Route path="/about" component={About} />
           <Route path="/profile" component={Profile} />
+          <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/account" component={Account} />
         </Switch>
