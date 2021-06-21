@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
+import {Link} from 'react-router-dom';
 
 class RegisterForm extends React.Component {
   constructor(){
@@ -46,9 +47,12 @@ class RegisterForm extends React.Component {
     // console.log(registered);
     axios.post('http://localhost:4000/app/register', registered)
     .then(response=> {
-      if (response.data) {
-        // let errors = response.data;
-        this.setState({errors:response.data});
+    // console.log(response.data);
+     if (response.data.errors) {
+        this.setState({errors:response.data.errors});
+    } else if (response.data.username) {
+      this.props.history.push('/login', { justRegistered: true });
+      // console.log("registered")
     }
   })
     .catch(err=>console.log(err))
@@ -64,7 +68,7 @@ class RegisterForm extends React.Component {
     // })
   }
   render() {
-
+    // this.state.errors.length>0 && console.log(this.state.errors);
     let errorDisplay = this.state.errors && (
 
         <div className="errorDisplay">
@@ -79,11 +83,13 @@ class RegisterForm extends React.Component {
       )
     this.state.errors.map((item,i) => {
       return (
-        <div className="errorDisplay" key={i}>{item.msg}</div>
+        <div className="messageSection error" key={i}>{item.msg}</div>
         )
     });
+
     return (
           <main id="register">
+            <h2>Register</h2>
             {errorDisplay}
             <form onSubmit={this.onSubmit}>
               <div><label>First Name</label>
@@ -120,6 +126,7 @@ class RegisterForm extends React.Component {
                 <input type="submit" value='Submit' />
               </div>
             </form>
+            <div>Already registered? <Link to='/login/'>Login</Link></div>
           </main>
       );
   }

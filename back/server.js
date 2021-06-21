@@ -6,11 +6,20 @@ const routesUrls = require('./routes/routes');
 const cors = require('cors');
 
 // from traversey
+
+//Passport config
+const passport = require('passport');
+
+require('./passport.js')(passport);
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 // body parser
 app.use(express.urlencoded({ extended: false}));
+
+// Passport middleware
+passport.use(passport.initialize());
+passport.use(passport.session());
 
 
 // traversey up to here

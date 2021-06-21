@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../App.css';
+import {Link} from 'react-router-dom';
 
 class Login extends React.Component {
   constructor(){
@@ -11,7 +12,8 @@ class Login extends React.Component {
       username: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      justRegistered: false
     }
   }
   changeUsername = (e) => {
@@ -22,12 +24,12 @@ class Login extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    const registered = {
+    const login = {
       username: this.state.username,
       password: this.state.password
     }
-    console.log(registered);
-    axios.post('http://localhost:4000/app/login', registered)
+    // console.log(login);
+    axios.post('http://localhost:4000/app/login', login)
     .then(response=>console.log(response))
 
     this.setState({
@@ -36,8 +38,13 @@ class Login extends React.Component {
     })
   }
   render() {
+    // console.log(this.props)
+    let message = this.props.location.state ? (<div className="messageSection">You're signed up! Now you can log in.</div>) : null;
+
     return (
           <main id="register">
+          {message}
+          <h2>Login</h2>
           {/*{errorDisplay}*/}
             <form onSubmit={this.onSubmit}>
               <div><label>Username</label>
@@ -54,6 +61,7 @@ class Login extends React.Component {
                 <input type="submit" value='Submit' />
               </div>
             </form>
+            <div>Not registered? <Link to='/register/'>Sign up</Link></div>
           </main>
       );
   }

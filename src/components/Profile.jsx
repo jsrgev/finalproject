@@ -4,7 +4,7 @@ class Profile extends React.Component {
 	render () {
 		return (
 	      <main id="profile">
-				<h3>My Profile</h3>
+				<h2>My Profile</h2>
 				<p>info</p>
 				<p>about</p>
 	      </main>

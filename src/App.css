@@ -4,7 +4,7 @@
 }
 
 
-/* MAIN LAYOUT */
+/* Typography  */
 
 html {
   font-size: 16px;
@@ -14,6 +14,15 @@ body, input {
   font-family: calibri, sans-serif;
   font-size: 1rem;
 }
+
+h2 {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+
+/* MAIN LAYOUT */
+
 
 body {
   min-height: 100vh;
@@ -120,10 +129,13 @@ nav a {
 
 /* ERRORS */
 
-.errorDisplay {
-  color:  red;
+.messageSection {
   text-align: center;
   margin-bottom: 1rem;
+}
+
+.error {
+  color:  red;
 }
 
 /* PROFILE */
