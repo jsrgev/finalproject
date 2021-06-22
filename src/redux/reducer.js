@@ -8,7 +8,6 @@ let initState = {
 
 
 export const reducer = (state = initState, action = {}) => {
-	console.log(action.payload);
 	switch (action.type) {
 		case SET_LOGIN_STATUS:
 			return {...state,loggedIn: action.payload};

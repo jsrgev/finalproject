@@ -85,7 +85,7 @@ router.post('/login', (req,res) => {
 	User.findOne({username: username})
 	.then(user => {
 		if(!user) {
-			res.send({message: "user not found"});
+			res.send({auth: false, message: "user not found"});
 			return;
 			// return done(null, false, { message: 'That email is not registered' });
 		}
@@ -102,7 +102,7 @@ router.post('/login', (req,res) => {
 					// res.send("you are logged in");
 					// return done(null, user);
 				} else {
-					res.send({message: "not a match"});
+					res.send({auth: false, message: "not a match"});
 					// return done(null,false, { message: 'Password is incorrect' })
 				}
 		});

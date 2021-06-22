@@ -34,11 +34,12 @@ body {
     /*,radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%)*/
 }
 
-form {
+
+/*form {
   display: grid;
   grid-template-columns: 10rem;
   gap: 1rem;
-}
+}*/
 
 
 #root {
@@ -96,29 +97,39 @@ nav a {
 
 
 
-/* REGISTER */
+/* REGISTER & LOGIN */
 
-#register {
+#register, #login {
   background-color: var(--transparentwhite);
 }
 
-#register form {
+#register form, #login form {
   width: min-content;
   display: grid;
   gap: .5rem 3rem;
-  grid-template-columns: 1fr 1fr;
   margin: auto;
 }
 
-#register form div:not(#submitDiv) {
+#register form div:not(#submitDiv), #login form div:not(#submitDiv) {
   display: grid;
   gap: 1rem;
   grid-template-columns: 7.5rem 10rem;
 }
 
-#submitDiv {
+
+#register form {
+  grid-template-columns: 1fr 1fr;
+}
+
+#register form #submitDiv {
   grid-column: span 2;
 }
+
+
+#login form {
+  grid-template-columns: 1fr;
+}
+
 
 #submitDiv input {
   margin:  1rem auto 0;
@@ -127,11 +138,12 @@ nav a {
 
 
 
+
 /* ERRORS */
 
 .messageSection {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .error {

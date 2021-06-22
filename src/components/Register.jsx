@@ -36,6 +36,7 @@ class RegisterForm extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
+    this.setState({errors: []});
     const registered = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,

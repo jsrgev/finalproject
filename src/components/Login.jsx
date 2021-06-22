@@ -11,6 +11,10 @@ class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
+      errors: "",
+      confirmation: ""
+      // errorMessage: "",
+      // confirmMessage: ""
     }
   }
   changeUsername = (e) => {
@@ -21,17 +25,19 @@ class Login extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
+    this.setState({message: ""});
     const login = {
       username: this.state.username,
       password: this.state.password
     }
     axios.post('http://localhost:4000/app/login', login)
     .then(response=> {
-      // console.log(response.data.token);
-      if (response.data.token) {
+      if (response.data.auth) {
+        this.setState({confirmation:"You've successfully logged in."})
         this.props.setLoginStatus(true)
       } else {
-        console.log(response.data.message)
+        this.setState({errors: response.data.message})
+        console.log(this.state)
       }
       console.log(this.props.loggedIn)
     })
@@ -43,13 +49,19 @@ class Login extends React.Component {
   }
   render() {
     // console.log(this.props)
-    let message = this.props.location.state ? (<div className="messageSection">You're signed up! Now you can log in.</div>) : null;
+    this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in"})
+    console.log(this.state);
+    let messageSection = (this.state.confirmation) ?
+      <div className="messageSection">{this.state.confirmation}</div> :
+      (this.state.errors) ?
+      <div className="messageSection error">{this.state.errors}</div> : null
+  // }
+
     // console.log(this.props.loggedIn);
     return (
-          <main id="register">
-          {message}
+          <main id="login">
           <h2>Login</h2>
-          {/*{errorDisplay}*/}
+          {messageSection}
             <form onSubmit={this.onSubmit}>
               <div><label>Username</label>
               <input type="text"
