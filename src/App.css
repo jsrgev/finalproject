@@ -62,7 +62,7 @@ nav, main, #feed, #taskList, footer {
   border-radius: 10px;
 }
 
-main {
+main:not(#splitMain), #feed {
   background-color: var(--transparentwhite);
 }
 
@@ -79,19 +79,22 @@ main {
 
 nav {
   background-color: var(--transparentwhite);
+  display: grid;
+  grid-template-columns: 1fr max-content;
+
 }
 
 nav ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
-  display: grid;
-  grid-template-columns: 1fr repeat(6, max-content);
-  gap: 1rem;
   justify-items: left;
 }
 
-
+nav li {
+  display: inline-block;
+  padding-left: 1rem;
+}
 
   
 /* FEED, POSTS */

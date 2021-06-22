@@ -13,8 +13,9 @@ class NavBar extends React.Component {
 	render () {
 		return (
 			<nav>
+				<NavLink exact to='/'>Home</NavLink>
 				<ul>
-					<li><NavLink exact to='/'>Home</NavLink></li>
+					<li><NavLink to='/about'>About</NavLink></li>
 
 				{!this.props.loggedIn ?
 					<>
@@ -24,7 +25,6 @@ class NavBar extends React.Component {
 					:
 
 					<>
-					<li><NavLink to='/about'>About</NavLink></li>
 					<li><NavLink to='/profile'>Profile</NavLink></li>
 					<li><NavLink to='/account'>Account</NavLink></li>
 					<li><NavLink to={{ pathname: '/login/', loggedOut: true }} onClick={this.logout}>Log Out</NavLink></li>
