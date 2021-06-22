@@ -2,18 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {setLoginStatus} from '../redux/actions';
 
 class Login extends React.Component {
   constructor(){
     super();
     this.state = {
-      firstName: "",
-      lastName: "",
       username: "",
-      email: "",
       password: "",
-      confirmPassword: "",
-      justRegistered: false
     }
   }
   changeUsername = (e) => {
@@ -28,9 +25,16 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     }
-    // console.log(login);
     axios.post('http://localhost:4000/app/login', login)
-    .then(response=>console.log(response))
+    .then(response=> {
+      // console.log(response.data.token);
+      if (response.data.token) {
+        this.props.setLoginStatus(true)
+      } else {
+        console.log(response.data.message)
+      }
+      console.log(this.props.loggedIn)
+    })
 
     this.setState({
       username: "",
@@ -40,7 +44,7 @@ class Login extends React.Component {
   render() {
     // console.log(this.props)
     let message = this.props.location.state ? (<div className="messageSection">You're signed up! Now you can log in.</div>) : null;
-
+    // console.log(this.props.loggedIn);
     return (
           <main id="register">
           {message}
@@ -62,9 +66,26 @@ class Login extends React.Component {
               </div>
             </form>
             <div>Not registered? <Link to='/register/'>Sign up</Link></div>
+            {this.props.loggedIn !== true}
           </main>
       );
   }
 }
 
-export default Login;
+// export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+const dispatchStateToProps = (dispatch) => {
+  return {
+    setLoginStatus: (value) => dispatch(setLoginStatus(value)),
+  }
+}
+
+export default connect(mapStateToProps,dispatchStateToProps)(Login);
+
+
