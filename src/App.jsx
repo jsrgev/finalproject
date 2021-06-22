@@ -17,7 +17,7 @@ import {setLoginStatus,setUser} from './redux/actions';
 class App extends React.Component {
   componentDidMount = () => {
     if (localStorage.getItem("token")) {
-    console.log(localStorage.getItem("token"));
+    // console.log(localStorage.getItem("token"));
 
       this.props.setLoginStatus(true);
       this.props.setUser(localStorage.getItem("user"));

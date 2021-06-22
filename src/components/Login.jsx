@@ -31,11 +31,13 @@ class Login extends React.Component {
     axios.post('http://localhost:4000/app/login', login)
     .then(response=> {
       if (response.data.auth) {
+        console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data.user._id);
-        this.props.setLoginStatus(true)
+        this.props.setLoginStatus(true);
         this.props.setUser(response.data.user._id)
+        this.props.history.push('/');
       } else {
         this.setState({errors: response.data.message})
         console.log(this.state)
@@ -90,7 +92,6 @@ class Login extends React.Component {
               </div>
             </form>
             <div>Not registered? <Link to='/register/'>Sign up</Link></div>
-            {this.props.loggedIn !== true}
           </main>
       );
   }

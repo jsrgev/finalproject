@@ -16,9 +16,11 @@ class Logout extends React.Component {
     // }
   // }
   componentDidMount = () => {
-    this.props.setUser("");
-    this.props.setLoginStatus(false);
-    localStorage.removeItem("token");
+    // console.log("logout mounted");
+    // this.props.setUser("");
+    // this.props.setLoginStatus(false);
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("user");
   }
   render() {
     let messageSection = (this.props.loggedIn) ?

@@ -4,6 +4,7 @@ export const SET_USER = 'SET_USER';
 
 
 export const setLoginStatus = (value) => {
+	console.log(value);
 	return {
 		type: SET_LOGIN_STATUS,
 		payload: value

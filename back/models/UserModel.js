@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const registerTemplate = new mongoose.Schema({
+const userTemplate = new mongoose.Schema({
 	firstName: {
 		type:String,
 		required:true
@@ -27,10 +27,10 @@ const registerTemplate = new mongoose.Schema({
 	}
 })
 
-const User = mongoose.model('users',registerTemplate);
+const User = mongoose.model('users',userTemplate);
 
 module.exports = User;
-
+  
 
 
 

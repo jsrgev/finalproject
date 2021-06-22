@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express();
-const signUpTemplateCopy = require('../models/RegisterModels');
+const signUpTemplateCopy = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/RegisterModels')
+const User = require('../models/UserModel')
 
 
 router.post('/register', async (req,res) => {
