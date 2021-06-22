@@ -16,8 +16,10 @@ class Login extends React.Component {
     }
   }
   componentDidMount = () => {
-  console.log(this.props);
-  (this.props.loggedIn === false) && this.setState({confirmation: "You've successfully logged out."})
+    // console.log(this.props.location);
+  // logout sets loggedOut to true, so following message can be displayed
+  (this.props.location.loggedOut === true) && this.setState({confirmation: "You've successfully logged out."})
+  // successful register sets state.justRegistered to true, so following message can be displayed
   this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in."})
   }
   changeUsername = (e) => {
@@ -68,17 +70,17 @@ class Login extends React.Component {
   render() {
     // console.log(this.props)
     // console.log(this.state);
-    let messageSection = (this.state.confirmation) ?
-      <div className="messageSection">{this.state.confirmation}</div> :
+    let alerts = (this.state.confirmation) ?
+      <div className="alerts"><div>{this.state.confirmation}</div></div> :
       (this.state.errors) ?
-      <div className="messageSection error">{this.state.errors}</div> : null
+      <div className="alerts"><div className="error">{this.state.errors}</div></div> : null
   // }
 
     // console.log(this.props.loggedIn);
     return (
           <main id="login">
           <h2>Login</h2>
-          {messageSection}
+          {alerts}
             <form onSubmit={this.onSubmit}>
               <div><label>Username</label>
               <input type="text"

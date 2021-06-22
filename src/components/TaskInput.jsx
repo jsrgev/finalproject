@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 class TaskInput extends React.Component {
 	render () {
-		console.log(this.props.user)
+		// console.log(this.props.user)
 		return (
 			<div id="taskInput">
 				<input placeholder="New item" className="inputTaskName" />

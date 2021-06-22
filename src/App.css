@@ -147,11 +147,13 @@ nav li {
 
 /* ERRORS */
 
-.messageSection {
-  text-align: center;
+.alerts {
   margin-bottom: 1.5rem;
 }
 
+.alerts>div {
+  text-align: center;
+}
 .error {
   color:  red;
 }

@@ -60,25 +60,25 @@ class RegisterForm extends React.Component {
 
   }
   render() {
-    let errorDisplay = this.state.errors && (
-        <div className="messageSection error">
+    let alerts = this.state.errors && (
+        <div className="alerts">
         {
           this.state.errors.map((item,i) => {
-          return <div key={i}>{item.msg}</div>
+          return <div className="error" key={i}>{item.msg}</div>
         })
         }
         </div>
       )
-    this.state.errors.map((item,i) => {
-      return (
-        <div className="messageSection error" key={i}>{item.msg}</div>
-        )
-    });
+    // this.state.errors.map((item,i) => {
+      // return (
+        // <div className="alerts error" key={i}>{item.msg}</div>
+        // )
+    // });
 
     return (
           <main id="register">
             <h2>Register</h2>
-            {errorDisplay}
+            {alerts}
             <form onSubmit={this.onSubmit}>
               <div><label>First Name</label>
               <input type="text"

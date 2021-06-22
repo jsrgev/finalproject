@@ -32,8 +32,9 @@ class App extends React.Component {
             <>
         <Switch>
               <Route path="/register" component={Register} />
+          <Route path="/about" component={About} />
               <Route path="/" component={Login} />
-        </Switch>
+       </Switch>
             </>
            :
             <>
