@@ -11,25 +11,62 @@ import Account from './components/Account.jsx';
 import Footer from './components/Footer.jsx';
 import Logout from './components/Logout.jsx';
 import { Route, Switch } from "react-router-dom";
+import {connect} from 'react-redux';
+import {setLoginStatus,setUser} from './redux/actions';
 
 class App extends React.Component {
+  componentDidMount = () => {
+    if (localStorage.getItem("token")) {
+    console.log(localStorage.getItem("token"));
+
+      this.props.setLoginStatus(true);
+      this.props.setUser(localStorage.getItem("user"));
+    }
+  }
   render() {
+            // console.log(this.props)
     return (
       <>
         <NavBar />
+          {!this.props.loggedIn ?
+            <>
         <Switch>
-          <Route exact path="/" component={SplitDisplay} />
+              <Route path="/register" component={Register} />
+              <Route path="/" component={Login} />
+        </Switch>
+            </>
+           :
+            <>
+        <Switch>
           <Route path="/about" component={About} />
           <Route path="/profile" component={Profile} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
           <Route path="/account" component={Account} />
           <Route path="/logout" component={Logout} />
+          <Route path="/" component={SplitDisplay} />
         </Switch>
+          </>
+          }
+
         <Footer />
       </>
       );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+const dispatchStateToProps = (dispatch) => {
+  return {
+    setLoginStatus: (value) => dispatch(setLoginStatus(value)),
+    setUser: (id) => dispatch(setUser(id)),
+  }
+}
+
+
+export default connect(mapStateToProps, dispatchStateToProps)(App);
+
+// export default App;

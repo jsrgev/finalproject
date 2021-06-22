@@ -22,8 +22,8 @@ class Logout extends React.Component {
   }
   render() {
     let messageSection = (this.props.loggedIn) ?
-      <div>You have been logged out.</div> :
-      <div>You are being logged out...</div>
+      <div>You are being logged out...</div> :
+      <div>You have been logged out.</div>
     return (
           <main id="logout">
           {/*<h2>Login</h2>*/}

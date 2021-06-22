@@ -32,12 +32,13 @@ class Login extends React.Component {
     .then(response=> {
       if (response.data.auth) {
         this.setState({confirmation:"You've successfully logged in."})
-        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user._id);
         this.props.setLoginStatus(true)
         this.props.setUser(response.data.user._id)
       } else {
         this.setState({errors: response.data.message})
-        // console.log(this.state)
+        console.log(this.state)
       }
     })
   }

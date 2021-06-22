@@ -84,15 +84,15 @@ router.post('/login', (req,res) => {
 
 	// Check form for errors
 	if (!username || !password) {
-		console.log("no");
-		res.send({auth: false, msg: 'Please fill in both fields.'});
+		// console.log("nope");
+		res.send({auth: false, message: 'Please fill in both fields.'});
 		return;
 	}
 
 	User.findOne({username: username})
 	.then(user => {
 		if(!user) {
-			res.send({auth: false, message: "user not found"});
+			res.send({auth: false, message: "User not found."});
 			return;
 			// return done(null, false, { message: 'That email is not registered' });
 		}
@@ -109,7 +109,7 @@ router.post('/login', (req,res) => {
 					// res.send("you are logged in");
 					// return done(null, user);
 				} else {
-					res.send({auth: false, message: "not a match"});
+					res.send({auth: false, message: "Password is incorrect."});
 					// return done(null,false, { message: 'Password is incorrect' })
 				}
 		});
@@ -128,7 +128,7 @@ const verifyJWT = (req,res,next) => {
 		jwt.verify(token, "jwtSecret", (err, decoded) => {
 			if (err) {
 				console.log(err);
-				res.send({ auth: false, message: "Authentication failed"})
+				res.send({ auth: false, message: "Authentication failed."})
 			} else {
 				req.userId = decoded.id;
 				next();
@@ -138,9 +138,14 @@ const verifyJWT = (req,res,next) => {
 }
 
 router.get('/isUserAuthenticated', verifyJWT, (req,res) => {
-	res.send({auth: true, message: "authenticated"})
+	res.send({auth: true, message: "Authenticated."})
 })
 
+
+router.get('/logout', (req,res) => {
+
+	res.send({auth: true, message: "Authenticated."})
+})
 
 // router.post('/login',
 // 	passport.authenticate('local'),
