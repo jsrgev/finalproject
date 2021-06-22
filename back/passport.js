@@ -1,9 +1,13 @@
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const express = require('express');
+
+let app = express();
 
 const passport = require('passport');
 
+app.use(passport.initialize());
 
 const User = require('./models/RegisterModels')
 
@@ -25,6 +29,7 @@ module.exports = function(passport) {
 						if(err) throw err;
 						if(isMatch) {
 							console.log("yes password");
+							console.log(user);
 							return done(null, user);
 						} else {
 							console.log("no password");
@@ -43,7 +48,7 @@ passport.serializeUser((user,done) => {
 });
 
 passport.deserializeUser((id,done) => {
-	User.findByIs(id, (err,user) => {
+	User.findById(id, (err,user) => {
 		done(err,user);
 	})
 })
