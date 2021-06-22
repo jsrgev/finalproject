@@ -58,28 +58,15 @@ class RegisterForm extends React.Component {
   })
     .catch(err=>console.log(err))
 
-    // this.setState({
-    //   firstName: "",
-    //   lastName: "",
-    //   username: "",
-    //   email: "",
-    //   password: "",
-    //   password2: "",
-    //   errors: []
-    // })
   }
   render() {
-    // this.state.errors.length>0 && console.log(this.state.errors);
     let errorDisplay = this.state.errors && (
-
         <div className="messageSection error">
-
         {
           this.state.errors.map((item,i) => {
           return <div key={i}>{item.msg}</div>
         })
         }
-
         </div>
       )
     this.state.errors.map((item,i) => {

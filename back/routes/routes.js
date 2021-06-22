@@ -82,6 +82,13 @@ router.get('/login', async (req,res) => {
 router.post('/login', (req,res) => {
 	const {username, password} = req.body;
 
+	// Check form for errors
+	if (!username || !password) {
+		console.log("no");
+		res.send({auth: false, msg: 'Please fill in both fields.'});
+		return;
+	}
+
 	User.findOne({username: username})
 	.then(user => {
 		if(!user) {
@@ -96,7 +103,7 @@ router.post('/login', (req,res) => {
 					const id = user._id;
 					const token = jwt.sign({id}, "jwtSecret", {
 
-						expiresIn: 300 //300 = 5 minutes
+						expiresIn: "30d" //300 = 5 minutes
 					})
 					res.json({auth:true, token, user});
 					// res.send("you are logged in");
@@ -116,11 +123,12 @@ router.post('/login', (req,res) => {
 const verifyJWT = (req,res,next) => {
 	const token = req.headers["x-access-token"]
 	if (!token) {
-		res.send("Token needed.");
+		res.send({ auth: false, message: "Token needed."});
 	} else {
 		jwt.verify(token, "jwtSecret", (err, decoded) => {
 			if (err) {
-				res.send({ auth: false, message: "Authenication failed"})
+				console.log(err);
+				res.send({ auth: false, message: "Authentication failed"})
 			} else {
 				req.userId = decoded.id;
 				next();
@@ -130,7 +138,7 @@ const verifyJWT = (req,res,next) => {
 }
 
 router.get('/isUserAuthenticated', verifyJWT, (req,res) => {
-	res.send("authenticated")
+	res.send({auth: true, message: "authenticated"})
 })
 
 

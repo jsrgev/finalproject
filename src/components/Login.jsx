@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../App.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {setLoginStatus} from '../redux/actions';
+import {setLoginStatus,setUser} from '../redux/actions';
 
 class Login extends React.Component {
   constructor(){
@@ -13,8 +13,6 @@ class Login extends React.Component {
       password: "",
       errors: "",
       confirmation: ""
-      // errorMessage: "",
-      // confirmMessage: ""
     }
   }
   changeUsername = (e) => {
@@ -25,7 +23,7 @@ class Login extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    this.setState({message: ""});
+    this.setState({errors: "", confirmation: ""});
     const login = {
       username: this.state.username,
       password: this.state.password
@@ -34,23 +32,35 @@ class Login extends React.Component {
     .then(response=> {
       if (response.data.auth) {
         this.setState({confirmation:"You've successfully logged in."})
+        localStorage.setItem("token", response.data.token)
         this.props.setLoginStatus(true)
+        this.props.setUser(response.data.user._id)
       } else {
         this.setState({errors: response.data.message})
-        console.log(this.state)
+        // console.log(this.state)
       }
-      console.log(this.props.loggedIn)
     })
-
-    this.setState({
-      username: "",
-      password: "",
+  }
+  handleClick = () => {
+    console.log(localStorage.getItem("token"));
+    axios.get('http://localhost:4000/app/isUserAuthenticated', {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
     })
+    .then(response => {
+      if (response) {
+        console.log(response);
+      } else {
+        console.log(response)
+      }
+    })
+    .catch(err =>console.log(err))
   }
   render() {
     // console.log(this.props)
     this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in"})
-    console.log(this.state);
+    // console.log(this.state);
     let messageSection = (this.state.confirmation) ?
       <div className="messageSection">{this.state.confirmation}</div> :
       (this.state.errors) ?
@@ -75,6 +85,7 @@ class Login extends React.Component {
               /></div>
               <div id="submitDiv">
                 <input type="submit" value='Submit' />
+                <button onClick={this.handleClick}>authenticated?</button>
               </div>
             </form>
             <div>Not registered? <Link to='/register/'>Sign up</Link></div>
@@ -95,6 +106,7 @@ const mapStateToProps = (state) => {
 const dispatchStateToProps = (dispatch) => {
   return {
     setLoginStatus: (value) => dispatch(setLoginStatus(value)),
+    setUser: (id) => dispatch(setUser(id)),
   }
 }
 
