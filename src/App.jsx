@@ -9,6 +9,7 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Account from './components/Account.jsx';
 import Footer from './components/Footer.jsx';
+import Logout from './components/Logout.jsx';
 import { Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
@@ -23,6 +24,7 @@ class App extends React.Component {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/account" component={Account} />
+          <Route path="/logout" component={Logout} />
         </Switch>
         <Footer />
       </>
