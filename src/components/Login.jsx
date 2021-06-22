@@ -15,6 +15,11 @@ class Login extends React.Component {
       confirmation: ""
     }
   }
+  componentDidMount = () => {
+  console.log(this.props);
+  (this.props.loggedIn === false) && this.setState({confirmation: "You've successfully logged out."})
+  this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in."})
+  }
   changeUsername = (e) => {
     this.setState({username:e.target.value})
   }
@@ -62,7 +67,6 @@ class Login extends React.Component {
   }
   render() {
     // console.log(this.props)
-    this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in"})
     // console.log(this.state);
     let messageSection = (this.state.confirmation) ?
       <div className="messageSection">{this.state.confirmation}</div> :

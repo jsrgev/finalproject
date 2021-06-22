@@ -27,7 +27,7 @@ class NavBar extends React.Component {
 					<li><NavLink to='/about'>About</NavLink></li>
 					<li><NavLink to='/profile'>Profile</NavLink></li>
 					<li><NavLink to='/account'>Account</NavLink></li>
-					<li><NavLink to='/Login' onClick={this.logout}>Log Out</NavLink></li>
+					<li><NavLink to={{ pathname: '/login/', loggedOut: true }} onClick={this.logout}>Log Out</NavLink></li>
 					</>
 				}
 				</ul>
