@@ -10,7 +10,7 @@ html {
   font-size: 16px;
 }
 
-body, input {
+body, input, textarea {
   font-family: calibri, sans-serif;
   font-size: 1rem;
 }
@@ -181,16 +181,18 @@ nav li {
   gap: 1rem;
 }
 
-#taskInput {
+#taskInput .Collapsible__trigger {
   display: flex;
   /*grid-template-columns: ;-columns: 1fr max-content max-content max-content;*/
   /*gap: 1rem;*/
-  border-bottom: 1px solid lightgray;
+  /*border-bottom: 1px solid lightgray;*/
 }
 
-#taskInput input:first-child {
+#taskInput .Collapsible__trigger input:first-child {
   flex-grow: 1;
 }
+
+
 
 #taskInput i {
   position: relative;
@@ -209,6 +211,17 @@ nav li {
 .inputDateDue {
 
 }
+
+#taskInput textarea {
+  width: 100%;
+  margin-top: 1rem;
+  resize: none;
+  outline: none;
+  border:  none;
+  font-style: italic;
+}
+
+
 
 /*.task {
   background-color: #fff;

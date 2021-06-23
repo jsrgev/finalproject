@@ -3,13 +3,16 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {setTasks} from '../redux/actions';
 import DateInput from './DateInput';
+import TextareaAutosize from 'react-textarea-autosize';
+import Collapsible from 'react-collapsible';
 
 class TaskInput extends React.Component {
   constructor(){
 	    super();
 	    this.state = {
 	      taskName: "",
-	      dateDue: ""
+	      dateDue: "",
+	      description: ""
 		}
 	}
 	changeTaskName = (e) => {
@@ -22,6 +25,9 @@ class TaskInput extends React.Component {
 		// console.log(date);
 	    this.setState({dateDue:date})
 	}
+	changeDescription = (e) => {
+	    this.setState({description:e.target.value})
+	}
 	handleClick = () => {
 		if (this.state.taskName.length === 0) {
 			return;
@@ -30,7 +36,9 @@ class TaskInput extends React.Component {
 	      taskName: this.state.taskName,
 	      dateDue: this.state.dateDue,
 	      userId: this.props.user,
+	      description: this.state.description
 	    }
+		console.log(newTask)
 	    // console.log(newTask);
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
@@ -56,16 +64,33 @@ class TaskInput extends React.Component {
 		.catch(err => console.log(err))
 	}
 	render () {
-		// console.log(this.props)
-		return (
-			<div id="taskInput">
-				<input type="text" placeholder="New item" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
+		// let open = document.getElementById("mainInput").closest(".is-open")
+		let trigger =  <><input type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
 
 				{/*<input type="date" placeholder="Finish" className="inputDateDue" value={this.state.dateDue} onChange={this.changeDateDue} />
 				*/}
 
 				<DateInput handleDateChange={this.handleDateChange} />
-				<i className="fas fa-plus" onClick={this.handleClick}></i>
+				<i className="fas fa-plus" onClick={this.handleClick}>
+				</i>
+				</>
+		return (
+			<div id="taskInput">
+
+    <Collapsible
+	    trigger={trigger}
+	    transitionTime="70"
+	    transitionCloseTime="70"
+	    triggerDisabled={(this.state.taskName.length>0 && document.getElementById("mainInput").closest(".is-open")) ? true : false}
+	    >
+    <>
+    <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
+            <p>This is the collapsible content. It can be any element or React
+        component you like.</p>
+      </>
+    </Collapsible>
+
+
 			</div>
 		)
 	}

@@ -13,7 +13,7 @@ const taskTemplate = new mongoose.Schema({
 		type:String,
 		required:false
 	},
-	details: {
+	description: {
 		type:String,
 		required:false
 	},
