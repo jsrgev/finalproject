@@ -2,11 +2,13 @@ const express = require('express');
 const router = express();
 const signUpTemplateCopy = require('../models/UserModel');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+// const passport = require('passport');
 
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/UserModel')
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 router.post('/register', async (req,res) => {
@@ -101,8 +103,7 @@ router.post('/login', (req,res) => {
 				if(err) throw err;
 				if(isMatch) {
 					const id = user._id;
-					const token = jwt.sign({id}, "jwtSecret", {
-
+					const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
 						expiresIn: "30d" //300 = 5 minutes
 					})
 					res.json({auth:true, token, user});
@@ -125,7 +126,7 @@ const verifyJWT = (req,res,next) => {
 	if (!token) {
 		res.send({ auth: false, message: "Token needed."});
 	} else {
-		jwt.verify(token, "jwtSecret", (err, decoded) => {
+		jwt.verify(token, process.env.PUBLIC_KEY, (err, decoded) => {
 			if (err) {
 				console.log(err);
 				res.send({ auth: false, message: "Authentication failed."})
