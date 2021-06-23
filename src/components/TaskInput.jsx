@@ -49,7 +49,7 @@ class TaskInput extends React.Component {
 	      // this.props.history.push('/login', { justRegistered: true });
 	      // console.log("registered")
 	    // }
-	    this.setState({taskName:"", dateDue:""});
+	    this.setState({taskName:"", dateDue:"", description: ""});
 	    this.updateTasks();
 	    // console.log(this.state);
 	  })

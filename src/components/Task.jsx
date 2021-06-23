@@ -12,10 +12,8 @@ class Task extends React.Component {
       null;
   return (
     <Collapsible trigger={taskName} transitionTime="70" transitionCloseTime="70">
-    <>
-      {date}
-        <p>{description}</p>
-      </>
+      <p>{description}</p>
+      <p>{date}</p>
     </Collapsible>
   );
 };
