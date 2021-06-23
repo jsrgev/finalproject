@@ -14,10 +14,6 @@ class TaskList extends React.Component {
 		}
 	}
 	componentDidMount = () => {
-		// console.log(this.props.user);
-		console.log("componentDidMount");
-		// console.log(this.props.user);
-		// this.updateTasks();
 	}
 	updateTasks = () => {
 		// console.log("updateTasks");
@@ -37,7 +33,6 @@ class TaskList extends React.Component {
 	render () {
 		// this.props.user below only to trigger update when store is updated, to trigger componentDidUpdate → updateTasks
 		let user = this.props.user;
-
 		return (
 			<div id="taskList">
 				<TaskInput />

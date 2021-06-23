@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setTasks} from '../redux/actions';
+import DateInput from './DateInput';
 
 class TaskInput extends React.Component {
   constructor(){
@@ -16,6 +17,9 @@ class TaskInput extends React.Component {
 	}
 	changeDateDue = (e) => {
 	    this.setState({dateDue:e.target.value})
+	}
+	handleDateChange = () => {
+		console.log("date changed");
 	}
 	handleClick = () => {
 		if (this.state.taskName.length === 0) {
@@ -55,7 +59,11 @@ class TaskInput extends React.Component {
 		return (
 			<div id="taskInput">
 				<input type="text" placeholder="New item" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
-				<input type="date" placeholder="Finish" className="inputDateDue" value={this.state.dateDue} onChange={this.changeDateDue} />
+
+				{/*<input type="date" placeholder="Finish" className="inputDateDue" value={this.state.dateDue} onChange={this.changeDateDue} />
+				*/}
+
+				<DateInput handleDateChange={this.handleDateChange} />
 				<i className="fas fa-plus" onClick={this.handleClick}></i>
 			</div>
 		)

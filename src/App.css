@@ -182,10 +182,14 @@ nav li {
 }
 
 #taskInput {
-  display: grid;
-  grid-template-columns: 1fr max-content max-content;
-  gap: 1rem;
+  display: flex;
+  /*grid-template-columns: ;-columns: 1fr max-content max-content max-content;*/
+  /*gap: 1rem;*/
   border-bottom: 1px solid lightgray;
+}
+
+#taskInput input:first-child {
+  flex-grow: 1;
 }
 
 #taskInput i {
@@ -202,8 +206,8 @@ nav li {
   font-style: italic;
 }
 
-#taskInput .inputDateDue {
-  width: 3rem;
+.inputDateDue {
+
 }
 
 /*.task {
