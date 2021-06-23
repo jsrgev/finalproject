@@ -3,49 +3,64 @@ import Task from './Task.jsx';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import TaskInput from './TaskInput.jsx';
+import {setTasks} from '../redux/actions';
 
 
 class TaskList extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			isUserSet: false
+		}
+	}
 	componentDidMount = () => {
+		// console.log(this.props.user);
+		console.log("componentDidMount");
+		// console.log(this.props.user);
+		// this.updateTasks();
+	}
+	updateTasks = () => {
+		// console.log("updateTasks");
 	    axios.post('http://localhost:4000/task/getTasks', {userId: this.props.user})
 	    .then(response=> {
-	    console.log(response.data);
-	     // if (response.data.errors) {
-	        // this.setState({errors:response.data.errors});
-	    // } else if (response.data.username) {
-	      // this.props.history.push('/login', { justRegistered: true });
-	      // console.log("registered")
-	    // }
-	    // this.setState({taskName:"", dateDue:""});
+		    // console.log(response.data);
+		    this.props.setTasks(response.data.tasks);
 		})
+		.catch(err => console.log(err))
+	}
+	componentDidUpdate = () => {
+		if (!this.state.isUserSet) {
+			this.setState({isUserSet:true});
+			this.updateTasks();
+		}
 	}
 	render () {
-		let taskArray =["Practice piano","Learn Persian","Build website"];
-		return (
-			<><div id="taskList">
-					<TaskInput />
-					{taskArray.map((item,i) =>{
-						return <Task item={item} key={i} />
-					})}
-				</div>
+		// this.props.user below only to trigger update when store is updated, to trigger componentDidUpdate → updateTasks
+		let user = this.props.user;
 
-    </>
+		return (
+			<div id="taskList">
+				<TaskInput />
+				{this.props.tasks.map((item,i) =>{
+					return <Task item={item} key={i} />
+				})}
+			</div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    tasks: state.taskReducer.tasks
   }
 }
 
-// const dispatchStateToProps = (dispatch) => {
-//   return {
-//     setLoginStatus: (value) => dispatch(setLoginStatus(value)),
-//     setUser: (id) => dispatch(setUser(id)),
-//   }
-// }
+const dispatchStateToProps = (dispatch) => {
+  return {
+    setTasks: (array) => dispatch(setTasks(array)),
+  }
+}
 
 
-export default connect(mapStateToProps)(TaskList);
+export default connect(mapStateToProps,dispatchStateToProps)(TaskList);

@@ -1,6 +1,6 @@
 export const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 export const SET_USER = 'SET_USER';
-export const GET_TASKS = 'GET_TASKS';
+export const SET_TASKS = 'SET_TASKS';
 
 
 
@@ -20,9 +20,9 @@ export const setUser = (id) => {
 }
 
 
-export const getTasks = (a) => {
+export const setTasks = (array) => {
 	return {
-		type: GET_TASKS,
-		payload: a
+		type: SET_TASKS,
+		payload: array
 	}
 }

@@ -67,7 +67,6 @@ const dispatchStateToProps = (dispatch) => {
   }
 }
 
-
 export default connect(mapStateToProps, dispatchStateToProps)(App);
 
 // export default App;

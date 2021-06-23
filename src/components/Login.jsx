@@ -36,7 +36,7 @@ class Login extends React.Component {
       password: this.state.password
     }
     axios.post('http://localhost:4000/user/login', login)
-    .then(response=> {
+    .then(response => {
       if (response.data.auth) {
         // console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
@@ -44,6 +44,7 @@ class Login extends React.Component {
         localStorage.setItem("user", response.data.user._id);
         this.props.setLoginStatus(true);
         this.props.setUser(response.data.user._id)
+    // console.log(this.props);
         this.props.history.push('/');
       } else {
         this.setState({errors: response.data.message})
