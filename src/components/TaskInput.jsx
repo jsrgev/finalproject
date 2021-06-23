@@ -20,7 +20,6 @@ class TaskInput extends React.Component {
 	if (this.state.taskName.length === 0) {
 		return;
 	};
-	console.log("clicked");
 
     // this.setState({errors: []});
     const newTask = {
@@ -28,10 +27,10 @@ class TaskInput extends React.Component {
       dateDue: this.state.dateDue,
       userId: this.props.user,
     }
-    console.log(newTask);
+    // console.log(newTask);
     axios.post('http://localhost:4000/task/addTask', newTask)
     .then(response=> {
-    console.log(response.data);
+    // console.log(response.data);
      // if (response.data.errors) {
         // this.setState({errors:response.data.errors});
     // } else if (response.data.username) {
@@ -42,7 +41,6 @@ class TaskInput extends React.Component {
 
   })
     .catch(err=>console.log(err))
-
   }
 
 	render () {
@@ -60,7 +58,7 @@ class TaskInput extends React.Component {
 
 const mapStateToProps = (state) => {
 	return { 
-		user: state.user
+		user: state.userReducer.user
 	}
 }
 

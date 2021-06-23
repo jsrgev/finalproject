@@ -15,24 +15,13 @@ dotenv.config();
 
 router.post('/addTask', async (req,res) => {
 	const {taskName, userId, penalty, details, dateDue} = req.body;
-	let errors = [];
 
 	// Check form for errors
-	// if (!firstName || !lastName || !email || !username || !password || !password2) {
-		// errors.push ({msg: 'Please fill in all fields.'})
+	// let errors = [];
+	// if (errors.length > 0) {
+	// 	res.send({errors});
+	// 	return;
 	// }
-	// if (password !== password2 && password.length>0 && password2.length>0) {
-		// errors.push ({msg: 'Passwords do not match.'})
-	// }
-	// if (password.length<6 && password.length>0) {
-		// errors.push ({msg: 'Password must be at least 6 characters.'})
-	// }
-
-
-	if (errors.length > 0) {
-		res.send({errors});
-		return;
-	}
 
 	const newTask = new taskTemplateCopy({
 		taskName, userId, penalty, details, dateDue
@@ -41,15 +30,27 @@ router.post('/addTask', async (req,res) => {
 	newTask.save()
 	.then(data => {
 		res.json(data);
-		// res.redirect('http://localhost:3000/login')
 	})
 	.catch(err => {
 		res.json(err);
 	})
-	// res.send('send')
 })
 
-
+router.post('/getTasks', async (req,res) => {
+	console.log(req.body);
+	Task.find({userId: req.body.userId})
+		.then(tasks => {
+			console.log(tasks)
+			if(!tasks) {
+				res.send({result: false, message: "This user has no tasks."});
+				// return;
+				// return done(null, false, { message: 'That email is not registered' });
+			} else {
+				res.send({result: true, tasks});
+			}
+			})		
+		.catch(err => console.log(err));
+})
 
 
 

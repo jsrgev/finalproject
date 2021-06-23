@@ -105,11 +105,11 @@ class Login extends React.Component {
 
 // export default Login;
 
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: state.loggedIn
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     loggedIn: state.userReducer.loggedIn
+//   }
+// }
 
 const dispatchStateToProps = (dispatch) => {
   return {
@@ -118,6 +118,6 @@ const dispatchStateToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps,dispatchStateToProps)(Login);
+export default connect(null,dispatchStateToProps)(Login);
 
 
