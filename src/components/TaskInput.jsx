@@ -12,7 +12,8 @@ class TaskInput extends React.Component {
 	    this.state = {
 	      taskName: "",
 	      dateDue: "",
-	      description: ""
+	      description: "",
+	      penalty: ""
 		}
 	}
 	changeTaskName = (e) => {
@@ -28,6 +29,9 @@ class TaskInput extends React.Component {
 	changeDescription = (e) => {
 	    this.setState({description:e.target.value})
 	}
+	changePenalty = (e) => {
+	    this.setState({penalty:e.target.value})
+	}
 	handleClick = () => {
 		if (this.state.taskName.length === 0) {
 			return;
@@ -36,7 +40,8 @@ class TaskInput extends React.Component {
 	      taskName: this.state.taskName,
 	      dateDue: this.state.dateDue,
 	      userId: this.props.user,
-	      description: this.state.description
+	      description: this.state.description,
+	      penalty: this.state.penalty
 	    }
 		console.log(newTask)
 	    // console.log(newTask);
@@ -49,7 +54,7 @@ class TaskInput extends React.Component {
 	      // this.props.history.push('/login', { justRegistered: true });
 	      // console.log("registered")
 	    // }
-	    this.setState({taskName:"", dateDue:"", description: ""});
+	    this.setState({taskName:"", dateDue:"", description: "", penalty: ""});
 	    this.updateTasks();
 	    // console.log(this.state);
 	  })
@@ -85,8 +90,7 @@ class TaskInput extends React.Component {
 	    >
     <>
     <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
-            <p>This is the collapsible content. It can be any element or React
-        component you like.</p>
+    <TextareaAutosize placeholder="Penalty" value={this.state.penalty} onChange={this.changePenalty} />
       </>
     </Collapsible>
 
