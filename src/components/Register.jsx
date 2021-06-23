@@ -46,7 +46,7 @@ class RegisterForm extends React.Component {
       password2: this.state.password2
     }
     // console.log(registered);
-    axios.post('http://localhost:4000/app/register', registered)
+    axios.post('http://localhost:4000/user/register', registered)
     .then(response=> {
     // console.log(response.data);
      if (response.data.errors) {

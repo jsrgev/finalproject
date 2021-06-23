@@ -2,31 +2,17 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const routesUrls = require('./routes/routes');
+const userRoutes = require('./routes/userRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 const cors = require('cors');
 
-// from traversey
-
-//Passport config
-// const passport = require('passport');
-
-// require('./passport.js')(passport);
-
-// const expressLayouts = require('express-ejs-layouts');
-// app.use(expressLayouts);
-// app.set('view engine', 'ejs');
-// body parser
+// delete the following?
 app.use(express.urlencoded({ extended: false}));
 
-// Passport middleware
-// passport.use(passport.initialize());
-// passport.use(passport.session());
-
-
-// traversey up to here
 
 dotenv.config();
 
+// useUnifiedTopology and useNewUrlParser to avoid warnings
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true })
 .then(()=>console.log("Database connected"))
@@ -34,7 +20,8 @@ mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true })
 
 app.use(express.json());
 app.use(cors());
-app.use('/app', routesUrls);
+app.use('/user', userRoutes);
+app.use('/task', taskRoutes);
 
 
 

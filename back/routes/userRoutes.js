@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express();
-const signUpTemplateCopy = require('../models/UserModel');
+const userTemplateCopy = require('../models/UserModel');
 const bcrypt = require('bcrypt');
 // const passport = require('passport');
 
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/UserModel')
+
+// generated private and public keys from https://www.csfieldguide.org.nz/en/interactives/rsa-key-generator/
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -46,14 +48,15 @@ router.post('/register', async (req,res) => {
 	// encrypt password
 	const saltPassword = await bcrypt.genSalt(10);
 	const securePassword = await bcrypt.hash(password, saltPassword);
-	const signedUpUser = new signUpTemplateCopy({
+
+	const newUser = new userTemplateCopy({
 		firstName,
 		lastName,
 		username,
 		email,
 		password:securePassword
 	});
-	signedUpUser.save()
+	newUser.save()
 	.then(data => {
 		res.json(data);
 		// res.redirect('http://localhost:3000/login')

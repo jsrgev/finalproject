@@ -35,10 +35,10 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     }
-    axios.post('http://localhost:4000/app/login', login)
+    axios.post('http://localhost:4000/user/login', login)
     .then(response=> {
       if (response.data.auth) {
-        console.log(response.data);
+        // console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data.user._id);
@@ -47,13 +47,13 @@ class Login extends React.Component {
         this.props.history.push('/');
       } else {
         this.setState({errors: response.data.message})
-        console.log(this.state)
+        // console.log(this.state)
       }
     })
   }
   handleClick = () => {
     console.log(localStorage.getItem("token"));
-    axios.get('http://localhost:4000/app/isUserAuthenticated', {
+    axios.get('http://localhost:4000/user/isUserAuthenticated', {
       headers: {
         "x-access-token": localStorage.getItem("token")
       }
