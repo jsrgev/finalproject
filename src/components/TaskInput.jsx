@@ -18,8 +18,9 @@ class TaskInput extends React.Component {
 	changeDateDue = (e) => {
 	    this.setState({dateDue:e.target.value})
 	}
-	handleDateChange = () => {
-		console.log("date changed");
+	handleDateChange = (date) => {
+		// console.log(date);
+	    this.setState({dateDue:date})
 	}
 	handleClick = () => {
 		if (this.state.taskName.length === 0) {

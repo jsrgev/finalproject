@@ -13,7 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 // some of below adapted from https://github.com/Hacker0x01/react-datepicker/pull/1718, to block out past times on current day
 
-const DateInput = (props) => {
+const DateInput = ({handleDateChange}) => {
 	const [startDate, setStartDate] = useState();
 	const isSelectedDateInFuture = !isSameDay(startDate, new Date());
 
@@ -28,7 +28,8 @@ const DateInput = (props) => {
 		currentMins = 0;
 	}
 	const handleChange = (date) => {
-			setStartDate(date);
+		setStartDate(date);
+		handleDateChange(date);
 		};
 
 	return (
