@@ -9,7 +9,6 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Account from './components/Account.jsx';
 import Footer from './components/Footer.jsx';
-import Logout from './components/Logout.jsx';
 import { Route, Switch } from "react-router-dom";
 import {connect} from 'react-redux';
 import {setLoginStatus,setUser} from './redux/actions';
@@ -42,7 +41,6 @@ class App extends React.Component {
           <Route path="/about" component={About} />
           <Route path="/profile" component={Profile} />
           <Route path="/account" component={Account} />
-          <Route path="/logout" component={Logout} />
           <Route path="/" component={SplitDisplay} />
         </Switch>
           </>

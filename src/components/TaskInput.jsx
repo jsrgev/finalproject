@@ -13,7 +13,8 @@ class TaskInput extends React.Component {
 	      taskName: "",
 	      dateDue: "",
 	      description: "",
-	      penalty: ""
+	      penalty: "",
+	      shared: false
 		}
 	}
 	changeTaskName = (e) => {
@@ -31,50 +32,47 @@ class TaskInput extends React.Component {
 	changePenalty = (e) => {
 	    this.setState({penalty:e.target.value})
 	}
+	changeShared = (e) => {
+	    this.setState({shared:e.target.checked})
+	}
 	handleClick = () => {
 		if (this.state.taskName.length === 0) {
 			return;
 		};
-	    const newTask = {
-	      taskName: this.state.taskName,
-	      dateDue: this.state.dateDue,
-	      userId: this.props.user,
-	      description: this.state.description,
-	      penalty: this.state.penalty
-	    }
-		console.log(newTask)
-	    // console.log(newTask);
+	    // const newTask = {
+	    //   taskName: this.state.taskName,
+	    //   dateDue: this.state.dateDue,
+	    //   userId: this.props.user,
+	    //   description: this.state.description,
+	    //   penalty: this.state.penalty
+	    // }
+
+	    const newTask = { ... this.state, userId: this.props.user};
+	    //   taskName: this.state.taskName,
+	    //   dateDue: this.state.dateDue,
+	    //   userId: this.props.user,
+	    //   description: this.state.description,
+	    //   penalty: this.state.penalty
+	    // }
+
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
-	    // console.log(response.data);
-	     // if (response.data.errors) {
-	        // this.setState({errors:response.data.errors});
-	    // } else if (response.data.username) {
-	      // this.props.history.push('/login', { justRegistered: true });
-	      // console.log("registered")
-	    // }
-	    this.setState({taskName:"", dateDue:"", description: "", penalty: ""});
+	    this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: ""});
 	    this.updateTasks();
-	    // console.log(this.state);
 	  })
 	    .catch(err=>console.log(err))
 	  }
 	updateTasks = () => {
 	    axios.post('http://localhost:4000/task/getTasks', {userId: this.props.user})
 	    .then(response=> {
-		    // console.log(response.data);
 		    this.props.setTasks(response.data.tasks);
 		})
 		.catch(err => console.log(err))
 	}
 	render () {
-		// let open = document.getElementById("mainInput").closest(".is-open")
 		let trigger =  <><input type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
 
-				{/*<input type="date" placeholder="Finish" className="inputDateDue" value={this.state.dateDue} onChange={this.changeDateDue} />
-				*/}
-
-				<DateInput changeDateDue={this.changeDateDue} />
+				<DateInput changeDateDue={this.changeDateDue} dateDue={this.state.dateDue} />
 				<i className="fas fa-plus" onClick={this.handleClick}>
 				</i>
 				</>
@@ -91,6 +89,7 @@ class TaskInput extends React.Component {
     <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
     <TextareaAutosize placeholder="Penalty" value={this.state.penalty} onChange={this.changePenalty} />
       </>
+      <div>Shared <input type="checkbox" checked={this.state.shared} onChange={this.changeShared}/></div>
     </Collapsible>
 
 

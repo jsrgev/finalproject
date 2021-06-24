@@ -8,10 +8,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const DateInput = ({changeDateDue}) => {
 	const [startDate, setStartDate] = useState();
-	const isSelectedDateInFuture = !isSameDay(startDate, new Date());
 
-	// let minTimeHour = new Date().getHours();
-	// if (!isSelectedDateToday) {minTimeHour = 0};
+	const isSelectedDateInFuture = (startDate ? !isSameDay(startDate, new Date()) : false);
+	// console.log(startDate);
+	// console.log(isSelectedDateInFuture);
 
 	const date = new Date();
 	let currentMins = date.getMinutes();
@@ -24,7 +24,6 @@ const DateInput = ({changeDateDue}) => {
 		setStartDate(date);
 		changeDateDue(date);
 		};
-
 	return (
 		< DatePicker
 		showTimeSelect
