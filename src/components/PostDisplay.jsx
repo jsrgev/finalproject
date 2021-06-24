@@ -18,23 +18,35 @@ class PostDisplay extends React.Component {
 	        return format(newDate, "d MMM, yyyy p");
 	      } 
     }
-    getUserName = (id) => {
+    getFullName = (id) => {
     	// if tries to get do 'find' before 'users' is populated, causes crash
     	if (this.props.users.length>0) {
     	let user = this.props.users.find(a => a._id === id);
     	return `${user.firstName} ${user.lastName}`;
+	    }
+	     else {
+	    	return ""
+	    }
     }
-     else {
-    	return ""}
+    getUsername = (id) => {
+    	// if tries to get do 'find' before 'users' is populated, causes crash
+    	if (this.props.users.length>0) {
+    	let user = this.props.users.find(a => a._id === id);
+    	return user.username;
+	    }
+	     else {
+	    	return ""
+	    }
     }
    	render () {
-		let id = this.props.id;
-		let item = this.props.allPublicTasks.find(a => a._id === id);
+		let taskId = this.props.id;
+		let item = this.props.allPublicTasks.find(a => a._id === taskId);
 		let {completed, dateDue, description, penalty, taskName, userId, dateEntered} = item;
 
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    let dateElement = dateDue &&
 	      <div>Due: {this.formatDate(dateDue)}</div>;
+	    let username = this.getUsername(userId);
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
@@ -43,10 +55,9 @@ class PostDisplay extends React.Component {
 					{dateElement}
 				</div>
 				<p>
-					{/*<Link to={{ pathname: '/account/', user:this.props.user }} to='/account'>*/}
-
-						{this.getUserName(userId)}
-					{/*</Link>*/}
+					<Link to={`/profile/${username}`}>
+						{this.getFullName(userId)}
+					</Link>
 				</p>
 				<p>{description}</p>
 				<p>Penalty: {penalty}</p>

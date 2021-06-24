@@ -25,23 +25,14 @@ class TaskList extends React.Component {
 	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user.id})
 	    .then(response=> {
 	    	// why is this runing twice when first part only runs once??
-		    // console.log(response.data);
 		    this.setState({tasksUpdated:true});
 		    this.props.setUserTasks(response.data.tasks);
 		})
 		.catch(err => console.log(err))
 	}
-	// componentDidUpdate = () => {
-		// console.log(this.props.user.id);
-		// if (!this.state.isUserSet) {
-			// this.setState({isUserSet:true});
-			// this.updateTasks();
-		// }
-	// }
+
 	displayTasks = () => {
-		// if (!this.state.tasksUpdated) {
-			// console.log(this.props.tasks);
-		// }
+
 		this.props.tasks.map((item,i) =>{
 			return <Task item={item} key={i} />
 		})

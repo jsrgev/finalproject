@@ -24,9 +24,8 @@ class Feed extends React.Component {
 		    this.props.setAllUsers(response.data.users);
 		})
 		.catch(err => console.log(err))
-
 	}
-	render () {
+	render() {
 		let allPublicTasks = this.props.allPublicTasks;
 		return (
 			<div id="feed">

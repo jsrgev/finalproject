@@ -20,6 +20,10 @@ h2 {
   margin-top: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 a.active {
   color: black;
   pointer-events: none;
@@ -28,7 +32,6 @@ a.active {
 nav a {
   font-weight: 600;
   color: var(--blue);
-  text-decoration: none;
 }
 
 /* MAIN LAYOUT */

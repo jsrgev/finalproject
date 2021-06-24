@@ -5,7 +5,7 @@ import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 
 class Profile extends React.Component {
 	componentDidMount() {
-	this.getUsers();
+		this.getUsers();
 	}
 	getUsers = () => {
 	    axios.get('http://localhost:4000/user/getUsers')
@@ -17,15 +17,20 @@ class Profile extends React.Component {
 	}
 	render () {
 		let username = this.props.match.params.username;
-		// console.log(this.props.users);
 		let user = this.props.users.find(a => a.username === username);
-		// console.log(user);
-		let {firstName, lastName, date} = user;
-		return (
-	      <main id="profile">
-				<h2>{`${firstName} ${lastName}`}</h2>
+		let data = user ?
+			(
+			<>
+				<h2>{`${user.firstName} ${user.lastName}`}</h2>
 				<p>Info</p>
 				<p>Current Tasks</p>
+			</>
+			)
+			:
+			<p>Loading...</p>;
+		return (
+	      <main id="profile">
+	      	{data}
 	      </main>
 		)
 	}
