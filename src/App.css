@@ -46,30 +46,28 @@ body {
   background-attachment: fixed;
 }
 
-
 /*form {
   display: grid;
   grid-template-columns: 10rem;
   gap: 1rem;
 }*/
 
-
 #root {
   display: grid;
   gap: 1rem;
 }
 
-nav, main, #taskList, footer, .postDisplay {
+nav, main:not(#splitMain), #taskList, footer, .postDisplay {
   padding: 1rem;
   border-radius: 10px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }
 
-main:not(#splitMain), .postDisplay {
+nav, main:not(#splitMain), footer, .postDisplay {
   background-color: var(--transparentwhite);
-    /*background: rgba(255, 255, 255, .7);*/
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-  }
+}
+
 
 #splitMain {
   display: grid;
@@ -83,7 +81,6 @@ main:not(#splitMain), .postDisplay {
 /* NAV */
 
 nav {
-  background-color: var(--transparentwhite);
   display: grid;
   grid-template-columns: 1fr max-content;
 
@@ -111,10 +108,16 @@ nav li {
 }
 
 .postDisplay {
-  /*background-color: #fff;*/
 }
 
+.postHeader {
+  display: flex;
+  font-weight: 600;
+}
 
+.postHeader *:first-child {
+  flex-grow: 1;
+}
 
 /* REGISTER & LOGIN */
 
@@ -189,14 +192,17 @@ nav li {
   gap: 1rem;
 }
 
-#taskInput .Collapsible__trigger {
+/*#taskInput */
+.Collapsible__trigger {
   display: flex;
   /*grid-template-columns: ;-columns: 1fr max-content max-content max-content;*/
   /*gap: 1rem;*/
   /*border-bottom: 1px solid lightgray;*/
+  border-bottom: 1px solid lightgray;
 }
 
-#taskInput .Collapsible__trigger input:first-child {
+/*#taskInput */
+.Collapsible__trigger *:first-child {
   flex-grow: 1;
 }
 
@@ -230,23 +236,18 @@ nav li {
 }
 
 
-
-/*.task {
-  background-color: #fff;
-}*/
-
-
 .Collapsible {
   /*background-color: #fff;*/
 }
 
 span.Collapsible__trigger {
-  display: block;
-  border-bottom: 1px solid lightgray;
-}
+  /*display: block;*/
+/*  border-bottom: 1px solid lightgray;
+*/}
 
 .Collapsible__contentOuter {
   /*background-color: #fff;*/
+  color: gray;
 }
 
 
@@ -256,7 +257,6 @@ span.Collapsible__trigger {
 
 
 footer {
-  background-color: var(--transparentwhite);
 }
 
 

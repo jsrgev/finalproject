@@ -38,14 +38,13 @@ class Task extends React.Component {
     }
 	render() {
 		let {taskName, dateDue, description, penalty, shared} = this.props.item;
-    let dateElement = dateDue ?
-      <p>Due: {this.formatDate(dateDue)}</p> :
-      null;
+    let dateElement = dateDue &&
+      <div>{this.formatDate(dateDue)}</div>;
+    let trigger = <><div>{taskName}</div>{dateElement}</>
   return (
-    <Collapsible trigger={taskName} transitionTime="70" transitionCloseTime="70">
+    <Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
       <p>{description}</p>
       <p>Penalty: {penalty}</p>
-      {dateElement}
       <div>Shared <input type="checkbox"
       checked={shared}
       onChange={this.changeShared}

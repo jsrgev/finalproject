@@ -24,10 +24,12 @@ class PostDisplay extends React.Component {
 		let {completed, dateDue, description, penalty, taskName, userId} = item;
 		return (
 			<div className="postDisplay">
-				<h3>{taskName}</h3>
+				<div className="postHeader">
+					<div>{taskName}</div>
+					<div>Due: {this.formatDate(dateDue)}</div>
+				</div>
 				<p>{userId}</p>
 				<p>{description}</p>
-				<p>Due: {this.formatDate(dateDue)}</p>
 				<p>Penalty: {penalty}</p>
 			</div>
 		)
