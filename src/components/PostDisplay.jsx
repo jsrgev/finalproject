@@ -12,7 +12,6 @@ class PostDisplay extends React.Component {
 	constructor() {
 		super();
 		this.state ={
-			liked: false,
 			comment: ""
 		}
 	}
@@ -48,14 +47,14 @@ class PostDisplay extends React.Component {
 	    	return ""
 	    }
     }
-    handleClickLike = (e) => {
-    	if (this.state.liked) {
-    		this.setState({liked: false});
-    		this.updateTaskLikes(false);
-    	} else {
-    		this.setState({liked: true});
-    		this.updateTaskLikes(true)
-    	}
+    handleClickLike = (value) => {
+    	// if (this.state.liked) {
+    		this.setState({liked: !value});
+    		this.updateTaskLikes(!value);
+    	// } else {
+    		// this.setState({liked: true});
+    		// this.updateTaskLikes(true)
+    	// }
     }
     handleClickComment = () => {
     	if (this.state.comment.length > 0) {
@@ -77,6 +76,7 @@ class PostDisplay extends React.Component {
 	    .catch(err=>console.log(err))
     }
     updateTaskLikes = (value) => {
+    	// console.log("value");
 	    axios.post('http://localhost:4000/task/updatePublicTask', {
     		"taskId": this.props.id,
     		"field": "likes",
@@ -99,6 +99,17 @@ class PostDisplay extends React.Component {
 	    let dateElement = dateDue &&
 	      <div>Due: {this.formatDate(dateDue)}</div>;
 	    let username = this.getUsername(userId);
+
+	    let thisUserLiked = likes.some(a => a === this.props.user.id)
+
+	    let likeCountDisplay;
+	    if (likes.length === 0) {
+	    	likeCountDisplay = ""
+	    } else if (likes.length === 1) {
+	    	likeCountDisplay = "1 like"
+	    } else {
+	    	likeCountDisplay = `${likes.length} likes`
+	    }
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
@@ -114,8 +125,13 @@ class PostDisplay extends React.Component {
 				<p>{description}</p>
 				<p>Penalty: {penalty}</p>
 				<p></p>
-				<div className="postBottom"><button onClick={this.handleClick}>Like</button> <div>{likes.length} Likes</div><div>Added: {this.formatDate(dateEntered)}</div></div>
+				<div className="postBottom">
+					<button onClick={() => this.handleClickLike(thisUserLiked)}>Like</button>
+					<div>{likeCountDisplay}</div>
+					<div>Added: {this.formatDate(dateEntered)}</div>
+				</div>
 			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button>
+
 			    {comments.length>0 &&
 				<Collapsible trigger="Comments" transitionTime="70" transitionCloseTime="70">
 			      {comments.map((item,i) =>{

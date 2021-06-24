@@ -56,6 +56,7 @@ router.get('/getAllPublicTasks', async (req,res) => {
 })
 
 router.post('/updatePublicTask', async (req,res) => {
+	// console.log(req.body);
 	let {taskId, field, userId, add} = req.body;
 	if (add) {
 		Task.updateOne(
@@ -78,7 +79,7 @@ router.post('/updatePublicTask', async (req,res) => {
 
 router.post('/addComment', async (req,res) => {
 	let {taskId, field, userId, add, text} = req.body;
-	console.log(req.body);
+	// console.log(req.body);
 	let comment = {userId, text, date: new Date()}
 	if (add) {
 		Task.updateOne(
