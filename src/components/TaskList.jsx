@@ -10,35 +10,58 @@ class TaskList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			isUserSet: false
+			isUserSet: false,
+			tasksUpdated: false
 		}
 	}
 	componentDidMount = () => {
+		// console.log(this.props.user.id);
+		// this.updateTasks();
+		// setTimeout(()=>{this.updateTasks()},100);
 	}
 	updateTasks = () => {
-		// console.log("updateTasks");
-	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user.id})
+		// console.log(this.props.user.id);
+		console.log("updating tasks");
+	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user.id})
 	    .then(response=> {
-		    // console.log(response.data);
+		    console.log(response.data);
+		    this.setState({tasksUpdated:true});
 		    this.props.setUserTasks(response.data.tasks);
 		})
 		.catch(err => console.log(err))
 	}
-	componentDidUpdate = () => {
-		if (!this.state.isUserSet) {
-			this.setState({isUserSet:true});
-			this.updateTasks();
-		}
+	// componentDidUpdate = () => {
+		// console.log(this.props.user.id);
+		// if (!this.state.isUserSet) {
+			// this.setState({isUserSet:true});
+			// this.updateTasks();
+		// }
+	// }
+	displayTasks = () => {
+		// if (!this.state.tasksUpdated) {
+			// console.log(this.props.tasks);
+		// }
+		this.props.tasks.map((item,i) =>{
+			return <Task item={item} key={i} />
+		})
 	}
 	render () {
-		// this.props.user below only to trigger update when store is updated, to trigger componentDidUpdate → updateTasks
-		let user = this.props.user;
+		// let user = this.props.user;
+		if (this.props.user && !this.state.tasksUpdated) {
+			this.updateTasks();
+		};
+
+		let taskList = this.props.tasks ?
+			this.props.tasks.map((item,i) =>{
+				return <Task item={item} key={i} />
+			})
+				:
+			<div>Loading Tasks...</div>;
+
 		return (
 			<div id="taskList">
 				<TaskInput />
-				{this.props.tasks.map((item,i) =>{
-					return <Task item={item} key={i} />
-				})}
+				{taskList}
 			</div>
 		)
 	}

@@ -41,8 +41,8 @@ class Login extends React.Component {
         // console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
         localStorage.setItem("token", response.data.token);
-        // console.log(response.data);
-        localStorage.setItem("user", response.data.userInfo);
+        console.log(response.data);
+        localStorage.setItem("user", JSON.stringify(response.data.userInfo));
         this.props.setLoginStatus(true);
         this.props.setUser(response.data.userInfo)
     // console.log(this.props);

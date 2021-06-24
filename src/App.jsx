@@ -19,9 +19,10 @@ class App extends React.Component {
       // console.log(this.props.loggedIn);
     if (localStorage.getItem("token")) {
     // console.log(localStorage.getItem("token"));
-
+      // console.log("token")
+      // console.log(JSON.parse(localStorage.getItem("user")));
       this.props.setLoginStatus(true);
-      this.props.setUser(localStorage.getItem("user"));
+      this.props.setUser(JSON.parse(localStorage.getItem("user")));
     }
   }
   render() {

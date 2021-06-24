@@ -20,6 +20,7 @@ class Feed extends React.Component {
 	getUsers = () => {
 	    axios.get('http://localhost:4000/user/getUsers')
 	    .then(response=> {
+		    // console.log(response.data);
 		    this.props.setAllUsers(response.data.users);
 		})
 		.catch(err => console.log(err))

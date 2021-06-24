@@ -14,10 +14,10 @@ export const setLoginStatus = (value) => {
 	}
 }
 
-export const setUser = (id) => {
+export const setUser = (array) => {
 	return {
 		type: SET_USER,
-		payload: id
+		payload: array
 	}
 }
 
@@ -29,6 +29,7 @@ export const setAllUsers = (array) => {
 }
 
 export const setUserTasks = (array) => {
+	// console.log(array);
 	return {
 		type: SET_USER_TASKS,
 		payload: array
@@ -36,6 +37,7 @@ export const setUserTasks = (array) => {
 }
 
 export const setAllPublicTasks = (array) => {
+	// console.log(array)
 	return {
 		type: SET_ALL_PUBLIC_TASKS,
 		payload: array
