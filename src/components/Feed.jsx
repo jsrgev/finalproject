@@ -5,6 +5,12 @@ import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 
 class Feed extends React.Component {
+	constructor(){
+		super();
+		this.state = {
+			sharedTasks: true
+		}
+	}
 	componentDidMount = () => {
 		this.updateFeed();
 		this.getUsers();
@@ -12,8 +18,8 @@ class Feed extends React.Component {
 	updateFeed = () => {
 	    axios.get('http://localhost:4000/task/getAllPublicTasks')
 	    .then(response=> {
-		    // console.log(response.data);
 		    this.props.setAllPublicTasks(response.data.tasks);
+		    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
 		})
 		.catch(err => console.log(err))
 	}
@@ -29,14 +35,16 @@ class Feed extends React.Component {
 		let allPublicTasks = this.props.allPublicTasks;
 		return (
 			<div id="feed">
-				{allPublicTasks.length>0 ?
+				{(!this.state.sharedTasks) ?
+					<div className="loadingScreen">There are currently no shared tasks.</div>
+					:
+					allPublicTasks.length>0 ?
 					allPublicTasks.map(({_id},i) => {
 						return(
 							<PostDisplay id={_id} key={i} />
 							)
 					})
 				 :
-
 				<div className="loadingScreen">Loading ...</div>
 				}
 			</div>

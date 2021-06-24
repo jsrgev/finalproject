@@ -37,7 +37,9 @@ router.post('/register', async (req,res) => {
 	if (password === firstName || password === lastName || password === firstName+lastName) {
 		errors.push ({msg: 'Password cannot be your name.'})
 	}
-
+	if (password === "password") {
+		errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
+	}
 
 	// Check for duplicate user data
 
