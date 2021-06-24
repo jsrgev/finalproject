@@ -47,7 +47,7 @@ class TaskInput extends React.Component {
 	    //   penalty: this.state.penalty
 	    // }
 
-	    const newTask = { ... this.state, userId: this.props.user};
+	    const newTask = { ...this.state, userId: this.props.user};
 	    //   taskName: this.state.taskName,
 	    //   dateDue: this.state.dateDue,
 	    //   userId: this.props.user,
@@ -63,7 +63,7 @@ class TaskInput extends React.Component {
 	    .catch(err=>console.log(err))
 	  }
 	updateTasks = () => {
-	    axios.post('http://localhost:4000/task/getTasks', {userId: this.props.user})
+	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user})
 	    .then(response=> {
 		    this.props.setTasks(response.data.tasks);
 		})
@@ -111,3 +111,4 @@ const dispatchStateToProps = (dispatch) => {
   }
 }
 export default connect(mapStateToProps,dispatchStateToProps)(TaskInput);
+

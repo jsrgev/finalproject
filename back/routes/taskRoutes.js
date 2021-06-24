@@ -36,14 +36,12 @@ router.post('/addTask', async (req,res) => {
 	})
 })
 
-router.post('/getTasks', async (req,res) => {
+router.post('/getUserTasks', async (req,res) => {
 	// console.log(req.body);
 	Task.find({userId: req.body.userId})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "This user has no tasks."});
-				// return;
-				// return done(null, false, { message: 'That email is not registered' });
 			} else {
 				res.send({result: true, tasks});
 			}
@@ -51,6 +49,18 @@ router.post('/getTasks', async (req,res) => {
 		.catch(err => console.log(err));
 })
 
+router.get('/getAllPublicTasks', async (req,res) => {
+	// console.log(req.body);
+	Task.find({shared: true})
+		.then(tasks => {
+			if(!tasks) {
+				res.send({result: false, message: "There are no shared tasks right now."});
+			} else {
+				res.send({result: true, tasks});
+			}
+			})		
+		.catch(err => console.log(err));
+})
 
 
 

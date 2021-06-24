@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Post extends React.Component {
+class PostDisplay extends React.Component {
 	render () {
 		return (
 			<div className="postDisplay">
@@ -12,4 +12,4 @@ class Post extends React.Component {
 }
 
 
-export default Post;
+export default PostDisplay;

@@ -1,8 +1,29 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
+import {connect} from 'react-redux';
+import {setTasks} from '../redux/actions';
 
 class Task extends React.Component {
+  changeTaskName = (e) => {
+      // this.setState({taskName:e.target.value})
+  }
+  changeDateDue = (e) => {
+      // this.setState({dateDue:e.target.value})
+  }
+  changeDateDue = (date) => {
+      // this.setState({dateDue:date})
+  }
+  changeDescription = (e) => {
+      // this.setState({description:e.target.value})
+  }
+  changePenalty = (e) => {
+      // this.setState({penalty:e.target.value})
+  }
+  changeShared = (e) => {
+    console.log(e.target.checked);
+      // this.setState({shared:e.target.checked})
+  }
 	render() {
 		let {taskName, dateDue, description, penalty, shared} = this.props.item;
     const dateFormat = (date) => {
@@ -26,7 +47,7 @@ class Task extends React.Component {
       {dateElement}
       <div>Shared <input type="checkbox"
       checked={shared}
-      // onChange={this.changeShared}
+      onChange={this.changeShared}
       />
       </div>
     </Collapsible>
@@ -34,5 +55,18 @@ class Task extends React.Component {
 };
 }
 
-export default Task;
+const mapStateToProps = (state) => {
+  return { 
+    user: state.userReducer.user
+  }
+}
+
+const dispatchStateToProps = (dispatch) => {
+  return {
+    setTasks: (array) => dispatch(setTasks(array)),
+  }
+}
+
+export default connect(mapStateToProps,dispatchStateToProps)(Task);
+
 
