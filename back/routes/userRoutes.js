@@ -28,6 +28,15 @@ router.post('/register', async (req,res) => {
 	if (password.length<6 && password.length>0) {
 		errors.push ({msg: 'Password must be at least 6 characters.'})
 	}
+	if (password === username) {
+		errors.push ({msg: 'Password cannot match username.'})
+	}
+	if (password === email) {
+		errors.push ({msg: 'Password cannot match email.'})
+	}
+	if (password === firstName || password === lastName || password === firstName+lastName) {
+		errors.push ({msg: 'Password cannot be your name.'})
+	}
 
 
 	// Check for duplicate user data
