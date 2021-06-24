@@ -13,8 +13,18 @@ app.use(express.urlencoded({ extended: false}));
 dotenv.config();
 
 // useUnifiedTopology and useNewUrlParser to avoid warnings
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true })
+
+
+mongoose.connect(process.env.DATABASE_ACCESS, {
+  keepAlive: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+})
+
+// mongoose.set('useUnifiedTopology', true);
+// mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true })
 .then(()=>console.log("Database connected"))
 .catch(err=>console.log(err))
 

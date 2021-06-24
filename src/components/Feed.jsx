@@ -41,7 +41,7 @@ class Feed extends React.Component {
 					allPublicTasks.length>0 ?
 					allPublicTasks.map(({_id},i) => {
 						return(
-							<PostDisplay id={_id} key={i} />
+							<PostDisplay id={_id} key={i} updateFeed={this.updateFeed} />
 							)
 					})
 				 :

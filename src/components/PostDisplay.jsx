@@ -1,11 +1,18 @@
 import React from 'react';
+import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 // import {setAllPublicTasks} from '../redux/actions';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 
 class PostDisplay extends React.Component {
-
+	constructor() {
+		super();
+		this.state ={
+			liked: false,
+			comment: ""
+		}
+	}
 	formatDate =  (date) => {
     	let newDate = new Date(date);
 	      if (isToday(newDate)) {
@@ -38,15 +45,52 @@ class PostDisplay extends React.Component {
 	    	return ""
 	    }
     }
+    handleClick = (e) => {
+    	if (this.state.liked) {
+    		this.setState({liked: false});
+    		this.updateTaskLikes(false);
+    	} else {
+    		this.setState({liked: true});
+    		this.updateTaskLikes(true)
+    	}
+    }
+    updateTaskLikes = (value) => {
+    	let updateInfo = {
+    		"taskId": this.props.id,
+    		"field": "likes",
+    		"userId": this.props.user.id,
+    		"add": value
+    	};
+    	// console.log(updateInfo);		
+
+	    axios.post('http://localhost:4000/task/updatePublicTask', {
+    		"taskId": this.props.id,
+    		"field": "likes",
+    		"userId": this.props.user.id,
+    		"add": value
+	    })
+	    .then(response=> {
+	    	// console.log(response.data);
+	    	this.props.updateFeed();
+	    // this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: ""});
+	    // this.props.updateTasks();
+		// this.props.thereAreTasks();
+		// this.updateFeed();
+	  })
+	    .catch(err=>console.log(err))
+	  // }
+    }
    	render () {
+    	// console.log(this.state.liked);
 		let taskId = this.props.id;
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		let {completed, dateDue, description, penalty, taskName, userId, dateEntered} = item;
-
+		let {completed, dateDue, description, penalty, taskName, userId, dateEntered, likes} = item;
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    let dateElement = dateDue &&
 	      <div>Due: {this.formatDate(dateDue)}</div>;
 	    let username = this.getUsername(userId);
+	    console.log(taskName)
+	    console.log(likes)
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
@@ -61,7 +105,9 @@ class PostDisplay extends React.Component {
 				</p>
 				<p>{description}</p>
 				<p>Penalty: {penalty}</p>
-				<p>Added: {this.formatDate(dateEntered)}</p>
+				<p></p>
+				<div className="postBottom"><button onClick={this.handleClick}>Like</button> <div>{likes.length} Likes</div><div>Added: {this.formatDate(dateEntered)}</div></div>
+				<div>Add comment:</div>
 			</div>
 		)
 	}

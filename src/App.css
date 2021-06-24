@@ -122,6 +122,11 @@ nav li {
   flex-grow: 1;
 }
 
+.postBottom {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* REGISTER & LOGIN */
 
 

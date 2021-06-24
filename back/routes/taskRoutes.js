@@ -16,13 +16,6 @@ dotenv.config();
 router.post('/addTask', async (req,res) => {
 	const {taskName, userId, penalty, description, dateDue, shared} = req.body;
 
-	// Check form for errors
-	// let errors = [];
-	// if (errors.length > 0) {
-	// 	res.send({errors});
-	// 	return;
-	// }
-
 	const newTask = new taskTemplateCopy({
 		taskName, userId, penalty, description, dateDue, shared
 	});
@@ -60,6 +53,28 @@ router.get('/getAllPublicTasks', async (req,res) => {
 			}
 			})		
 		.catch(err => console.log(err));
+})
+
+router.post('/updatePublicTask', async (req,res) => {
+	let {taskId, field, userId, add} = req.body;
+	if (add) {
+		Task.updateOne(
+				{ _id: taskId },
+		  		{ $push: 
+		  			{ [field]: userId }
+		  		})
+		.then(results => res.send(results))
+			.catch(err => console.log(err))
+	} else {
+		Task.updateOne(
+				{ _id: taskId },
+		  		{ $pull: 
+		  			{ [field]: userId }
+		  		})
+		.then(results => res.send(results))
+			.catch(err => console.log(err))
+
+	}
 })
 
 
