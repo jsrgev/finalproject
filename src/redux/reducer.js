@@ -1,4 +1,4 @@
-import {SET_LOGIN_STATUS, SET_USER, SET_TASKS} from './actions';
+import {SET_LOGIN_STATUS, SET_USER, SET_USER_TASKS, SET_ALL_PUBLIC_TASKS} from './actions';
 import {combineReducers} from 'redux';
 
 let userInitState = {
@@ -17,19 +17,31 @@ const userReducer = (state = userInitState, action = {}) => {
 		}
 }
 
-const taskReducer = (state = {tasks: []}, action = {}) => {
+const userTaskReducer = (state = {tasks: []}, action = {}) => {
 	switch (action.type) {
-		case SET_TASKS:
+		case SET_USER_TASKS:
 			return {...state,tasks: action.payload};
 		default:
 			return {...state}
 		}
 }
 
+const allPublicTaskReducer = (state = {tasks: []}, action = {}) => {
+	switch (action.type) {
+		case SET_ALL_PUBLIC_TASKS:
+			return {...state,tasks: action.payload};
+		default:
+			return {...state}
+		}
+}
+
+
+
 export const reducer = combineReducers(
 	{
 		userReducer,
-		taskReducer
+		userTaskReducer,
+		allPublicTaskReducer
 	}
 )
 

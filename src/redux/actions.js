@@ -1,6 +1,7 @@
 export const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 export const SET_USER = 'SET_USER';
-export const SET_TASKS = 'SET_TASKS';
+export const SET_USER_TASKS = 'SET_USER_TASKS';
+export const SET_ALL_PUBLIC_TASKS = 'SET_ALL_PUBLIC_TASKS';
 
 
 
@@ -20,9 +21,17 @@ export const setUser = (id) => {
 }
 
 
-export const setTasks = (array) => {
+export const setUserTasks = (array) => {
 	return {
-		type: SET_TASKS,
+		type: SET_USER_TASKS,
 		payload: array
 	}
 }
+
+export const setAllPublicTasks = (array) => {
+	return {
+		type: SET_ALL_PUBLIC_TASKS,
+		payload: array
+	}
+}
+

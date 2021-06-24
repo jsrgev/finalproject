@@ -59,12 +59,12 @@ body {
   gap: 1rem;
 }
 
-nav, main, #feed, #taskList, footer {
+nav, main, #taskList, footer, .postDisplay {
   padding: 1rem;
   border-radius: 10px;
 }
 
-main:not(#splitMain), #feed {
+main:not(#splitMain), .postDisplay {
   background-color: var(--transparentwhite);
     /*background: rgba(255, 255, 255, .7);*/
     -webkit-backdrop-filter: blur(10px);
@@ -104,6 +104,11 @@ nav li {
   
 /* FEED, POSTS */
 
+#feed {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
 
 .postDisplay {
   /*background-color: #fff;*/

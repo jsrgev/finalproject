@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {setTasks} from '../redux/actions';
+import {setUserTasks} from '../redux/actions';
 import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
@@ -65,7 +65,7 @@ class TaskInput extends React.Component {
 	updateTasks = () => {
 	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user})
 	    .then(response=> {
-		    this.props.setTasks(response.data.tasks);
+		    this.props.setUserTasks(response.data.tasks);
 		})
 		.catch(err => console.log(err))
 	}
@@ -107,7 +107,7 @@ const mapStateToProps = (state) => {
 
 const dispatchStateToProps = (dispatch) => {
   return {
-    setTasks: (array) => dispatch(setTasks(array)),
+    setUserTasks: (array) => dispatch(setUserTasks(array)),
   }
 }
 export default connect(mapStateToProps,dispatchStateToProps)(TaskInput);

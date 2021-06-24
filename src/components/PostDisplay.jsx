@@ -1,15 +1,54 @@
 import React from 'react';
+import {connect} from 'react-redux';
+// import {setAllPublicTasks} from '../redux/actions';
+import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 
 class PostDisplay extends React.Component {
-	render () {
+
+	formatDate =  (date) => {
+    	let newDate = new Date(date);
+	      if (isToday(newDate)) {
+	          return (`Today ${format(newDate, "p")}`);
+	      } else if (isTomorrow(newDate)) {
+	          return (`Tomorrow ${format(newDate, "p")}`);
+	      } else if (isYesterday(newDate)) {
+	          return (`Yesterday ${format(newDate, "p")}`);
+	      } else {
+	        return format(newDate, "d MMM, yyyy p");
+	      } 
+    }
+   	render () {
+		// console.log(this.props);
+		let id = this.props.id;
+		let item = this.props.allPublicTasks.find(a => a._id == id);
+		let {completed, dateDue, description, penalty, taskName, userId} = item;
 		return (
 			<div className="postDisplay">
-				<h3>Post 1</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<h3>{taskName}</h3>
+				<p>{userId}</p>
+				<p>{description}</p>
+				<p>Due: {this.formatDate(dateDue)}</p>
+				<p>Penalty: {penalty}</p>
 			</div>
 		)
 	}
 }
 
 
-export default PostDisplay;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer.user,
+    tasks: state.userTaskReducer.tasks,
+    allPublicTasks: state.allPublicTaskReducer.tasks
+  }
+}
+
+// const dispatchStateToProps = (dispatch) => {
+//   return {
+//     setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
+//   }
+// }
+
+
+export default connect(mapStateToProps)(PostDisplay);

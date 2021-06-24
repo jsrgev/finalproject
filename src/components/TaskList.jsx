@@ -3,7 +3,7 @@ import Task from './Task.jsx';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import TaskInput from './TaskInput.jsx';
-import {setTasks} from '../redux/actions';
+import {setUserTasks} from '../redux/actions';
 
 
 class TaskList extends React.Component {
@@ -20,7 +20,7 @@ class TaskList extends React.Component {
 	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user})
 	    .then(response=> {
 		    // console.log(response.data);
-		    this.props.setTasks(response.data.tasks);
+		    this.props.setUserTasks(response.data.tasks);
 		})
 		.catch(err => console.log(err))
 	}
@@ -47,13 +47,13 @@ class TaskList extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
-    tasks: state.taskReducer.tasks
+    tasks: state.userTaskReducer.tasks
   }
 }
 
 const dispatchStateToProps = (dispatch) => {
   return {
-    setTasks: (array) => dispatch(setTasks(array)),
+    setUserTasks: (array) => dispatch(setUserTasks(array)),
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Collapsible from 'react-collapsible';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 import {connect} from 'react-redux';
-import {setTasks} from '../redux/actions';
+import {setUserTasks} from '../redux/actions';
 
 class Task extends React.Component {
   changeTaskName = (e) => {
@@ -24,21 +24,22 @@ class Task extends React.Component {
     console.log(e.target.checked);
       // this.setState({shared:e.target.checked})
   }
-	render() {
-		let {taskName, dateDue, description, penalty, shared} = this.props.item;
-    const dateFormat = (date) => {
-      if (isToday(date)) {
-          return (`Today ${format(date, "p")}`);
-      } else if (isTomorrow(date)) {
-          return (`Tomorrow ${format(date, "p")}`);
-      } else if (isYesterday(date)) {
-          return (`Yesterday ${format(date, "p")}`);
+  formatDate =  (date) => {
+    let newDate = new Date(date);
+      if (isToday(newDate)) {
+          return (`Today ${format(newDate, "p")}`);
+      } else if (isTomorrow(newDate)) {
+          return (`Tomorrow ${format(newDate, "p")}`);
+      } else if (isYesterday(newDate)) {
+          return (`Yesterday ${format(newDate, "p")}`);
       } else {
-        return format(date, "d MMM, yyyy p");
+        return format(newDate, "d MMM, yyyy p");
       } 
     }
+	render() {
+		let {taskName, dateDue, description, penalty, shared} = this.props.item;
     let dateElement = dateDue ?
-      <p>Due: {dateFormat(new Date(dateDue))}</p> :
+      <p>Due: {this.formatDate(dateDue)}</p> :
       null;
   return (
     <Collapsible trigger={taskName} transitionTime="70" transitionCloseTime="70">
@@ -63,7 +64,7 @@ const mapStateToProps = (state) => {
 
 const dispatchStateToProps = (dispatch) => {
   return {
-    setTasks: (array) => dispatch(setTasks(array)),
+    setUserTasks: (array) => dispatch(setUserTasks(array)),
   }
 }
 
