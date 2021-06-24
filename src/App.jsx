@@ -42,7 +42,7 @@ class App extends React.Component {
             <>
         <Switch>
           <Route path="/about" component={About} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile/:username" component={Profile} />
           <Route path="/account" component={Account} />
           <Route path="/" component={SplitDisplay} />
         </Switch>

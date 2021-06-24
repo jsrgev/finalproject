@@ -37,8 +37,8 @@ router.post('/addTask', async (req,res) => {
 })
 
 router.post('/getUserTasks', async (req,res) => {
-	console.log("backend - getUserTasks");
-	Task.find({userId: req.body.id})
+	// console.log("backend - getUserTasks");
+	Task.find({userId: req.body.id}).sort({dateDue:1})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "This user has no tasks."});
@@ -51,7 +51,7 @@ router.post('/getUserTasks', async (req,res) => {
 
 router.get('/getAllPublicTasks', async (req,res) => {
 	// console.log(req.body);
-	Task.find({shared: true})
+	Task.find({shared: true}).sort({dateEntered:-1})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "There are no shared tasks right now."});

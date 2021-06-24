@@ -11,12 +11,13 @@ class NavBar extends React.Component {
 	    localStorage.removeItem("user");
 	}
 	render () {
-		// const username = 
-		// console.log(this.props);
+		const username = this.props.user.username;
 		return (
 			<nav>
-				<NavLink exact to='/'>Home</NavLink>
+				<NavLink exact to='/'>Task Challenge</NavLink>
+				{/*<NavLink exact to='/'>Home</NavLink>*/}
 				<ul>
+				<NavLink exact to='/'>Home</NavLink>
 					<li><NavLink to='/about'>About</NavLink></li>
 
 				{!this.props.loggedIn ?
@@ -27,7 +28,7 @@ class NavBar extends React.Component {
 					:
 
 					<>
-					<li><NavLink to='/profile:username'>Profile</NavLink></li>
+					<li><NavLink to={`/profile/${username}`}>Profile</NavLink></li>
 					<li><NavLink to='/account'>Account</NavLink></li>
 					<li><NavLink to={{ pathname: '/login/', loggedOut: true }} onClick={this.logout}>Log Out</NavLink></li>
 					</>

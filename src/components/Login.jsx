@@ -41,7 +41,7 @@ class Login extends React.Component {
         // console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
         localStorage.setItem("token", response.data.token);
-        console.log(response.data);
+        // console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data.userInfo));
         this.props.setLoginStatus(true);
         this.props.setUser(response.data.userInfo)
@@ -96,7 +96,7 @@ class Login extends React.Component {
               /></div>
               <div id="submitDiv">
                 <input type="submit" value='Submit' />
-                <button onClick={this.handleClick}>authenticated?</button>
+                {/*<button onClick={this.handleClick}>authenticated?</button>*/}
               </div>
             </form>
             <div>Not registered? <Link to='/register/'>Sign up</Link></div>
