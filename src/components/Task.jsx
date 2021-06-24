@@ -38,6 +38,7 @@ class Task extends React.Component {
     }
 	render() {
 		let {taskName, dateDue, description, penalty, shared} = this.props.item;
+    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
     let dateElement = dateDue &&
       <div>{this.formatDate(dateDue)}</div>;
     let trigger = <><div>{taskName}</div>{dateElement}</>

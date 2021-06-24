@@ -59,30 +59,16 @@ router.post('/register', async (req,res) => {
 	newUser.save()
 	.then(data => {
 		res.json(data);
-		// res.redirect('http://localhost:3000/login')
 	})
 	.catch(err => {
 		res.json(err);
 	})
-	// res.send('send')
 })
 
 router.get('/login', async (req,res) => {
 	res.send("login")
 })
 
-// router.post('/ ', async (req,res) => {
-// 	res.send("login")
-// })
-
-
-// router.post('/login', (req,res,next) => {
-// 	console.log(req.body);
-// 	passport.authenticate('local', {
-// 		successRedirect: '/',
-// 		failureRedirect: '/login'
-// 	})(req,res,next);
-// });
 
 router.post('/login', (req,res) => {
 	const {username, password} = req.body;
@@ -99,7 +85,6 @@ router.post('/login', (req,res) => {
 		if(!user) {
 			res.send({auth: false, message: "User not found."});
 			return;
-			// return done(null, false, { message: 'That email is not registered' });
 		}
 		// Match password
 		bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -107,14 +92,11 @@ router.post('/login', (req,res) => {
 				if(isMatch) {
 					const id = user._id;
 					const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
-						expiresIn: "30d" //300 = 5 minutes
+						expiresIn: "30d"
 					})
 					res.json({auth:true, token, user});
-					// res.send("you are logged in");
-					// return done(null, user);
 				} else {
 					res.send({auth: false, message: "Password is incorrect."});
-					// return done(null,false, { message: 'Password is incorrect' })
 				}
 		});
 
@@ -151,14 +133,19 @@ router.get('/logout', (req,res) => {
 	res.send({auth: true, message: "Authenticated."})
 })
 
-// router.post('/login',
-// 	passport.authenticate('local'),
-// 	  function(req, res) {
-// 	    // If this function gets called, authentication was successful.
-// 	    // `req.user` contains the authenticated user.
-// 	    // res.redirect('/users/' + req.user.username);
-// 	    res.send(req.user.username);
-// });
+
+router.get('/getUsers', async (req,res) => {
+	// console.log(req.body);
+	User.find({},{password:0})
+		.then(users => {
+			if(!users) {
+				res.send({result: false, message: "No registered users have been found."});
+			} else {
+				res.send({result: true, users});
+			}
+			})		
+		.catch(err => console.log(err));
+})
 
 
 module.exports = router;

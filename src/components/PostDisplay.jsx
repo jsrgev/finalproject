@@ -17,20 +17,34 @@ class PostDisplay extends React.Component {
 	        return format(newDate, "d MMM, yyyy p");
 	      } 
     }
+    getUserName = (id) => {
+    	// if tries to get do 'find' before 'users' is populated, causes crash
+    	if (this.props.users.length>0) {
+    	let user = this.props.users.find(a => a._id === id);
+    	return `${user.firstName} ${user.lastName}`;
+    }
+     else {
+    	return ""}
+    }
    	render () {
-		// console.log(this.props);
 		let id = this.props.id;
-		let item = this.props.allPublicTasks.find(a => a._id == id);
-		let {completed, dateDue, description, penalty, taskName, userId} = item;
+		let item = this.props.allPublicTasks.find(a => a._id === id);
+		let {completed, dateDue, description, penalty, taskName, userId, dateEntered} = item;
+
+	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
+	    let dateElement = dateDue &&
+	      <div>Due: {this.formatDate(dateDue)}</div>;
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
 					<div>{taskName}</div>
-					<div>Due: {this.formatDate(dateDue)}</div>
+					{completed && <div>Completed</div>}
+					{dateElement}
 				</div>
-				<p>{userId}</p>
+				<p>{this.getUserName(userId)}</p>
 				<p>{description}</p>
 				<p>Penalty: {penalty}</p>
+				<p>Added: {this.formatDate(dateEntered)}</p>
 			</div>
 		)
 	}
@@ -41,6 +55,7 @@ class PostDisplay extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
+    users: state.allUserReducer.users,
     tasks: state.userTaskReducer.tasks,
     allPublicTasks: state.allPublicTaskReducer.tasks
   }

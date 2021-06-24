@@ -57,14 +57,14 @@ body {
   gap: 1rem;
 }
 
-nav, main:not(#splitMain), #taskList, footer, .postDisplay {
+nav, main:not(#splitMain), #taskList, footer, .postDisplay, .loadingScreen {
   padding: 1rem;
   border-radius: 10px;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
-nav, main:not(#splitMain), footer, .postDisplay {
+nav, main:not(#splitMain), footer, .postDisplay, .loadingScreen {
   background-color: var(--transparentwhite);
 }
 
