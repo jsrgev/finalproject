@@ -19,11 +19,16 @@ class TaskList extends React.Component {
 		// this.updateTasks();
 		// setTimeout(()=>{this.updateTasks()},100);
 	}
+	thereAreTasks = () => {
+		console.log("running");
+		this.setState({areTasks: true});
+	}
 	updateTasks = () => {
 		// console.log(this.props.user.id);
 		// console.log("updating tasks");
 	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user.id})
 	    .then(response=> {
+		console.log(this.props.tasks.length);
 	    	// console.log(response.data)
 	    	// why is this runing twice when first part only runs once??
 		    this.setState({tasksUpdated:true});
@@ -48,7 +53,6 @@ class TaskList extends React.Component {
 		if (this.props.user && !this.state.tasksUpdated) {
 			this.updateTasks();
 		};
-		console.log(this.state.areTasks);
 
 		let taskList = (!this.state.areTasks) ?
 			<div>You currently have no tasks.</div>
@@ -62,7 +66,7 @@ class TaskList extends React.Component {
 
 		return (
 			<div id="taskList">
-				<TaskInput />
+				<TaskInput thereAreTasks={this.thereAreTasks} updateTasks={this.updateTasks} />
 				{taskList}
 			</div>
 		)

@@ -260,6 +260,8 @@ span.Collapsible__trigger {
 
 
 footer {
+  /* for some reason footer was in front of date picker */
+  z-index: -1;
 }
 
 

@@ -38,7 +38,7 @@ router.post('/addTask', async (req,res) => {
 
 router.post('/getUserTasks', async (req,res) => {
 	// console.log("backend - getUserTasks");
-	Task.find({userId: req.body.id}).sort({dateDue:1})
+	Task.find({userId: req.body.id}).sort({dateDue:-1})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "This user has no tasks."});

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {setUserTasks} from '../redux/actions';
+import {setUserTasks,setAllPublicTasks} from '../redux/actions';
 import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
@@ -44,15 +44,27 @@ class TaskInput extends React.Component {
 
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
+	    	console.log(response.data);
 	    this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: ""});
-	    this.updateTasks();
+	    this.props.updateTasks();
+		this.props.thereAreTasks();
+		this.updateFeed();
 	  })
 	    .catch(err=>console.log(err))
 	  }
-	updateTasks = () => {
-	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user.id})
+	// updateTasks = () => {
+	//     axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user.id})
+	//     .then(response=> {
+	//     	// console.log(response.data.tasks);
+	// 	    this.props.setUserTasks(response.data.tasks);
+	// 	})
+	// 	.catch(err => console.log(err))
+	// }
+	updateFeed = () => {
+	    axios.get('http://localhost:4000/task/getAllPublicTasks')
 	    .then(response=> {
-		    this.props.setUserTasks(response.data.tasks);
+		    this.props.setAllPublicTasks(response.data.tasks);
+		    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
 		})
 		.catch(err => console.log(err))
 	}
@@ -95,6 +107,7 @@ const mapStateToProps = (state) => {
 const dispatchStateToProps = (dispatch) => {
   return {
     setUserTasks: (array) => dispatch(setUserTasks(array)),
+    setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
   }
 }
 export default connect(mapStateToProps,dispatchStateToProps)(TaskInput);
