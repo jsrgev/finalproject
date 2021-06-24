@@ -17,7 +17,7 @@ class TaskList extends React.Component {
 	}
 	updateTasks = () => {
 		// console.log("updateTasks");
-	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user})
+	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user.id})
 	    .then(response=> {
 		    // console.log(response.data);
 		    this.props.setUserTasks(response.data.tasks);

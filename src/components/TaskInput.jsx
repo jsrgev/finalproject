@@ -39,21 +39,8 @@ class TaskInput extends React.Component {
 		if (this.state.taskName.length === 0) {
 			return;
 		};
-	    // const newTask = {
-	    //   taskName: this.state.taskName,
-	    //   dateDue: this.state.dateDue,
-	    //   userId: this.props.user,
-	    //   description: this.state.description,
-	    //   penalty: this.state.penalty
-	    // }
 
-	    const newTask = { ...this.state, userId: this.props.user};
-	    //   taskName: this.state.taskName,
-	    //   dateDue: this.state.dateDue,
-	    //   userId: this.props.user,
-	    //   description: this.state.description,
-	    //   penalty: this.state.penalty
-	    // }
+	    const newTask = { ...this.state, userId: this.props.user.id};
 
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
@@ -63,7 +50,7 @@ class TaskInput extends React.Component {
 	    .catch(err=>console.log(err))
 	  }
 	updateTasks = () => {
-	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user})
+	    axios.post('http://localhost:4000/task/getUserTasks', {userId: this.props.user.id})
 	    .then(response=> {
 		    this.props.setUserTasks(response.data.tasks);
 		})

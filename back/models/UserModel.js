@@ -24,6 +24,10 @@ const userTemplate = new mongoose.Schema({
 	date: {
 		type:Date,
 		default:Date.now
+	},
+	active: {
+		type:Boolean,
+		default:true
 	}
 })
 

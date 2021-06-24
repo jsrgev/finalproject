@@ -11,6 +11,8 @@ class NavBar extends React.Component {
 	    localStorage.removeItem("user");
 	}
 	render () {
+		// const username = 
+		// console.log(this.props);
 		return (
 			<nav>
 				<NavLink exact to='/'>Home</NavLink>
@@ -25,7 +27,7 @@ class NavBar extends React.Component {
 					:
 
 					<>
-					<li><NavLink to='/profile'>Profile</NavLink></li>
+					<li><NavLink to='/profile:username'>Profile</NavLink></li>
 					<li><NavLink to='/account'>Account</NavLink></li>
 					<li><NavLink to={{ pathname: '/login/', loggedOut: true }} onClick={this.logout}>Log Out</NavLink></li>
 					</>
@@ -38,6 +40,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+  	user: state.userReducer.user,
     loggedIn: state.userReducer.loggedIn
   }
 }

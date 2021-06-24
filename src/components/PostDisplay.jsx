@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom'
 // import {setAllPublicTasks} from '../redux/actions';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 
@@ -41,7 +42,12 @@ class PostDisplay extends React.Component {
 					{completed && <div>Completed</div>}
 					{dateElement}
 				</div>
-				<p>{this.getUserName(userId)}</p>
+				<p>
+					{/*<Link to={{ pathname: '/account/', user:this.props.user }} to='/account'>*/}
+
+						{this.getUserName(userId)}
+					{/*</Link>*/}
+				</p>
 				<p>{description}</p>
 				<p>Penalty: {penalty}</p>
 				<p>Added: {this.formatDate(dateEntered)}</p>
@@ -49,8 +55,6 @@ class PostDisplay extends React.Component {
 		)
 	}
 }
-
-
 
 const mapStateToProps = (state) => {
   return {

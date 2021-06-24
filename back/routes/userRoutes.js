@@ -103,7 +103,16 @@ router.post('/login', (req,res) => {
 					const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
 						expiresIn: "30d"
 					})
-					res.json({auth:true, token, user});
+					// send user info, excluding password
+					let userInfo = {
+						id: user._id,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						username: user.username,
+						email: user.email,
+						date: user.date
+					}
+					res.json({auth:true, token, userInfo});
 				} else {
 					res.send({auth: false, message: "Password is incorrect."});
 				}

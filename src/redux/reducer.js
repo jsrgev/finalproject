@@ -2,8 +2,8 @@ import {SET_LOGIN_STATUS, SET_USER, SET_ALL_USERS, SET_USER_TASKS, SET_ALL_PUBLI
 import {combineReducers} from 'redux';
 
 let userInitState = {
-	user: "",
-	loggedIn: true
+	user: [],
+	loggedIn: false
 }
 
 const userReducer = (state = userInitState, action = {}) => {
@@ -11,6 +11,7 @@ const userReducer = (state = userInitState, action = {}) => {
 		case SET_LOGIN_STATUS:
 			return {...state,loggedIn: action.payload};
 		case SET_USER:
+			// console.log(action.payload);
 			return {...state,user: action.payload};
 		default:
 			return {...state}
