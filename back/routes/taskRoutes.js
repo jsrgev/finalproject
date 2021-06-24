@@ -73,11 +73,31 @@ router.post('/updatePublicTask', async (req,res) => {
 		  		})
 		.then(results => res.send(results))
 			.catch(err => console.log(err))
-
 	}
 })
 
-
+router.post('/addComment', async (req,res) => {
+	let {taskId, field, userId, add, text} = req.body;
+	console.log(req.body);
+	let comment = {userId, text, date: new Date()}
+	if (add) {
+		Task.updateOne(
+				{ _id: taskId },
+		  		{ $push: 
+		  			{ [field]: comment }
+		  		})
+		.then(results => res.send(results))
+			.catch(err => console.log(err))
+	} else {
+		Task.updateOne(
+				{ _id: taskId },
+		  		{ $pull: 
+		  			{ [field]: userId }
+		  		})
+		.then(results => res.send(results))
+			.catch(err => console.log(err))
+	}
+})
 
 
 

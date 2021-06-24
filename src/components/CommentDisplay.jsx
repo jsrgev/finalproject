@@ -1,14 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 // import {setAllPublicTasks} from '../redux/actions';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
-import TextareaAutosize from 'react-textarea-autosize';
-import Collapsible from 'react-collapsible';
-import CommentDisplay from './CommentDisplay';
+// import TextareaAutosize from 'react-textarea-autosize';
+// import Collapsible from 'react-collapsible';
 
-class PostDisplay extends React.Component {
+class CommentDisplay extends React.Component {
 	constructor() {
 		super();
 		this.state ={
@@ -92,40 +91,21 @@ class PostDisplay extends React.Component {
     	this.setState({comment: e.target.value})
     }
    	render () {
-		let taskId = this.props.id;
-		let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		let {completed, dateDue, description, penalty, taskName, userId, dateEntered, likes, comments} = item;
+		let {userId, text, date} = this.props.item;
+		// let taskId = this.props.id;
+		// let item = this.props.allPublicTasks.find(a => a._id === taskId);
+		// let {completed, dateDue, description, penalty, taskName, userId, dateEntered, likes} = item;
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
-	    let dateElement = dateDue &&
-	      <div>Due: {this.formatDate(dateDue)}</div>;
-	    let username = this.getUsername(userId);
+	    // let dateElement = dateDue &&
+	      // <div>Due: {this.formatDate(dateDue)}</div>;
+	    // let username = this.getUsername(userId);
 		return (
-			<div className="postDisplay">
-				<div className="postHeader">
-					<div>{taskName}</div>
-					{completed && <div>Completed</div>}
-					{dateElement}
+			<>
+				<div>{text}</div>
+				<div>
+					<div>{this.getFullName(userId)}</div><div>{this.formatDate(date)}</div>
 				</div>
-				<p>
-					<Link to={`/profile/${username}`}>
-						{this.getFullName(userId)}
-					</Link>
-				</p>
-				<p>{description}</p>
-				<p>Penalty: {penalty}</p>
-				<p></p>
-				<div className="postBottom"><button onClick={this.handleClick}>Like</button> <div>{likes.length} Likes</div><div>Added: {this.formatDate(dateEntered)}</div></div>
-			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button>
-			    {comments.length>0 &&
-				<Collapsible trigger="Comments" transitionTime="70" transitionCloseTime="70">
-			      {comments.map((item,i) =>{
-			      	return <CommentDisplay item={item} key={i} />
-			      })
-			      }
-			    </Collapsible>
-			    }
-			    
-		</div>
+		</>
 		)
 	}
 }
@@ -146,4 +126,4 @@ const mapStateToProps = (state) => {
 // }
 
 
-export default connect(mapStateToProps)(PostDisplay);
+export default connect(mapStateToProps)(CommentDisplay);

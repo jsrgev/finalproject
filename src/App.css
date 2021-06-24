@@ -234,13 +234,15 @@ nav li {
 
 }
 
-#taskInput textarea {
+/*#taskInput*/
+textarea {
   width: 100%;
   margin-top: 1rem;
   resize: none;
   outline: none;
   border:  none;
   font-style: italic;
+  /*height: 1em;*/
 }
 
 
