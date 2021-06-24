@@ -1,20 +1,27 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
-import { format } from "date-fns";
+import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 
 class Task extends React.Component {
 	render() {
-    // console.log(this.props)
 		let {taskName, dateDue, description, penalty} = this.props.item;
-		// let headline = item;
-    let date = dateDue ?
-      <p>Due: {format(new Date(dateDue), "d MMM, yyyy p")}</p> :
+    const dateFormat = (date) => {
+      if (isToday(date)) {
+          return (`Today ${format(date, "p")}`);
+      } else if (isTomorrow(date)) {
+          return (`Tomorrow ${format(date, "p")}`);
+      } else {
+        return format(date, "d MMM, yyyy p");
+      } 
+    }
+    let dateElement = dateDue ?
+      <p>Due: {dateFormat(new Date(dateDue))}</p> :
       null;
   return (
     <Collapsible trigger={taskName} transitionTime="70" transitionCloseTime="70">
       <p>{description}</p>
-      <p>{penalty}</p>
-      <p>{date}</p>
+      <p>Penalty: {penalty}</p>
+      <p>{dateElement}</p>
     </Collapsible>
   );
 };

@@ -14,7 +14,6 @@ dotenv.config();
 
 
 router.post('/addTask', async (req,res) => {
-	console.log(req.body);
 	const {taskName, userId, penalty, description, dateDue} = req.body;
 
 	// Check form for errors

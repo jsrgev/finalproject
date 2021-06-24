@@ -22,8 +22,7 @@ class TaskInput extends React.Component {
 	changeDateDue = (e) => {
 	    this.setState({dateDue:e.target.value})
 	}
-	handleDateChange = (date) => {
-		// console.log(date);
+	changeDateDue = (date) => {
 	    this.setState({dateDue:date})
 	}
 	changeDescription = (e) => {
@@ -75,7 +74,7 @@ class TaskInput extends React.Component {
 				{/*<input type="date" placeholder="Finish" className="inputDateDue" value={this.state.dateDue} onChange={this.changeDateDue} />
 				*/}
 
-				<DateInput handleDateChange={this.handleDateChange} />
+				<DateInput changeDateDue={this.changeDateDue} />
 				<i className="fas fa-plus" onClick={this.handleClick}>
 				</i>
 				</>
