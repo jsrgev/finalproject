@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 // import {setAllPublicTasks} from '../redux/actions';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 // import TextareaAutosize from 'react-textarea-autosize';
@@ -98,12 +98,13 @@ class CommentDisplay extends React.Component {
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    // let dateElement = dateDue &&
 	      // <div>Due: {this.formatDate(dateDue)}</div>;
-	    // let username = this.getUsername(userId);
+	    let username = this.getUsername(userId);
 		return (
 			<div className="commentDisplay">
 				<div>{text}</div>
 				<div>
-					<div>— {this.getFullName(userId)}</div><div>{this.formatDate(date)}</div>
+					<div>— <Link to={`/profile/${username}`}>{this.getFullName(userId)}</Link></div>
+					<div>{this.formatDate(date)}</div>
 				</div>
 			</div>
 		)

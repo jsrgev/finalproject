@@ -77,6 +77,33 @@ router.post('/updatePublicTask', async (req,res) => {
 	}
 })
 
+
+router.post('/updateUserTask', async (req,res) => {
+	console.log(req.body);
+	let {taskId, field, value} = req.body;
+	// if (add) {
+		Task.updateOne(
+				{ _id: taskId },
+		  		// { $push: 
+		  			{ [field]: value }
+		  		// }
+		  		)
+		.then(results => res.send(results))
+		.catch(err => console.log(err))
+	// } else {
+		// Task.updateOne(
+				// { _id: taskId },
+		  		// { $pull: 
+		  			// { [field]: userId }
+		  		// })
+		// .then(results => res.send(results))
+			// .catch(err => console.log(err))
+	// }
+	// res.send(req.body)
+}
+)
+
+
 router.post('/addComment', async (req,res) => {
 	let {taskId, field, userId, add, text} = req.body;
 	// console.log(req.body);

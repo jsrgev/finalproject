@@ -110,7 +110,7 @@ class PostDisplay extends React.Component {
 	    } else {
 	    	likeCountDisplay = `${likes.length} likes`
 	    }
-	    const trigger = <><div>Comments</div><div><i class="fas fa-chevron-down"></i></div></>;
+	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">

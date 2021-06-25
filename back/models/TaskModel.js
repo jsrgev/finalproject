@@ -44,6 +44,10 @@ const taskTemplate = new mongoose.Schema({
 	dateEntered: {
 		type:Date,
 		default:Date.now
+	},
+	active: {
+		type: Boolean,
+		default: true
 	}
 })
 

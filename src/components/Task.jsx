@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Collapsible from 'react-collapsible';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 import {connect} from 'react-redux';
@@ -24,6 +25,22 @@ class Task extends React.Component {
     console.log(e.target.checked);
       // this.setState({shared:e.target.checked})
   }
+  changeCompleted = (value) => {
+    // console.log(this.props.item._id);
+    // updateTaskLikes = (value) => {
+      axios.post('http://localhost:4000/task/updateUserTask', {
+        "taskId": this.props.item._id,
+        "field": "completed",
+        // "userId": this.props.user.id,
+        "value": value
+      })
+      .then(response=> {
+        console.log(response.data);
+      this.props.updateTasks();
+    })
+      .catch(err=>console.log(err))
+    // }
+  }
   formatDate =  (date) => {
     let newDate = new Date(date);
       if (isToday(newDate)) {
@@ -37,21 +54,30 @@ class Task extends React.Component {
       } 
     }
 	render() {
-		let {taskName, dateDue, description, penalty, shared} = this.props.item;
+		let {taskName, dateDue, description, penalty, shared, completed} = this.props.item;
+    let completedClass = completed ? "completed" : "uncompleted";
+
     // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
     let dateElement = dateDue &&
-      <div>{this.formatDate(dateDue)}</div>;
-    let trigger = <><div>{taskName}</div>{dateElement}</>
+      this.formatDate(dateDue);
+    let trigger = <>
+          <div>{taskName}</div>
+          <div>{dateElement}</div>
+          <div onClick={()=>this.changeCompleted(!completed)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i>
+</div>
+        </>
   return (
-    <Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
-      <p>{description}</p>
-      <p>Penalty: {penalty}</p>
-      <div>Shared <input type="checkbox"
-      checked={shared}
-      onChange={this.changeShared}
-      />
-      </div>
-    </Collapsible>
+    <div className={completedClass}>
+      <Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
+        <p>{description}</p>
+        <p>Penalty: {penalty}</p>
+        <div>Shared <input type="checkbox"
+        checked={shared}
+        onChange={this.changeShared}
+        />
+        </div>
+      </Collapsible>
+    </div>
   );
 };
 }

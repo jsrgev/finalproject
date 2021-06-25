@@ -75,7 +75,7 @@ nav, main:not(#splitMain), footer, .postDisplay, .loadingScreen {
 #splitMain {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 2fr;
   padding: 0;
 }
 
@@ -138,6 +138,17 @@ nav li {
   /*height: 1em;*/
 }
 
+
+.postDisplay .Collapsible__trigger {
+  display: flex;
+  border-bottom: 1px solid lightgray;
+}
+
+.postDisplay .Collapsible__trigger *:first-child {
+  flex-grow: 1;
+}
+
+
 .postDisplay .Collapsible__contentInner {
   padding-top: 1rem;
   display: grid;
@@ -146,18 +157,12 @@ nav li {
 } 
 
 .commentDisplay div:last-child {
-  /*padding-top: 1rem;*/
   display: flex;
   justify-content: space-between;
 } 
 
-/*.postDisplay .Collapsible__trigger {
-  position: relative;
-}*/
-
 .postDisplay .Collapsible__trigger i {
-
-    transition: transform 300ms; }
+    transition: transform 700ms; }
 
 .postDisplay .Collapsible__trigger.is-open i {
     transform: rotateZ(180deg); }
@@ -237,21 +242,20 @@ nav li {
   gap: 1rem;
 }
 
-/*#taskInput */
-.Collapsible__trigger {
-  display: flex;
-  /*grid-template-columns: ;-columns: 1fr max-content max-content max-content;*/
-  /*gap: 1rem;*/
-  /*border-bottom: 1px solid lightgray;*/
+#taskList .Collapsible__trigger {
+  display: grid;
+  grid-template-columns: 1fr 10rem 1rem;
+  gap: 1rem;
   border-bottom: 1px solid lightgray;
 }
 
-/*#taskInput */
-.Collapsible__trigger *:first-child {
+#taskList .Collapsible__trigger > *:first-child {
   flex-grow: 1;
 }
 
-
+#taskList .Collapsible__trigger > *:last-child {
+  text-align: center;
+}
 
 #taskInput i {
   position: relative;
@@ -286,16 +290,42 @@ nav li {
   /*background-color: #fff;*/
 }
 
-span.Collapsible__trigger {
-  /*display: block;*/
-/*  border-bottom: 1px solid lightgray;
-*/}
-
 #taskList .Collapsible__contentOuter {
   /*background-color: #fff;*/
   color: gray;
 }
 
+ /* uncompleted tasks */
+
+#taskList .uncompleted .fa-circle {
+  display: block;
+}
+
+#taskList .uncompleted .fa-check-circle {
+  display: none;
+}
+
+#taskList .uncompleted:hover .fa-circle {
+  display: none;
+}
+
+#taskList .uncompleted:hover .fa-check-circle {
+  display: block;
+}
+
+/* completed tasks */
+
+#taskList .completed .fa-circle {
+  display: none;
+}
+
+#taskList .completed .fa-check-circle {
+  display: block;
+}
+
+#taskList .completed {
+  color: gray;
+}
 
 
 
