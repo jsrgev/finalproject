@@ -19,7 +19,7 @@ const taskTemplate = new mongoose.Schema({
 	},
 	shared: {
 		type:Boolean,
-		default:false
+		required:true
 	},
 	completed: {
 		type:Boolean,

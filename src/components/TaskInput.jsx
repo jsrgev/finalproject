@@ -45,7 +45,7 @@ class TaskInput extends React.Component {
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
 	    	console.log(response.data);
-	    this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: ""});
+	    this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: false});
 	    this.props.updateTasks();
 		this.props.thereAreTasks();
 		this.updateFeed();
@@ -69,7 +69,6 @@ class TaskInput extends React.Component {
 		.catch(err => console.log(err))
 	}
 	render () {
-		console.log(this.state.taskName);
 		let trigger =  <>
 				<input type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
 				</>
