@@ -14,7 +14,7 @@ dotenv.config();
 
 
 router.post('/addTask', async (req,res) => {
-	console.log(req.body)
+	// console.log(req.body)
 	const {taskName, userId, penalty, description, dateDue, shared} = req.body;
 
 	const newTask = new taskTemplateCopy({

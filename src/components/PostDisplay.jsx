@@ -48,13 +48,9 @@ class PostDisplay extends React.Component {
 	    }
     }
     handleClickLike = (value) => {
-    	// if (this.state.liked) {
     		this.setState({liked: !value});
     		this.updateTaskLikes(!value);
-    	// } else {
-    		// this.setState({liked: true});
-    		// this.updateTaskLikes(true)
-    	// }
+
     }
     handleClickComment = () => {
     	if (this.state.comment.length > 0) {
@@ -76,7 +72,6 @@ class PostDisplay extends React.Component {
 	    .catch(err=>console.log(err))
     }
     updateTaskLikes = (value) => {
-    	// console.log("value");
 	    axios.post('http://localhost:4000/task/updatePublicTask', {
     		"taskId": this.props.id,
     		"field": "likes",

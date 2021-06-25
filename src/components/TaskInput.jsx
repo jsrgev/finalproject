@@ -13,7 +13,8 @@ class TaskInput extends React.Component {
 	      taskName: "",
 	      dateDue: "",
 	      description: "",
-	      penalty: "",
+	      penaltyText: "",
+	      penaltyUrl: "",
 	      shared: false
 		}
 	}
@@ -29,8 +30,11 @@ class TaskInput extends React.Component {
 	changeDescription = (e) => {
 	    this.setState({description:e.target.value})
 	}
-	changePenalty = (e) => {
-	    this.setState({penalty:e.target.value})
+	changePenaltyText = (e) => {
+	    this.setState({penaltyText:e.target.value})
+	}
+	changePenaltyUrl = (e) => {
+	    this.setState({penaltyUrl:e.target.value})
 	}
 	changeShared = (e) => {
 	    this.setState({shared:e.target.checked})
@@ -45,7 +49,7 @@ class TaskInput extends React.Component {
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
 	    	console.log(response.data);
-	    this.setState({taskName:"", dateDue:"", description: "", penalty: "", shared: false});
+	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false});
 	    this.props.updateTasks();
 		this.props.thereAreTasks();
 		this.updateFeed();
@@ -92,7 +96,8 @@ class TaskInput extends React.Component {
 			    >
 		    <>
 		    <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
-		    <TextareaAutosize placeholder="Penalty" value={this.state.penalty} onChange={this.changePenalty} />
+		    <TextareaAutosize placeholder="PenaltyText" value={this.state.penaltyText} onChange={this.changePenaltyText} />
+		    <input placeholder="PenaltyUrl" value={this.state.penaltyUrl} onChange={this.changePenaltyUrl} />
 		      </>
 		      <div>Shared <input type="checkbox" checked={this.state.shared} onChange={this.changeShared}/></div>
 		    </Collapsible>
