@@ -60,15 +60,17 @@ class Task extends React.Component {
     // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
     let dateElement = dateDue &&
       this.formatDate(dateDue);
+
+    let sibling = <div className="sibling" onClick={()=>this.changeCompleted(!completed)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i></div>;
+
     let trigger = <>
           <div>{taskName}</div>
           <div>{dateElement}</div>
-          <div onClick={()=>this.changeCompleted(!completed)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i>
-</div>
+          
         </>
   return (
     <div className={completedClass}>
-      <Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
+      <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
         <p>{description}</p>
         <p>Penalty: {penalty}</p>
         <div>Shared <input type="checkbox"

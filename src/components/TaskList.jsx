@@ -55,19 +55,19 @@ class TaskList extends React.Component {
 		};
 
 		let taskList = (!this.state.areTasks) ?
-			<div>You currently have no tasks.</div>
+			"You currently have no tasks."
 			:
 			(this.props.tasks.length > 0) ?
 			this.props.tasks.map((item,i) =>{
 				return <Task item={item} key={i} updateTasks={this.updateTasks} />
 			})
 			:
-			<div>Loading Tasks...</div>;
+			"Loading Tasks...";
 
 		return (
-			<div id="taskList">
+			<div id="taskSection">
 				<TaskInput thereAreTasks={this.thereAreTasks} updateTasks={this.updateTasks} />
-				{taskList}
+				<div id="taskList">{taskList}</div>
 			</div>
 		)
 	}

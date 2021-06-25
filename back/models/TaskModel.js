@@ -25,6 +25,10 @@ const taskTemplate = new mongoose.Schema({
 		type:Boolean,
 		default:false
 	},
+	dateCompleted: {
+		type:Date,
+		required:false
+	},
 	likes: {
 		type:Array,
 		required:false

@@ -60,7 +60,7 @@ body {
   gap: 1rem;
 }
 
-nav, main:not(#splitMain), #taskList, footer, .postDisplay, .loadingScreen {
+nav, main:not(#splitMain), #taskSection, footer, .postDisplay, .loadingScreen {
   padding: 1rem;
   border-radius: 10px;
   -webkit-backdrop-filter: blur(20px);
@@ -233,43 +233,109 @@ nav li {
 
 /* TASKS */
 
-#taskList  {
-  /*background-color: #ffffe6f2;*/
+#taskSection  {
   background-color: #ffffe0f5;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: flex-start;
-  gap: 1rem;
 }
 
-#taskList .Collapsible__trigger {
-  display: grid;
-  grid-template-columns: 1fr 10rem 1rem;
+#taskInput .Collapsible__trigger {
+  display: inline-grid;
+  grid-template-columns: 15rem 10rem 1rem;
+  /*grid-template-columns: 1fr;*/
+  /*width:  calc(100% - 12em);*/
+  width: 100%;
   gap: 1rem;
   border-bottom: 1px solid lightgray;
 }
 
-#taskList .Collapsible__trigger > *:first-child {
+
+#taskList  {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#taskList .Collapsible__trigger {
+  display: inline-grid;
+  grid-template-columns: 15rem 10rem 1rem;
+  /*grid-template-columns: 1fr 10rem;*/
+  /*width:  calc(100% - 2em);*/
+  width: 100%;
+  gap: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+
+#taskSection .Collapsible__trigger > *:first-child {
   flex-grow: 1;
 }
 
-#taskList .Collapsible__trigger > *:last-child {
-  text-align: center;
+#taskSection .Collapsible__trigger > *:last-child {
+  /*text-align: center;*/
 }
 
-#taskInput i {
+
+#taskSection i {
   position: relative;
-  top: 3px;
+  top: .1rem;
+}
+
+#mainInput i {
   color: var(--blue);
-  font-size: .9em;
+}
+
+.react-datepicker-wrapper {
+  display: inline-block;
+  position: absolute;
+  right: 3em;
+}
+
+.react-datepicker__input-container {
+  width: 10rem !important;
+  border-bottom: 1px solid lightgray;
+}
+
+.react-datepicker__tab-loop {
+  display: inline-block;
+}
+
+.i-wrapper {
+  display: inline-block;
+  position: absolute;
+  width: 1rem;
+  right: 1rem;
+  text-align: center;
+  /*border-bottom: 1px solid lightgray;*/
+}
+
+#taskInput i.fa-plus {
+  top: -.1rem;
+  font-size: .7rem;
+  /*position: absolute;*/
+  /*transform: translateX(50%);*/
+  /*right: 25%;*/
+}
+
+#taskInput i.fa-circle {
+  position: relative;
+  visibility: hidden;
+  /*left: 0;*/
+  top: -1.2rem;
+}
+
+.i-wrapper:hover i.fa-circle {
+  visibility: visible !important;
 }
 
 #taskInput input {
   outline: none;
+  padding: 0;
   border: none;
   background-color: inherit;
   font-style: italic;
 }
+
+
 
 .inputDateDue {
 
@@ -290,40 +356,49 @@ nav li {
   /*background-color: #fff;*/
 }
 
-#taskList .Collapsible__contentOuter {
+#taskSection .Collapsible__contentOuter {
   /*background-color: #fff;*/
   color: gray;
 }
 
+.sibling {
+  display: inline-block;
+  /*border-bottom: 1px solid lightgray;*/
+  /*height: 18px;*/
+  /*padding-left: 1em;*/
+  position: absolute;
+  right: 1em;
+}
+
  /* uncompleted tasks */
 
-#taskList .uncompleted .fa-circle {
+#taskSection .uncompleted .fa-circle {
   display: block;
 }
 
-#taskList .uncompleted .fa-check-circle {
+#taskSection .uncompleted .fa-check-circle {
   display: none;
 }
 
-#taskList .uncompleted:hover .fa-circle {
+#taskSection .uncompleted .sibling:hover .fa-circle {
   display: none;
 }
 
-#taskList .uncompleted:hover .fa-check-circle {
+#taskSection .uncompleted .sibling:hover .fa-check-circle {
   display: block;
 }
 
 /* completed tasks */
 
-#taskList .completed .fa-circle {
+#taskSection .completed .fa-circle {
   display: none;
 }
 
-#taskList .completed .fa-check-circle {
+#taskSection .completed .fa-check-circle {
   display: block;
 }
 
-#taskList .completed {
+#taskSection .completed {
   color: gray;
 }
 

@@ -69,30 +69,36 @@ class TaskInput extends React.Component {
 		.catch(err => console.log(err))
 	}
 	render () {
-		let trigger =  <><input type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
+		console.log(this.state.taskName);
+		let trigger =  <>
+				<input type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={this.state.taskName} onChange={this.changeTaskName} />
+				</>
 
+		let sibling = <>
 				<DateInput changeDateDue={this.changeDateDue} dateDue={this.state.dateDue} />
-				<i className="fas fa-plus" onClick={this.handleClick}>
-				</i>
+				<div className="i-wrapper" onClick={this.handleClick}>
+					<i className="fas fa-plus"></i>
+					<i className="far fa-circle"></i>
+				</div>
 				</>
 		return (
 			<div id="taskInput">
 
-    <Collapsible
-	    trigger={trigger}
-	    transitionTime="70"
-	    transitionCloseTime="70"
-	    triggerDisabled={(this.state.taskName.length>0 && document.getElementById("mainInput").closest(".is-open")) ? true : false}
-	    >
-    <>
-    <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
-    <TextareaAutosize placeholder="Penalty" value={this.state.penalty} onChange={this.changePenalty} />
-      </>
-      <div>Shared <input type="checkbox" checked={this.state.shared} onChange={this.changeShared}/></div>
-    </Collapsible>
+		    <Collapsible
+			    trigger={trigger}
+			    triggerSibling={() => sibling}
+			    transitionTime="70"
+			    transitionCloseTime="70"
+			    triggerDisabled={(this.state.taskName.length>0 && document.getElementById("mainInput").closest(".is-open")) ? true : false}
+			    >
+		    <>
+		    <TextareaAutosize placeholder="Description" value={this.state.description} onChange={this.changeDescription} />
+		    <TextareaAutosize placeholder="Penalty" value={this.state.penalty} onChange={this.changePenalty} />
+		      </>
+		      <div>Shared <input type="checkbox" checked={this.state.shared} onChange={this.changeShared}/></div>
+		    </Collapsible>
 
-
-			</div>
+					</div>
 		)
 	}
 }
