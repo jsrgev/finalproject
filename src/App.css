@@ -127,6 +127,43 @@ nav li {
   justify-content: space-between;
 }
 
+
+.commentInput textarea {
+  width: 100%;
+  margin-top: 1rem;
+  resize: none;
+  outline: none;
+  border:  none;
+  font-style: italic;
+  /*height: 1em;*/
+}
+
+.postDisplay .Collapsible__contentInner {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+} 
+
+.commentDisplay div:last-child {
+  /*padding-top: 1rem;*/
+  display: flex;
+  justify-content: space-between;
+} 
+
+/*.postDisplay .Collapsible__trigger {
+  position: relative;
+}*/
+
+.postDisplay .Collapsible__trigger i {
+
+    transition: transform 300ms; }
+
+.postDisplay .Collapsible__trigger.is-open i {
+    transform: rotateZ(180deg); }
+
+
+
 /* REGISTER & LOGIN */
 
 
@@ -234,8 +271,7 @@ nav li {
 
 }
 
-/*#taskInput*/
-textarea {
+#taskInput textarea {
   width: 100%;
   margin-top: 1rem;
   resize: none;
@@ -255,7 +291,7 @@ span.Collapsible__trigger {
 /*  border-bottom: 1px solid lightgray;
 */}
 
-.Collapsible__contentOuter {
+#taskList .Collapsible__contentOuter {
   /*background-color: #fff;*/
   color: gray;
 }

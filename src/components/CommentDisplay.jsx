@@ -8,13 +8,13 @@ import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 // import Collapsible from 'react-collapsible';
 
 class CommentDisplay extends React.Component {
-	constructor() {
-		super();
-		this.state ={
-			liked: false,
-			comment: ""
-		}
-	}
+	// constructor() {
+	// 	super();
+	// 	this.state ={
+	// 		liked: false,
+	// 		comment: ""
+	// 	}
+	// }
 	formatDate =  (date) => {
     	let newDate = new Date(date);
 	      if (isToday(newDate)) {
@@ -62,19 +62,19 @@ class CommentDisplay extends React.Component {
     		this.submitComment(true);
     	}
     }
-    submitComment = (value) => {
-	    axios.post('http://localhost:4000/task/addComment', {
-    		"taskId": this.props.id,
-    		"field": "comments",
-    		"userId": this.props.user.id,
-    		"add": value,
-    		"text": this.state.comment
-	    })
-	    .then(response=> {
-	   	this.props.updateFeed()
-		})
-	    .catch(err=>console.log(err))
-    }
+  //   submitComment = (value) => {
+	 //    axios.post('http://localhost:4000/task/addComment', {
+  //   		"taskId": this.props.id,
+  //   		"field": "comments",
+  //   		"userId": this.props.user.id,
+  //   		"add": value,
+  //   		"text": this.state.comment
+	 //    })
+	 //    .then(response=> {
+	 //   	this.props.updateFeed()
+		// })
+	 //    .catch(err=>console.log(err))
+  //   }
     updateTaskLikes = (value) => {
 	    axios.post('http://localhost:4000/task/updatePublicTask', {
     		"taskId": this.props.id,
@@ -87,9 +87,9 @@ class CommentDisplay extends React.Component {
 		})
 	    .catch(err=>console.log(err))
     }
-    changeComment = (e) => {
-    	this.setState({comment: e.target.value})
-    }
+    // changeComment = (e) => {
+    // 	this.setState({comment: e.target.value})
+    // }
    	render () {
 		let {userId, text, date} = this.props.item;
 		// let taskId = this.props.id;
@@ -100,12 +100,12 @@ class CommentDisplay extends React.Component {
 	      // <div>Due: {this.formatDate(dateDue)}</div>;
 	    // let username = this.getUsername(userId);
 		return (
-			<>
+			<div className="commentDisplay">
 				<div>{text}</div>
 				<div>
-					<div>{this.getFullName(userId)}</div><div>{this.formatDate(date)}</div>
+					<div>— {this.getFullName(userId)}</div><div>{this.formatDate(date)}</div>
 				</div>
-		</>
+			</div>
 		)
 	}
 }

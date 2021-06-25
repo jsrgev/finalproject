@@ -110,6 +110,7 @@ class PostDisplay extends React.Component {
 	    } else {
 	    	likeCountDisplay = `${likes.length} likes`
 	    }
+	    const trigger = <><div>Comments</div><div><i class="fas fa-chevron-down"></i></div></>;
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
@@ -130,15 +131,18 @@ class PostDisplay extends React.Component {
 					<div>{likeCountDisplay}</div>
 					<div>Added: {this.formatDate(dateEntered)}</div>
 				</div>
-			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button>
+				<div className="commentInput">
+			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button></div>
 
 			    {comments.length>0 &&
-				<Collapsible trigger="Comments" transitionTime="70" transitionCloseTime="70">
-			      {comments.map((item,i) =>{
-			      	return <CommentDisplay item={item} key={i} />
-			      })
-			      }
-			    </Collapsible>
+			    	// <div className="commentList">
+						<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
+					      {comments.map((item,i) =>{
+					      	return <CommentDisplay item={item} key={i} />
+					      })
+					      }
+					    </Collapsible>
+				    // </div>
 			    }
 			    
 		</div>
