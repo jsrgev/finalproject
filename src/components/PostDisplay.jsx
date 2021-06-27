@@ -36,6 +36,16 @@ class PostDisplay extends React.Component {
 	    	return ""
 	    }
     }
+    avatarDisplay = (id) => {
+    	// if tries to get do 'find' before 'users' is populated, causes crash
+    	if (this.props.users.length>0) {
+    	let user = this.props.users.find(a => a._id === id);
+    	return <img className="avatar-small" src={user.avatarUrl} alt="avatar" />;
+	    }
+	     else {
+	    	return ""
+	    }
+    }
     handleClickLike = (value) => {
     		this.setState({liked: !value});
     		this.updateTaskLikes(!value);
@@ -51,7 +61,7 @@ class PostDisplay extends React.Component {
 	    axios.post('http://localhost:4000/task/addComment', {
     		"taskId": this.props.id,
     		"field": "comments",
-    		"userId": this.props.user.id,
+    		"userId": this.props.user._id,
     		"add": value,
     		"text": this.state.comment
 	    })
@@ -64,7 +74,7 @@ class PostDisplay extends React.Component {
 	    axios.post('http://localhost:4000/task/updatePublicTask', {
     		"taskId": this.props.id,
     		"field": "likes",
-    		"userId": this.props.user.id,
+    		"userId": this.props.user._id,
     		"add": value
 	    })
 	    .then(response=> {
@@ -85,7 +95,7 @@ class PostDisplay extends React.Component {
 	      null;
 	    let username = this.getUsername(userId);
 
-	    let thisUserLiked = likes.some(a => a === this.props.user.id)
+	    let thisUserLiked = likes.some(a => a === this.props.user._id)
 
 	    let likeCountDisplay;
 	    if (likes.length === 0) {
@@ -106,6 +116,7 @@ class PostDisplay extends React.Component {
 				<div className="postContent">
 					<div>
 						<Link to={`/profile/${username}`}>
+							{this.avatarDisplay(userId)}
 							{this.getFullName(userId)}
 						</Link>
 					</div>

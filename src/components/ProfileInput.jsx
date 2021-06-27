@@ -18,7 +18,7 @@ class ProfileInput extends React.Component {
 	      gender: "",
 	      birthdate: "",
 	      shareBirthyear: "",
-	      avatar: "",
+	      avatarUrl: "",
 	      links: []
 		}
 	}
@@ -28,18 +28,43 @@ class ProfileInput extends React.Component {
 	      lastName: this.props.user.lastName,
 	      location: this.props.user.location,
 	      gender: this.props.user.gender,
+	      about: this.props.user.about,
 	      birthdate: this.props.user.birthdate,
 	      shareBirthyear: this.props.user.shareBirthyear,
-	      avatar: this.props.user.avatar,
+	      avatarUrl: this.props.user.avatarUrl,
 	      links: this.props.user.links
 		})
 	}
 	updateField = (e) => {
+		// console.log(e.target.value);
 	  this.setState({[e.target.name]:e.target.value})
-	  // console.log(e.target.value)
+	  if (e.target.name === "gender") {
+	  	let {avatarUrl} = this.state;
+	  	let newAvatarUrl = avatarUrl;
+	  	if (e.target.value === "male") {
+	  		if (avatarUrl.includes("/female/")) {
+	  			newAvatarUrl = avatarUrl.replace('/female/', '/male/');
+	  		} else {
+	  			newAvatarUrl = avatarUrl.replace('https://joeschmoe.io/api/v1/', 'https://joeschmoe.io/api/v1/male/');
+	  		}
+	  	} else if (e.target.value === "female") {
+	  		if (avatarUrl.includes("/male/")) {
+	  			newAvatarUrl = avatarUrl.replace('/male/', '/female/');
+	  		} else {
+	  			newAvatarUrl = avatarUrl.replace('https://joeschmoe.io/api/v1/', 'https://joeschmoe.io/api/v1/female/');
+	  		}
+	  	} else if (e.target.value === "noAnswer") {
+	  		if (avatarUrl.includes("/male/")) {
+	  			newAvatarUrl = avatarUrl.replace('/male/', '/');
+	  		} else {
+	  			newAvatarUrl = avatarUrl.replace('/female/', '/');
+	  		}
+	  	}
+	  	this.setState({avatarUrl:newAvatarUrl});
+	  }
 	}
 	handleSubmit = () => {
-		// console.log(this.state);
+		console.log(this.state);
 		// let user = {...this.state}
 		let data = {
 			userId : this.props.user._id,
@@ -66,12 +91,15 @@ class ProfileInput extends React.Component {
 	// 	.catch(err => console.log(err))
 	// }
 	render () {
-		// let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = this.props.user._id;
+		let {firstName, lastName, avatarUrl} = this.state;
 		return (
-			<div id="profileInput">
+			<>
+				<h2>{`${firstName} ${lastName}`}</h2>
+				<img className="avatar-medium" src={avatarUrl} alt="avatar" />
+				<div id="profileInput">
 					<div id="profileGrid">
 						{/*<div>Location</div><div><input value={this.state.location} name="location" onChange={this.updateField} /></div>*/}
-						<div>Avatar link</div><div><TextareaAutosize value={this.state.avatar} name="avatar" onChange={this.updateField} /></div>
+						<div>Avatar link</div><div><TextareaAutosize value={this.state.avatarUrl} name="avatarUrl" onChange={this.updateField} /></div>
 						{/*<div>Birthday</div><div><div>{this.state.birthdate}</div></div>*/}
 						{/*<div>Links</div><div><div>{this.state.links}</div></div>*/}
 						<div>About</div><div><input value={this.state.about} name="about" onChange={this.updateField} /></div>
@@ -86,12 +114,12 @@ class ProfileInput extends React.Component {
 					<button onClick={()=>this.props.editProfile(false``)}>Cancel</button>
 					<button onClick={this.handleSubmit}>Submit</button>
 				</div>
+			</>
 		)
 	}
 }
 
 
-						
 
 const mapStateToProps = (state) => {
 	return { 

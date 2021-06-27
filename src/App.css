@@ -533,6 +533,10 @@ nav li {
 
 /* IMAGES */
 
+.avatar-small {
+  width: 70px;
+}
+
 .avatar-medium {
   width: 100px;
 }

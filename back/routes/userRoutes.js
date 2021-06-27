@@ -14,8 +14,8 @@ dotenv.config();
 
 
 router.post('/register', async (req,res) => {
-	console.log("running!");
-	console.log(req.body);
+	// console.log("running!");
+	// console.log(req.body);
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
 
@@ -39,8 +39,8 @@ router.post('/register', async (req,res) => {
 	// console.log(saltPassword)
 	const securePassword = await bcrypt.hash(password, saltPassword);
 
-
-	const newUser = new userTemplateCopy({...req.body, password:securePassword});
+	let avatarUrl = `https://joeschmoe.io/api/v1/${username}`
+	const newUser = new userTemplateCopy({...req.body, password:securePassword, avatarUrl});
 	newUser.save()
 	.then(data => {
 		res.json(data);

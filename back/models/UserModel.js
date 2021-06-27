@@ -29,6 +29,10 @@ const userTemplate = new mongoose.Schema({
 		type:String,
 		required:false
 	},
+	about: {
+		type:String,
+		required:false
+	},
 	birthdate: {
 		type:Date,
 		required: false
@@ -37,7 +41,7 @@ const userTemplate = new mongoose.Schema({
 		type:Boolean,
 		required: false
 	},
-	avatar: {
+	avatarUrl: {
 		type:String,
 		required:false
 	},
