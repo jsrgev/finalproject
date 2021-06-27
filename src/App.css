@@ -533,13 +533,20 @@ nav li {
 
 /* IMAGES */
 
-.avatar-small {
-  width: 70px;
+.avatar-medium {
+  width: 4rem;
 }
 
-.avatar-medium {
-  width: 100px;
+.avatar-small {
+  width: 2.5rem;
 }
+
+.avatar-mini {
+  width: 1.5rem;
+}
+
+
+
 
 /* FOOTER */
 

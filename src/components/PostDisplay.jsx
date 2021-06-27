@@ -36,11 +36,11 @@ class PostDisplay extends React.Component {
 	    	return ""
 	    }
     }
-    avatarDisplay = (id) => {
+    avatarDisplay = (id, size) => {
     	// if tries to get do 'find' before 'users' is populated, causes crash
     	if (this.props.users.length>0) {
     	let user = this.props.users.find(a => a._id === id);
-    	return <img className="avatar-small" src={user.avatarUrl} alt="avatar" />;
+    	return <img className={`avatar-${size}`} src={user.avatarUrl} alt="avatar" />;
 	    }
 	     else {
 	    	return ""
@@ -55,6 +55,7 @@ class PostDisplay extends React.Component {
     	if (this.state.comment.length > 0) {
     		// console.log(this.state.comment)
     		this.submitComment(true);
+    		this.setState({comment:""});
     	}
     }
     submitComment = (value) => {
@@ -116,7 +117,7 @@ class PostDisplay extends React.Component {
 				<div className="postContent">
 					<div>
 						<Link to={`/profile/${username}`}>
-							{this.avatarDisplay(userId)}
+							{this.avatarDisplay(userId,"small")}
 							{this.getFullName(userId)}
 						</Link>
 					</div>
@@ -129,13 +130,14 @@ class PostDisplay extends React.Component {
 					<div>Added: {formatDate(dateEntered)}</div>
 				</div>
 				<div className="commentInput">
+				{this.avatarDisplay(this.props.user._id,"mini")}
 			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button></div>
 
 			    {comments.length>0 &&
 			    	// <div className="commentList">
 						<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
 					      {comments.map((item,i) =>{
-					      	return <CommentDisplay item={item} key={i} />
+					      	return <CommentDisplay avatarDisplay={this.avatarDisplay} item={item} key={i} />
 					      })
 					      }
 					    </Collapsible>

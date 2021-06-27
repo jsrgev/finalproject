@@ -103,7 +103,10 @@ class CommentDisplay extends React.Component {
 			<div className="commentDisplay">
 				<div>{text}</div>
 				<div>
-					<div>— <Link to={`/profile/${username}`}>{this.getFullName(userId)}</Link></div>
+					<div>— <Link to={`/profile/${username}`}>
+							{this.props.avatarDisplay(userId,"mini")}
+							{this.getFullName(userId)}
+					</Link></div>
 					<div>{this.formatDate(date)}</div>
 				</div>
 			</div>
