@@ -4,6 +4,7 @@ const taskTemplateCopy = require('../models/TaskModel');
 var CronJob = require('cron').CronJob;
 var CronJobManager = require('cron-job-manager');
 var manager = new CronJobManager();
+const axios = require('axios');
 
 const Task = require('../models/TaskModel')
 
@@ -13,17 +14,7 @@ dotenv.config();
 
 
 router.post('/addTask', async (req,res) => {
-	// console.log(req.body)
-	// const {taskName, userId, penaltyText, penaltyUrl,  description, dateDue, shared} = req.body;
-
-	// const newTask = new taskTemplateCopy({
-		// taskName, userId, penaltyText, penaltyUrl, description, dateDue, shared
-	// });
-
 	const newTask = new taskTemplateCopy({...req.body});
-
-	// console.log(newTask)
-
 	newTask.save()
 	.then(data => {
 		startCronJobs();
@@ -100,6 +91,7 @@ router.post('/updateUserTaskCompleted', async (req,res) => {
 	}
 )
 
+
 router.post('/updateUserTask', async (req,res) => {
 	let {taskId, field, value} = req.body;
 	Task.updateOne(
@@ -137,7 +129,30 @@ router.post('/addComment', async (req,res) => {
 	}
 })
 
+// let sampleUrl = 'https://maker.ifttt.com/trigger/post/with/key/cGg0CsIdj9AGj_Ius1Ihiw';
+
+const triggerIfttt = (url) => {
+	axios.get(url)
+	.then(response=> console.log(response.data))
+	.catch(err => console.log(err))
+}
+
+
+// const triggerIfttt = async (url) => {
+// 	try {
+// 		let res = await fetch(url, {
+// 			  method: "GET",
+// 		});
+// 		console.log(res);
+// 		let data = await res.json();
+// 		console.log(data);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// }
+
 const startCronJobs = async () => {
+	console.log("running 'startCronJobs'");
 	Task.find({
 		shared: true,
 		completed: false,
@@ -146,10 +161,10 @@ const startCronJobs = async () => {
 		dateDue: {$gt: new Date()}
 	})
 	.then(results => {
+		// console.log(results);
 		let pending = results.length;
 		if (pending===0) {
 			console.log("There are no pending penalties");
-			return;
 		}
 		results.forEach(a => {
 		let jobName = a._id.toString()
@@ -159,7 +174,8 @@ const startCronJobs = async () => {
 				date,
 				() => {
 					// action to be carried out
-					console.log(a.penaltyText + " . . ." + a.penaltyUrl)
+					triggerIfttt(a.penaltyUrl);
+					console.log(`${a.penaltyUrl} is now being triggered.`);
 				},
 				{
 				  onComplete: () => {console.log("the job has stopped....")}
@@ -167,49 +183,17 @@ const startCronJobs = async () => {
 			);
 			manager.start(jobName);
 		})
-		console.log(`There are ${pending} cron jobs pending:\n${manager.listCrons()}`);
+		console.log (`There are ${pending} cron jobs pending:\n${manager.listCrons()}`);
 	})
-	.catch(err => console.log(err))
-};
+	.catch(err => {
+		console.log(err)
+	})
+};	
 
 
 router.get('/startCronJobs', async (req,res) => {
-	Task.find({
-		shared: true,
-		completed: false,
-		active: true,
-		penaltyUrl: { $ne : ""},
-		dateDue: {$gt: new Date()}
-	})
-	.then(results => {
-		let pending = results.length;
-		if (pending===0) {
-			res.send("There are no pending penalties");
-			return;
-		}
-		results.forEach(a => {
-		// console.log(a._id)
-		let jobName = a._id.toString()
-		// console.log(jobName)
-		let seconds = '*/1 * * * * *';
-		let date = new Date(a.dateDue);
-			manager.add(jobName,
-				date,
-				() => {
-					// action to be carried out
-					console.log(a.penaltyText + " . . ." + a.penaltyUrl)
-				},
-				{
-				  onComplete: () => {console.log("the job has stopped....")}
-				}
-			);
-			manager.start(jobName);
-		})
-		// res.send("Cron jobs have been started.")
-		res.send(`There are ${pending} cron jobs pending:\n${manager.listCrons()}`);
-		// console.log(manager.listCrons());
-	})
-	.catch(err => console.log(err))
+	let result = await startCronJobs();
+	res.send("Cron jobs started from server.");
 })
 
 

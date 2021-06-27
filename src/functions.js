@@ -1,6 +1,10 @@
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 
 export const formatDate =  (date,includeTime = true) => {
+    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
+	if (!date) {
+		return "";
+	}
 	let time = includeTime ? ` ${format(new Date(date), "p")}` : "";
 	let newDate = new Date(date);
       if (isToday(newDate)) {

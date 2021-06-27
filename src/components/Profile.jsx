@@ -16,26 +16,27 @@ class Profile extends React.Component {
 		})
 		.catch(err => console.log(err))
 	}
-	componentDidMount () {
-		// this.getAvatar();
-	};
-	// getAvatar = async () => {
-
-		
-
-	// }
 	render () {
 		let username = this.props.match.params.username;
 		let user = this.props.users.find(a => a.username === username);
 		let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = user;
+		
+		let image = avatar ? avatar :
+			gender ?
+			`https://joeschmoe.io/api/v1/${gender}/${username}` :
+			`https://joeschmoe.io/api/v1/${username}`
 		let data = user ?
 			(
 			<>
 				<h2>{`${firstName} ${lastName}`}</h2>
-				<img className="avatar-medium" src={`https://joeschmoe.io/api/v1/male/${username}`} />
-				<p>Info</p>
-				<p>Member since {formatDate(dateEntered,false)}</p>
-				<p>Current Tasks</p>
+				<img className="avatar-medium" src={image} alt="avatar" />
+				<div>Info</div>
+				<div>Member since {formatDate(dateEntered,false)}</div>
+				<div>Current Tasks</div>
+				{/*<div>{gender}</div>*/}
+				<div>{location}</div>
+				<div>{birthdate}</div>
+				<div>{links}</div>
 			</>
 			)
 			:

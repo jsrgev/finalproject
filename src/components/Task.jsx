@@ -44,39 +44,23 @@ class Task extends React.Component {
     // .catch(err=>console.log(err))
   }
   changeCompleted = (value) => {
-    // console.log(this.props.item._id);
-    // updateTaskLikes = (value) => {
-      axios.post('http://localhost:4000/task/updateUserTaskCompleted', {
-        "taskId": this.props.item._id,
-        "value": value
-      })
-      .then(response=> {
-        // console.log(response.data);
-        // console.log(this.props.updateTasks)
-        this.props.updateTasks();
+    axios.post('http://localhost:4000/task/updateUserTaskCompleted', {
+      "taskId": this.props.item._id,
+      "value": value
     })
-      .catch(err=>console.log(err))
-    // }
-  }
-  // formatDate =  (date) => {
-  //   let newDate = new Date(date);
-  //     if (isToday(newDate)) {
-  //         return (`Today ${format(newDate, "p")}`);
-  //     } else if (isTomorrow(newDate)) {
-  //         return (`Tomorrow ${format(newDate, "p")}`);
-  //     } else if (isYesterday(newDate)) {
-  //         return (`Yesterday ${format(newDate, "p")}`);
-  //     } else {
-  //       return format(newDate, "d MMM, yyyy p");
-  //     } 
-  //   }
-  testCron = (taskName, dateDue) => {
-      axios.get('http://localhost:4000/task/startCronJobs')
-      .then(response=> {
-        console.log(response.data);
+    .then(response=> {
+      this.props.updateTasks();
     })
-      .catch(err => console.log(err))
+    .catch(err=>console.log(err))
   }
+
+  // testCron = (taskName, dateDue) => {
+  //     axios.get('http://localhost:4000/task/startCronJobs')
+  //     .then(response=> {
+  //       console.log(response.data);
+  //   })
+  //     .catch(err => console.log(err))
+  // }
   stopCron = (taskName, dateDue) => {
       axios.post('http://localhost:4000/task/stopCron', {
         // "taskId": this.props.item._id,
@@ -92,20 +76,14 @@ class Task extends React.Component {
   }
 	render() {
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, completed} = this.props.item;
-    // console.log(taskName + " " + shared);
     let completedClass = completed ? "completed" : "uncompleted";
     let pastClass = !dateDue ? null : isPast(new Date(dateDue)) ? "past": null;
-
-
-    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
-    let dateElement = dateDue &&
-      formatDate(dateDue);
 
     let sibling = <div className="sibling" onClick={()=>this.changeCompleted(!completed)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i></div>;
 
     let trigger = <>
           <div>{taskName}</div>
-          <div>{dateElement}</div>
+          <div>{formatDate(dateDue)}</div>
           
         </>
   return (
@@ -120,7 +98,7 @@ class Task extends React.Component {
         />
         </div>
         {/*<div>*/}
-          <button onClick={()=>this.testCron(taskName, dateDue)}>Start cron jobs</button>
+          {/*<button onClick={()=>this.testCron(taskName, dateDue)}>Start cron jobs</button>*/}
           <button onClick={()=>this.stopCron(taskName, dateDue)}>Stop Cron</button>
           <button>Delete</button>
         {/*</div>*/}

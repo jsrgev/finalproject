@@ -488,7 +488,15 @@ nav li {
     padding-top: 1rem;
 }
 
+.Collapsible__contentInner {
+  word-wrap: break-word;
+  word-break: break-all;
+}
 
+/*.url {
+  word-wrap: break-word;
+  word-break: break-all;
+}*/
 
 /* IMAGES */
 

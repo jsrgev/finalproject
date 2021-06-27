@@ -80,8 +80,9 @@ class PostDisplay extends React.Component {
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
 		let {completed, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments} = item;
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
-	    let dateElement = dateDue &&
-	      <div>Due: {formatDate(dateDue)}</div>;
+	    let dateElement = formatDate(dateDue) ?
+	      <div>Due: {formatDate(dateDue)}</div> :
+	      null;
 	    let username = this.getUsername(userId);
 
 	    let thisUserLiked = likes.some(a => a === this.props.user.id)
