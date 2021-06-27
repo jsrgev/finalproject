@@ -21,7 +21,27 @@ const userTemplate = new mongoose.Schema({
 		type:String,
 		required:true
 	},
-	date: {
+	location: {
+		type:String,
+		required:false
+	},
+	gender: {
+		type:String,
+		required:false
+	},
+	birthdate: {
+		type:Date,
+		required: false
+	},
+	avatar: {
+		type:String,
+		required:false
+	},
+	links: {
+		type:Array,
+		required:false		
+	},
+	dateEntered: {
 		type:Date,
 		default:Date.now
 	},

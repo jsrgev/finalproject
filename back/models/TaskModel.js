@@ -21,6 +21,18 @@ const taskTemplate = new mongoose.Schema({
 		type:String,
 		required:false
 	},
+	category: {
+		type:String,
+		required:false
+	},
+	group: {
+		type:String,
+		required:false
+	},
+	parent: {
+		type:String,
+		required:false
+	},
 	shared: {
 		type:Boolean,
 		required:true
@@ -56,6 +68,14 @@ const taskTemplate = new mongoose.Schema({
 	active: {
 		type: Boolean,
 		default: true
+	},
+	votes: {
+		type: Number,
+		default: 0
+	},
+	approved: {
+		type: Boolean,
+		default: false
 	}
 })
 

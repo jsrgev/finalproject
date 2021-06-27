@@ -1,6 +1,6 @@
 import React from 'react';
 import Feed from './Feed.jsx';
-import TaskList from './TaskList.jsx';
+import TaskSection from './TaskSection.jsx';
 
 class SplitDisplay extends React.Component {
   render() {
@@ -8,7 +8,7 @@ class SplitDisplay extends React.Component {
       <>
         <main id="splitMain">
           <Feed />    
-          <TaskList />
+          <TaskSection />
         </main>
       </>
       );

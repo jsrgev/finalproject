@@ -34,16 +34,47 @@ class RegisterForm extends React.Component {
   changePassword2 = (e) => {
     this.setState({password2:e.target.value})
   }
+  checkForErrors = () => {
+    let errors = [];
+    // Check form for errors
+    const {firstName, lastName, username, email, password, password2} = this.state;
+    if (!firstName || !lastName || !email || !username || !password || !password2) {
+      errors.push ({msg: 'Please fill in all fields.'})
+    }
+    if (password !== password2 && password.length>0 && password2.length>0) {
+      errors.push ({msg: 'Passwords do not match.'})
+    }
+    if (password.length<6 && password.length>0) {
+      errors.push ({msg: 'Password must be at least 6 characters.'})
+    }
+    if (password === username) {
+      errors.push ({msg: 'Password cannot match username.'})
+    }
+    if (password === email) {
+      errors.push ({msg: 'Password cannot match email.'})
+    }
+    if (password === firstName || password === lastName || password === firstName+lastName) {
+      errors.push ({msg: 'Password cannot be your name.'})
+    }
+    if (password === "password") {
+      errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
+    }
+    this.setState({errors: errors});
+  }
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({errors: []});
+    this.checkForErrors();
     const registered = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2
+      // password2: this.state.password2
+    }
+    if (this.state.errors.length>0)  {
+      return;
     }
     // console.log(registered);
     axios.post('http://localhost:4000/user/register', registered)

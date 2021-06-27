@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
+import {formatDate} from '../functions';
 
 class Profile extends React.Component {
 	componentDidMount() {
@@ -15,14 +16,25 @@ class Profile extends React.Component {
 		})
 		.catch(err => console.log(err))
 	}
+	componentDidMount () {
+		// this.getAvatar();
+	};
+	// getAvatar = async () => {
+
+		
+
+	// }
 	render () {
 		let username = this.props.match.params.username;
 		let user = this.props.users.find(a => a.username === username);
+		let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = user;
 		let data = user ?
 			(
 			<>
-				<h2>{`${user.firstName} ${user.lastName}`}</h2>
+				<h2>{`${firstName} ${lastName}`}</h2>
+				<img className="avatar-medium" src={`https://joeschmoe.io/api/v1/male/${username}`} />
 				<p>Info</p>
+				<p>Member since {formatDate(dateEntered,false)}</p>
 				<p>Current Tasks</p>
 			</>
 			)

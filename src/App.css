@@ -1,5 +1,6 @@
 :root {
   --blue: #5075ff;
+  --darkgray: #53575a;
   --transparentwhite: #ffffffe6 ;
 }
 
@@ -33,6 +34,14 @@ nav a {
   font-weight: 600;
   color: var(--blue);
 }
+
+textarea::placeholder, input::placeholder {
+  color: var(--darkgray);
+}
+
+
+
+
 
 /* MAIN LAYOUT */
 
@@ -111,6 +120,9 @@ nav li {
 }
 
 .postDisplay {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
 .postHeader {
@@ -130,7 +142,6 @@ nav li {
 
 .commentInput textarea {
   width: 100%;
-  margin-top: 1rem;
   resize: none;
   outline: none;
   border:  none;
@@ -141,7 +152,8 @@ nav li {
 
 .postDisplay .Collapsible__trigger {
   display: flex;
-  border-bottom: 1px solid lightgray;
+  color:  var(--blue);
+  font-weight: 600;
 }
 
 .postDisplay .Collapsible__trigger *:first-child {
@@ -235,28 +247,31 @@ nav li {
 
 #taskSection  {
   background-color: #ffffe0f5;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: flex-start;
+  gap: 2rem;
 }
 
 #taskInput .Collapsible__trigger {
   display: inline-grid;
   grid-template-columns: 15rem 10rem 1rem;
-  /*grid-template-columns: 1fr;*/
-  /*width:  calc(100% - 12em);*/
   width: 100%;
   gap: 1rem;
-  border-bottom: 1px solid lightgray;
+  /*border-bottom: 1px solid lightgray;*/
+  border-bottom: 1px solid var(--blue);
+  /*background-color: aliceblue;*/
 }
 
 
-#taskList  {
+.taskList  {
   display: grid;
   grid-template-columns: 1fr;
   align-content: flex-start;
   gap: 1rem;
-  margin-top: 1rem;
 }
 
-#taskList .Collapsible__trigger {
+.taskList .Collapsible__trigger:not(.completedTaskList > div > span) {
   display: inline-grid;
   grid-template-columns: 15rem 10rem 1rem;
   /*grid-template-columns: 1fr 10rem;*/
@@ -292,7 +307,7 @@ nav li {
 
 .react-datepicker__input-container {
   width: 10rem !important;
-  border-bottom: 1px solid lightgray;
+  /*border-bottom: 1px solid lightgray;*/
 }
 
 .react-datepicker__tab-loop {
@@ -327,38 +342,59 @@ nav li {
   visibility: visible !important;
 }
 
+
+#taskInput .Collapsible__contentInner {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+    background: #b9d6ff;
+    background: #ecf6fe;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--blue);
+}
+
+
+#taskInput .Collapsible__contentInner > div {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+  }
+
+
 #taskInput input {
   outline: none;
   padding: 0;
   border: none;
   background-color: inherit;
   font-style: italic;
+  /*border-bottom: 1px solid var(--blue);*/
 }
 
-
-
-.inputDateDue {
-
+.Collapsible__contentInner input {
+  border-bottom: 1px solid var(--blue) !important;
 }
+
 
 #taskInput textarea {
   width: 100%;
-  margin-top: 1rem;
   resize: none;
   outline: none;
   border:  none;
+  padding: 0;
   font-style: italic;
-  /*height: 1em;*/
+  background: inherit;
+}
+
+.Collapsible__contentInner textarea {
+  border-bottom: 1px solid var(--blue) !important;
 }
 
 
-.Collapsible {
-  /*background-color: #fff;*/
-}
 
 #taskSection .Collapsible__contentOuter {
-  /*background-color: #fff;*/
-  color: gray;
+  color: var(--darkgray);
 }
 
 .sibling {
@@ -370,7 +406,12 @@ nav li {
   right: 1em;
 }
 
- /* uncompleted tasks */
+.is-closed ~ .Collapsible__contentOuter .sibling {
+  /*background-color: aquamarine;*/
+  position: static;
+}
+
+ /* uncompleted tasks icons and color */
 
 #taskSection .uncompleted .fa-circle {
   display: block;
@@ -388,7 +429,11 @@ nav li {
   display: block;
 }
 
-/* completed tasks */
+#taskSection .past.uncompleted {
+  color: red;
+}
+
+/* completed tasks icons and color*/
 
 #taskSection .completed .fa-circle {
   display: none;
@@ -399,10 +444,57 @@ nav li {
 }
 
 #taskSection .completed {
-  color: gray;
+  color: var(--darkgray);
 }
 
 
+
+.taskList .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+  background: #b9d6ff;
+  background: #ecf6fe;
+  border-radius: 10px;
+  padding: 1rem;
+  border: 1px solid var(--blue);
+}
+
+.taskList .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+}
+
+
+.completedTaskList > div > .Collapsible__trigger {
+  display: flex;
+  color:  var(--blue);
+  font-weight: 600;
+}
+
+.completedTaskList > div > .Collapsible__trigger *:first-child {
+  flex-grow: 1;
+}
+
+.completedTaskList .Collapsible__trigger i {
+    transition: transform 700ms; }
+
+.completedTaskList .Collapsible__trigger.is-open i {
+    transform: rotateZ(180deg); }
+
+.completedTaskList .Collapsible__contentInner {
+    padding-top: 1rem;
+}
+
+
+
+/* IMAGES */
+
+.avatar-medium {
+  width: 100px;
+}
 
 /* FOOTER */
 

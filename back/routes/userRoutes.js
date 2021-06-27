@@ -14,32 +14,32 @@ dotenv.config();
 
 
 router.post('/register', async (req,res) => {
-
+	console.log(req.body);
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
 
-	// Check form for errors
-	if (!firstName || !lastName || !email || !username || !password || !password2) {
-		errors.push ({msg: 'Please fill in all fields.'})
-	}
-	if (password !== password2 && password.length>0 && password2.length>0) {
-		errors.push ({msg: 'Passwords do not match.'})
-	}
-	if (password.length<6 && password.length>0) {
-		errors.push ({msg: 'Password must be at least 6 characters.'})
-	}
-	if (password === username) {
-		errors.push ({msg: 'Password cannot match username.'})
-	}
-	if (password === email) {
-		errors.push ({msg: 'Password cannot match email.'})
-	}
-	if (password === firstName || password === lastName || password === firstName+lastName) {
-		errors.push ({msg: 'Password cannot be your name.'})
-	}
-	if (password === "password") {
-		errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
-	}
+	// // Check form for errors
+	// if (!firstName || !lastName || !email || !username || !password || !password2) {
+	// 	errors.push ({msg: 'Please fill in all fields.'})
+	// }
+	// if (password !== password2 && password.length>0 && password2.length>0) {
+	// 	errors.push ({msg: 'Passwords do not match.'})
+	// }
+	// if (password.length<6 && password.length>0) {
+	// 	errors.push ({msg: 'Password must be at least 6 characters.'})
+	// }
+	// if (password === username) {
+	// 	errors.push ({msg: 'Password cannot match username.'})
+	// }
+	// if (password === email) {
+	// 	errors.push ({msg: 'Password cannot match email.'})
+	// }
+	// if (password === firstName || password === lastName || password === firstName+lastName) {
+	// 	errors.push ({msg: 'Password cannot be your name.'})
+	// }
+	// if (password === "password") {
+	// 	errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
+	// }
 
 	// Check for duplicate user data
 
@@ -60,13 +60,14 @@ router.post('/register', async (req,res) => {
 	const saltPassword = await bcrypt.genSalt(10);
 	const securePassword = await bcrypt.hash(password, saltPassword);
 
-	const newUser = new userTemplateCopy({
-		firstName,
-		lastName,
-		username,
-		email,
-		password:securePassword
-	});
+	// const newUser = new userTemplateCopy({
+	// 	firstName,
+	// 	lastName,
+	// 	username,
+	// 	email,
+	// 	password:securePassword
+	// });
+	const newUser = new userTemplateCopy({...req.body, password:securePassword});
 	newUser.save()
 	.then(data => {
 		res.json(data);
@@ -166,6 +167,9 @@ router.get('/getUsers', async (req,res) => {
 			})		
 		.catch(err => console.log(err));
 })
+
+
+
 
 
 module.exports = router;
