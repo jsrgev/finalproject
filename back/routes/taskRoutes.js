@@ -13,6 +13,66 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
+// CRON JOB FUNCTIONS
+
+// let sampleUrl = 'https://maker.ifttt.com/trigger/post/with/key/cGg0CsIdj9AGj_Ius1Ihiw';
+
+const triggerIfttt = (url) => {
+	axios.get(url)
+	.then(response=> console.log(response.data))
+	.catch(err => console.log(err))
+}
+
+const startCronJobs = async () => {
+	console.log("running 'startCronJobs'");
+	Task.find({
+		shared: true,
+		completed: false,
+		active: true,
+		penaltyUrl: { $ne : ""},
+		dateDue: {$gt: new Date()}
+	})
+	.then(results => {
+		// console.log(results);
+		let pending = results.length;
+		if (pending===0) {
+			console.log("There are no pending penalties");
+		}
+		results.forEach(a => {
+		let jobName = a._id.toString()
+		let seconds = '*/1 * * * * *';
+		let date = new Date(a.dateDue);
+			manager.add(jobName,
+				date,
+				() => {
+					// action to be carried out
+					triggerIfttt(a.penaltyUrl);
+					console.log(`${a.penaltyUrl} is now being triggered.`);
+				},
+				{
+				  onComplete: () => {console.log("the job has stopped....")}
+				}
+			);
+			manager.start(jobName);
+		})
+		console.log (`There are ${pending} cron jobs pending:\n${manager.listCrons()}`);
+	})
+	.catch(err => {
+		console.log(err)
+	})
+};
+
+const stopCron = (taskId) => {
+	manager.stop(taskId);
+	// manager.stop(req.body.taskId);
+	console.log("Cron job has been stopped.");
+}
+
+
+
+
+// ROUTES
+
 router.post('/addTask', async (req,res) => {
 	const newTask = new taskTemplateCopy({...req.body});
 	newTask.save()
@@ -26,7 +86,7 @@ router.post('/addTask', async (req,res) => {
 })
 
 router.post('/getUserTasks', async (req,res) => {
-	Task.find({userId: req.body.id}).sort({dateDue:1})
+	Task.find({userId: req.body.id, active: true}).sort({dateDue:1})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "This user has no tasks."});
@@ -38,7 +98,7 @@ router.post('/getUserTasks', async (req,res) => {
 })
 
 router.get('/getAllPublicTasks', async (req,res) => {
-	Task.find({shared: true}).sort({dateEntered:-1})
+	Task.find({shared: true, active: true}).sort({dateEntered:-1})
 		.then(tasks => {
 			if(!tasks) {
 				res.send({result: false, message: "There are no shared tasks right now."});
@@ -71,10 +131,13 @@ router.post('/updatePublicTask', async (req,res) => {
 	}
 })
 
-
 // changing a task to completed or back to uncompleted
 router.post('/updateUserTaskCompleted', async (req,res) => {
-	let {taskId, field, value} = req.body;
+	let {taskId, value, penalty} = req.body;
+	// if completing task with pending penalty, stop cronjob immediately
+	if (value && penalty) {
+		stopCron(taskId);
+	}
 	let date = value ? new Date() : ""
 	Task.updateOne(
 			{ _id: taskId },
@@ -129,81 +192,12 @@ router.post('/addComment', async (req,res) => {
 	}
 })
 
-// let sampleUrl = 'https://maker.ifttt.com/trigger/post/with/key/cGg0CsIdj9AGj_Ius1Ihiw';
-
-const triggerIfttt = (url) => {
-	axios.get(url)
-	.then(response=> console.log(response.data))
-	.catch(err => console.log(err))
-}
-
-
-// const triggerIfttt = async (url) => {
-// 	try {
-// 		let res = await fetch(url, {
-// 			  method: "GET",
-// 		});
-// 		console.log(res);
-// 		let data = await res.json();
-// 		console.log(data);
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// }
-
-const startCronJobs = async () => {
-	console.log("running 'startCronJobs'");
-	Task.find({
-		shared: true,
-		completed: false,
-		active: true,
-		penaltyUrl: { $ne : ""},
-		dateDue: {$gt: new Date()}
-	})
-	.then(results => {
-		// console.log(results);
-		let pending = results.length;
-		if (pending===0) {
-			console.log("There are no pending penalties");
-		}
-		results.forEach(a => {
-		let jobName = a._id.toString()
-		let seconds = '*/1 * * * * *';
-		let date = new Date(a.dateDue);
-			manager.add(jobName,
-				date,
-				() => {
-					// action to be carried out
-					triggerIfttt(a.penaltyUrl);
-					console.log(`${a.penaltyUrl} is now being triggered.`);
-				},
-				{
-				  onComplete: () => {console.log("the job has stopped....")}
-				}
-			);
-			manager.start(jobName);
-		})
-		console.log (`There are ${pending} cron jobs pending:\n${manager.listCrons()}`);
-	})
-	.catch(err => {
-		console.log(err)
-	})
-};	
 
 
 router.get('/startCronJobs', async (req,res) => {
 	let result = await startCronJobs();
 	res.send("Cron jobs started from server.");
 })
-
-
-router.post('/stopCron', async (req,res) => {
-	manager.stop('next_job');
-	// manager.stop(req.body.taskId);
-	res.send("Cron job has been stopped.");
-})
-
-
 
 
 

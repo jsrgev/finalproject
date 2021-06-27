@@ -340,6 +340,7 @@ nav li {
 
 .i-wrapper:hover i.fa-circle {
   visibility: visible !important;
+  color: var(--blue);
 }
 
 
@@ -497,6 +498,34 @@ nav li {
   word-wrap: break-word;
   word-break: break-all;
 }*/
+
+
+
+
+.controls {
+  grid-template-columns: repeat(3, 1fr) !important;
+  /*background: white;*/
+  justify-items: center;
+  position: relative;
+}
+
+.controls .icons {
+  font-size: .9rem;
+  margin-left: 1rem;
+  position: relative;
+  top: -.1rem;
+}
+
+.controls > div:hover {
+  color: var(--blue);
+}
+
+.controls > div.shared {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+
 
 /* IMAGES */
 

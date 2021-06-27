@@ -3,7 +3,7 @@ import Task from './Task.jsx';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import TaskInput from './TaskInput.jsx';
-import {setUserTasks} from '../redux/actions';
+import {setUserTasks, setAllPublicTasks} from '../redux/actions';
 import Collapsible from 'react-collapsible';
 
 
@@ -34,7 +34,14 @@ class TaskSection extends React.Component {
 		})
 		.catch(err => console.log(err))
 	}
-
+	updateFeed = () => {
+	    axios.get('http://localhost:4000/task/getAllPublicTasks')
+	    .then(response=> {
+		    this.props.setAllPublicTasks(response.data.tasks);
+		    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
+		})
+		.catch(err => console.log(err))
+	}
 	displayTasks = () => {
 
 		this.props.tasks.map((item,i) =>{
@@ -76,7 +83,7 @@ class TaskSection extends React.Component {
 			"You have no outstanding tasks." :
 			(this.props.tasks.length > 0) ?
 			uncompleted.map((item,i) =>{
-				return <Task item={item} key={i} updateTasks={this.updateTasks} />
+				return <Task taskId={item._id} key={i} updateTasks={this.updateTasks} updateFeed={this.updateFeed} />
 			})
 			:
 			"Loading Tasks...";
@@ -87,7 +94,7 @@ class TaskSection extends React.Component {
 				<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
 				<div className="taskList ">
 	      {completed.map((item,i) => {
-	      	return <Task item={item} key={i} updateTasks={this.updateTasks} />
+	      	return <Task taskId={item._id} key={i} updateTasks={this.updateTasks} />
 	      })
 	      }
 	      </div>
@@ -96,7 +103,7 @@ class TaskSection extends React.Component {
 	    null;
 		return (
 			<div id="taskSection">
-				<TaskInput thereAreTasks={this.thereAreTasks} updateTasks={this.updateTasks} />
+				<TaskInput thereAreTasks={this.thereAreTasks} updateTasks={this.updateTasks} updateFeed={this.updateFeed} />
 				<div className="taskList">{taskList}</div>
 				<div className="completedTaskList">{completedTaskList}</div>
 			</div>
@@ -114,6 +121,7 @@ const mapStateToProps = (state) => {
 const dispatchStateToProps = (dispatch) => {
   return {
     setUserTasks: (array) => dispatch(setUserTasks(array)),
+    setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array))
   }
 }
 
