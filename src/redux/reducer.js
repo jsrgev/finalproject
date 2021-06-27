@@ -11,8 +11,8 @@ const userReducer = (state = userInitState, action = {}) => {
 		case SET_LOGIN_STATUS:
 			return {...state,loggedIn: action.payload};
 		case SET_USER:
-			// console.log(action.payload);
 			return {...state,user: action.payload};
+			// break;
 		default:
 			return {...state}
 		}

@@ -2,9 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
-import {formatDate} from '../functions';
+// import {formatDate} from '../functions';
+import ProfileInput from './ProfileInput';
+import ProfileDisplay from './ProfileDisplay';
 
 class Profile extends React.Component {
+	constructor () {
+		super();
+		this.state = {
+			editMode: false
+		}
+	}
 	componentDidMount() {
 		this.getUsers();
 	}
@@ -16,42 +24,41 @@ class Profile extends React.Component {
 		})
 		.catch(err => console.log(err))
 	}
+	editProfile = (value) => {
+		this.setState({editMode: value})
+		// console.log("edit");
+	}
+	getUserId = () => {
+			let username = this.props.match.params.username;
+			return this.props.users.find(a => a.username === username)._id
+	}
 	render () {
-		let username = this.props.match.params.username;
-		let user = this.props.users.find(a => a.username === username);
-		let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = user;
-		
-		let image = avatar ? avatar :
-			gender ?
-			`https://joeschmoe.io/api/v1/${gender}/${username}` :
-			`https://joeschmoe.io/api/v1/${username}`
-		let data = user ?
-			(
-			<>
-				<h2>{`${firstName} ${lastName}`}</h2>
-				<img className="avatar-medium" src={image} alt="avatar" />
-				<div>Info</div>
-				<div>Member since {formatDate(dateEntered,false)}</div>
-				<div>Current Tasks</div>
-				{/*<div>{gender}</div>*/}
-				<div>{location}</div>
-				<div>{birthdate}</div>
-				<div>{links}</div>
-			</>
+		// if (this.props.users.length===0) {
+			// return (
+				// <div className="loadingScreen">Loading ...</div>
+			// )
+		// } else {
+			// let username = this.props.match.params.username;
+			// let userId = this.props.users.find(a => a.username === username)._id
+			return (
+				<>
+		      <main id="profile">
+		      	{ this.props.users.length===0 ?
+				<div className="loadingScreen">Loading ...</div> :
+		      		this.state.editMode ?
+						<ProfileInput editProfile={this.editProfile} getUsers={this.getUsers} /> :
+		      	<ProfileDisplay userId={this.getUserId()} editProfile={this.editProfile} />
+		      	}
+		      </main>
+		      </>
 			)
-			:
-			<p>Loading...</p>;
-		return (
-	      <main id="profile">
-	      	{data}
-	      </main>
-		)
+
 	}
 }
 
 const mapStateToProps = (state) => {
   return {
-    // user: state.userReducer.user,
+    user: state.userReducer.user,
     users: state.allUserReducer.users,
     // tasks: state.userTaskReducer.tasks,
     // allPublicTasks: state.allPublicTaskReducer.tasks

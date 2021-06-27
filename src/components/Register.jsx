@@ -13,7 +13,8 @@ class RegisterForm extends React.Component {
       email: "",
       password: "",
       password2: "",
-      errors: []
+      errors: [],
+      cleared: false
     }
   }
   changeFirstName = (e) => {
@@ -34,7 +35,7 @@ class RegisterForm extends React.Component {
   changePassword2 = (e) => {
     this.setState({password2:e.target.value})
   }
-  checkForErrors = () => {
+  checkForErrors = async () => {
     let errors = [];
     // Check form for errors
     const {firstName, lastName, username, email, password, password2} = this.state;
@@ -59,12 +60,15 @@ class RegisterForm extends React.Component {
     if (password === "password") {
       errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
     }
-    this.setState({errors: errors});
+
+    let ok = await this.setState({"errors": errors, cleared: true});
+    // console.log(errors);
+    // setTimeout(()=>{console.log(this.state.errors)},500);
   }
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
-    this.setState({errors: []});
-    this.checkForErrors();
+    // this.setState({errors: []});
+    await this.checkForErrors();
     const registered = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -73,9 +77,11 @@ class RegisterForm extends React.Component {
       password: this.state.password,
       // password2: this.state.password2
     }
+    console.log(this.state.errors);
     if (this.state.errors.length>0)  {
       return;
     }
+    return;
     // console.log(registered);
     axios.post('http://localhost:4000/user/register', registered)
     .then(response=> {

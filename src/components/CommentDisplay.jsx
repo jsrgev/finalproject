@@ -79,7 +79,7 @@ class CommentDisplay extends React.Component {
 	    axios.post('http://localhost:4000/task/updatePublicTask', {
     		"taskId": this.props.id,
     		"field": "likes",
-    		"userId": this.props.user.id,
+    		"userId": this.props.user._id,
     		"add": value
 	    })
 	    .then(response=> {

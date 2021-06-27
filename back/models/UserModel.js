@@ -33,6 +33,10 @@ const userTemplate = new mongoose.Schema({
 		type:Date,
 		required: false
 	},
+	shareBirthyear: {
+		type:Boolean,
+		required: false
+	},
 	avatar: {
 		type:String,
 		required:false

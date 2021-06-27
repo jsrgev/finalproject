@@ -18,29 +18,6 @@ router.post('/register', async (req,res) => {
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
 
-	// // Check form for errors
-	// if (!firstName || !lastName || !email || !username || !password || !password2) {
-	// 	errors.push ({msg: 'Please fill in all fields.'})
-	// }
-	// if (password !== password2 && password.length>0 && password2.length>0) {
-	// 	errors.push ({msg: 'Passwords do not match.'})
-	// }
-	// if (password.length<6 && password.length>0) {
-	// 	errors.push ({msg: 'Password must be at least 6 characters.'})
-	// }
-	// if (password === username) {
-	// 	errors.push ({msg: 'Password cannot match username.'})
-	// }
-	// if (password === email) {
-	// 	errors.push ({msg: 'Password cannot match email.'})
-	// }
-	// if (password === firstName || password === lastName || password === firstName+lastName) {
-	// 	errors.push ({msg: 'Password cannot be your name.'})
-	// }
-	// if (password === "password") {
-	// 	errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
-	// }
-
 	// Check for duplicate user data
 
 	let alreadyEmail = await User.findOne({email})
@@ -55,18 +32,11 @@ router.post('/register', async (req,res) => {
 		return;
 	}
 
-
 	// encrypt password
 	const saltPassword = await bcrypt.genSalt(10);
 	const securePassword = await bcrypt.hash(password, saltPassword);
 
-	// const newUser = new userTemplateCopy({
-	// 	firstName,
-	// 	lastName,
-	// 	username,
-	// 	email,
-	// 	password:securePassword
-	// });
+
 	const newUser = new userTemplateCopy({...req.body, password:securePassword});
 	newUser.save()
 	.then(data => {
@@ -100,25 +70,29 @@ router.post('/login', (req,res) => {
 		}
 		// Match password
 		bcrypt.compare(password, user.password, (err, isMatch) => {
-				if(err) throw err;
-				if(isMatch) {
-					const id = user._id;
-					const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
-						expiresIn: "30d"
-					})
-					// send user info, excluding password
-					let userInfo = {
-						id: user._id,
-						firstName: user.firstName,
-						lastName: user.lastName,
-						username: user.username,
-						email: user.email,
-						date: user.date
-					}
-					res.json({auth:true, token, userInfo});
-				} else {
-					res.send({auth: false, message: "Password is incorrect."});
-				}
+			if(err) throw err;
+			if(isMatch) {
+				const id = user._id;
+				const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
+					expiresIn: "30d"
+				})
+				// send user info, excluding password
+				// console.log(user._doc)
+				// console.log(user.lastName)
+				let {password, __v, ...userInfo} = user._doc;
+				// 	userInfo
+				// 	id: user._id,
+				// 	firstName: user.firstName,
+				// 	lastName: user.lastName,
+				// 	username: user.username,
+				// 	email: user.email,
+				// 	date: user.date
+				// }
+				// console.log(userInfo);
+				res.json({auth:true, token, userInfo});
+			} else {
+				res.send({auth: false, message: "Password is incorrect."});
+			}
 		});
 
 	})
@@ -168,7 +142,24 @@ router.get('/getUsers', async (req,res) => {
 		.catch(err => console.log(err));
 })
 
-
+router.post('/updateProfile', (req,res) => {
+	console.log(req.body);
+	let {userId, user} = req.body; 
+	User.updateOne(
+		{ _id: userId },
+  			user
+  		)
+	.then(results => {
+		// console.log(results);
+		return User.findOne({ _id: userId},{password:0})
+	})
+	.then(user => {
+		// console.log(user);
+		res.send(user);
+	})
+	.catch(err => console.log(err));
+	// res.send(req.body);
+})
 
 
 

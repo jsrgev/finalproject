@@ -19,7 +19,7 @@ class TaskSection extends React.Component {
 		this.setState({areTasks: true});
 	}
 	updateTasks = () => {
-	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user.id})
+	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user._id})
 	    .then(response=> {
 			// console.log(this.props.tasks.length);
     	// console.log(response.data)

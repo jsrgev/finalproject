@@ -116,7 +116,7 @@ class Login extends React.Component {
 const dispatchStateToProps = (dispatch) => {
   return {
     setLoginStatus: (value) => dispatch(setLoginStatus(value)),
-    setUser: (id) => dispatch(setUser(id)),
+    setUser: (info) => dispatch(setUser(info)),
   }
 }
 
