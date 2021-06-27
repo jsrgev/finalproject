@@ -14,6 +14,7 @@ dotenv.config();
 
 
 router.post('/register', async (req,res) => {
+	console.log("running!");
 	console.log(req.body);
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
@@ -34,6 +35,8 @@ router.post('/register', async (req,res) => {
 
 	// encrypt password
 	const saltPassword = await bcrypt.genSalt(10);
+	// console.log(password)
+	// console.log(saltPassword)
 	const securePassword = await bcrypt.hash(password, saltPassword);
 
 

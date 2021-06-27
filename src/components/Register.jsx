@@ -14,7 +14,7 @@ class RegisterForm extends React.Component {
       password: "",
       password2: "",
       errors: [],
-      cleared: false
+      // cleared: false
     }
   }
   changeFirstName = (e) => {
@@ -35,7 +35,7 @@ class RegisterForm extends React.Component {
   changePassword2 = (e) => {
     this.setState({password2:e.target.value})
   }
-  checkForErrors = async () => {
+  checkForErrors = () => {
     let errors = [];
     // Check form for errors
     const {firstName, lastName, username, email, password, password2} = this.state;
@@ -60,8 +60,12 @@ class RegisterForm extends React.Component {
     if (password === "password") {
       errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
     }
-
-    let ok = await this.setState({"errors": errors, cleared: true});
+    // let counter = 0;
+    // for (let i=0; i<10000000; i++) {
+    //   counter += 2
+    // }
+    this.setState({"errors": errors});
+    return errors;
     // console.log(errors);
     // setTimeout(()=>{console.log(this.state.errors)},500);
   }
@@ -69,20 +73,22 @@ class RegisterForm extends React.Component {
     e.preventDefault();
     // this.setState({errors: []});
     await this.checkForErrors();
+    // let done = await this.checkForErrors();
+    // console.log(done);
     const registered = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      // password2: this.state.password2
     }
-    console.log(this.state.errors);
+    // console.log(this.state.errors);
     if (this.state.errors.length>0)  {
       return;
     }
-    return;
-    // console.log(registered);
+    const {password, errors, ...registered2} = this.state;
+    console.log({registered, registered2});
+    // return;
     axios.post('http://localhost:4000/user/register', registered)
     .then(response=> {
     // console.log(response.data);
@@ -106,11 +112,6 @@ class RegisterForm extends React.Component {
         }
         </div>
       )
-    // this.state.errors.map((item,i) => {
-      // return (
-        // <div className="alerts error" key={i}>{item.msg}</div>
-        // )
-    // });
 
     return (
           <main id="register">

@@ -22,12 +22,12 @@ class Login extends React.Component {
   // successful register sets state.justRegistered to true, so following message can be displayed
   this.props.location.state && this.setState({confirmation: "You're signed up! Now you can log in."})
   }
-  changeUsername = (e) => {
-    this.setState({username:e.target.value})
+  changeField = (e) => {
+    this.setState({[e.target.name]:e.target.value})
   }
-  changePassword = (e) => {
-    this.setState({password:e.target.value})
-  }
+  // changePassword = (e) => {
+    // this.setState({password:e.target.value})
+  // }
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({errors: "", confirmation: ""});
@@ -86,12 +86,14 @@ class Login extends React.Component {
             <form onSubmit={this.onSubmit}>
               <div><label>Username</label>
               <input type="text"
-              onChange={this.changeUsername}
+              name="username"
+              onChange={this.changeField}
               value={this.state.username}
               /></div>
               <div><label>Password</label>
               <input type="password"
-              onChange={this.changePassword}
+              name="password"
+              onChange={this.changeField}
               value={this.state.password}
               /></div>
               <div id="submitDiv">

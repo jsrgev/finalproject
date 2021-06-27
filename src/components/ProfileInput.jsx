@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {setUser} from '../redux/actions';
 import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
-import Collapsible from 'react-collapsible';
-import { isDate, isPast } from "date-fns";
+// import Collapsible from 'react-collapsible';
+// import { isDate, isPast } from "date-fns";
 
 class ProfileInput extends React.Component {
   constructor(){
@@ -40,7 +40,7 @@ class ProfileInput extends React.Component {
 	}
 	handleSubmit = () => {
 		// console.log(this.state);
-		let user = {...this.state}
+		// let user = {...this.state}
 		let data = {
 			userId : this.props.user._id,
 			user :{...this.state}
@@ -66,7 +66,7 @@ class ProfileInput extends React.Component {
 	// 	.catch(err => console.log(err))
 	// }
 	render () {
-		let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = this.props.user._id;
+		// let {firstName, lastName, location, gender, birthdate, avatar, links, dateEntered} = this.props.user._id;
 		return (
 			<div id="profileInput">
 					<div id="profileGrid">
@@ -91,10 +91,7 @@ class ProfileInput extends React.Component {
 }
 
 
-						{/*<div>First Name</div><div><input value={this.state.firstName} name="firstName" onChange={this.updateField} /></div>*/}
-						{/*<div>Last Name</div><div><input value={this.state.lastName} name="lastName" onChange={this.updateField} /></div>*/}
-
-
+						
 
 const mapStateToProps = (state) => {
 	return { 
