@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-// import {setUserTasks} from '../redux/actions';
 import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
@@ -18,25 +17,14 @@ class TaskInput extends React.Component {
 	      penaltyUrl: "",
 	      shared: false,
 	      dateShared: "",
+	      expanded: false
 		}
 	}
-	changeTaskName = (e) => {
-	    this.setState({taskName:e.target.value})
-	}
-	changeDateDue = (e) => {
-	    this.setState({dateDue:e.target.value})
+	changeField = (e) => {
+	  this.setState({[e.target.name]:e.target.value})
 	}
 	changeDateDue = (date) => {
 	    this.setState({dateDue:date})
-	}
-	changeDescription = (e) => {
-	    this.setState({description:e.target.value})
-	}
-	changePenaltyText = (e) => {
-	    this.setState({penaltyText:e.target.value})
-	}
-	changePenaltyUrl = (e) => {
-	    this.setState({penaltyUrl:e.target.value})
 	}
 	changeShared = (value) => {
 	    this.setState({shared:value})
@@ -44,7 +32,6 @@ class TaskInput extends React.Component {
 		  this.setState({dateShared:date});
 	}
 	handleClick = () => {
-		// console.log(this.state);
 		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
 		if (taskName.length === 0) {
 			return;
@@ -76,8 +63,8 @@ class TaskInput extends React.Component {
 			}
 		}
 
-	    const newTask = { ...this.state, userId: this.props.user._id};
-
+	    const thisTask = {...this.state, userId: this.props.user._id};
+	    const {expanded, ...newTask} = thisTask;
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
 	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
@@ -88,24 +75,48 @@ class TaskInput extends React.Component {
 	  })
 	    .catch(err=>console.log(err))
 	  }
-
+	setExpanded = (value) => {
+		this.setState({expanded:value});
+	}
 	render () {
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
 		let trigger =  <>
-			<TextareaAutosize type="text" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeTaskName} />
+			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
 			</>
 
 		let sibling = <>
-			<DateInput changeDateDue={this.changeDateDue} dateDue={dateDue} />
+			<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={dateDue} />
 			<div className="i-wrapper" onClick={this.handleClick}>
 				<i className="fas fa-plus"></i>
 				<i className="far fa-circle"></i>
 			</div>
 			</>
-		let triggerDisabled: false;
-		if (taskName.length>0 && document.getElementById("mainInput").closest(".is-open")) {
-			triggerDisabled = true;
-		}
+		// to prevent collapsing once user already has information entered
+		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyUrl.length>0)
+					&& this.state.expanded) ? true : false;
+
+		// let expanded = console.log(document.querySelector("#taskInput .Collapsible__trigger")) ?
+			// document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open") :
+			// false;
+
+		// console.log(document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open"));
+		// console.log(expanded);
+		// let open = document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open");
+		
+		// if (taskName.length>0 && expanded) {
+			// triggerDisabled = true;
+		// }
+
+		// if (
+				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
+					// &&
+				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
+			// ) {
+
+			// console.log(document.querySelector("#taskInput .Collapsible__trigger"));
+		// }
+
+		// console.log(open	);
 		return (
 			<div id="taskInput">
 			    <Collapsible
@@ -114,30 +125,36 @@ class TaskInput extends React.Component {
 				    transitionTime="70"
 				    transitionCloseTime="70"
 				    triggerDisabled={triggerDisabled}
+				    onOpening={()=>this.setExpanded(true)}
+				    onClosing={()=>this.setExpanded(false)}
 				    >
 				    <div>
 					    <label>Description</label>
-				    	<TextareaAutosize value={description} onChange={this.changeDescription} />
+				    	<TextareaAutosize name="description" value={description} onChange={this.changeField} />
 				    </div>
 				    <div>
-					    <label>PenaltyText</label>
-					    <TextareaAutosize value={penaltyText} onChange={this.changePenaltyText} />
+					    <label>Penalty</label>
+					    <TextareaAutosize name="penaltyText" value={penaltyText} onChange={this.changeField} />
 				    </div>
 				    <div>
-					    <label>Penalty URL</label>
-					    <input value={penaltyUrl} onChange={this.changePenaltyUrl} />
+					    <label>IFTTT URL</label>
+					    <input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />
 				    </div>
-	          <div className="controls">
-		          <div></div>
-	            <div className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}>
-	              {shared ? "Shared" : "Share"}
-	              <span className="icons">
-	                <i className="far fa-share-square"></i>
+				    <div>
+					    <label>Privacy</label>
+					    <span name="shared" onClick={()=>this.changeShared(!shared)}>{shared ? "Public" : "Private"}</span>
+				    </div>
+	          {/*<div className="controls">*/}
+		          {/*<div></div>*/}
+	            {/*<div name="shared" className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}> Will be */}
+	              {/*{shared ? " Public" : " Private"}*/}
+	              {/*<span className="icons">*/}
+	                {/*<i className="far fa-share-square"></i>*/}
 	                {/*<i className="fas fa-share-square"></i>*/}
-	              </span>
-	            </div>
-		          <div></div>
-						</div>
+	              {/*</span>*/}
+	            {/*</div>*/}
+		          {/*<div></div>*/}
+						{/*</div>*/}
 			    </Collapsible>
 			</div>
 		)
@@ -151,11 +168,5 @@ const mapStateToProps = (state) => {
 	}
 }
 
-// const dispatchStateToProps = (dispatch) => {
-//   return {
-//     // setUserTasks: (array) => dispatch(setUserTasks(array)),
-//     // setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
-//   }
-// }
 export default connect(mapStateToProps)(TaskInput);
 
