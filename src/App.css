@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Fugaz+One&family=Libre+Baskerville:ital@0;1&family=Lilita+One&family=Rubik:ital,wght@0,400;0,600;1,400&display=swap');
 :root {
   --blue: #5075ff;
   --darkgray: #53575a;
@@ -8,11 +9,12 @@
 /* Typography  */
 
 html {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 body, input, textarea {
   font-family: calibri, sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-size: 1rem;
 }
 
@@ -30,15 +32,37 @@ a.active {
   pointer-events: none;
 }
 
-nav a {
+header {
+  text-transform: uppercase;
   font-weight: 600;
-  color: var(--blue);
-  position: sticky;
-  top: 2rem;
-  z-index: 2;
 }
 
+header a {
+  font-weight: 600;
+  color: var(--blue);
+}
 
+#title {
+  font-family: 'Fugaz One', cursive;
+  font-family: 'Chewy', cursive;
+  font-family: 'Lilita One', cursive;
+  font-family: 'Libre Baskerville', serif;
+  font-family: 'Fugaz One', cursive;
+  text-transform: uppercase;
+  font-size: 2rem;
+    position: relative;
+    top: 0.3rem;
+}
+
+#title {
+  color: #F05157;
+}
+
+.heading {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+}
 
 textarea::placeholder, input::placeholder {
   color: var(--darkgray);
@@ -75,14 +99,14 @@ body {
   gap: 1rem;
 }
 
-nav, footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen {
+header, footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen {
   padding: 1rem;
   border-radius: 10px;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
-nav, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
+header, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
   background-color: var(--transparentwhite);
 }
 
@@ -96,22 +120,25 @@ nav, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
 
 
 
-/* NAV */
+/* HEADER */
 
-nav {
+header {
   display: grid;
   grid-template-columns: 1fr max-content;
-
+  /*position: sticky;*/
+  /*top: 2rem;*/
+  /*z-index: 2;*/
 }
 
-nav ul {
+
+header ul {
   padding: 0;
   margin: 0;
   list-style-type: none;
   justify-items: left;
 }
 
-nav li {
+header li {
   display: inline-block;
   padding-left: 1rem;
 }
@@ -222,7 +249,7 @@ nav li {
 #register form div:not(#submitDiv), #login form div:not(#submitDiv) {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 7.5rem 10rem;
+  grid-template-columns: 7.5rem 11rem;
 }
 
 
@@ -287,7 +314,7 @@ nav li {
 
 #taskInput .Collapsible__trigger {
   display: inline-grid;
-  grid-template-columns: 15rem 10rem 1rem;
+  grid-template-columns: 15rem 11rem 1rem;
   width: 100%;
   gap: 1rem;
   /*border-bottom: 1px solid lightgray;*/
@@ -305,7 +332,7 @@ nav li {
 
 .taskList .Collapsible__trigger:not(.completedTaskList > div > span) {
   display: inline-grid;
-  grid-template-columns: 15rem 10rem 1rem;
+  grid-template-columns: 15rem 11rem 1rem;
   /*grid-template-columns: 1fr 10rem;*/
   /*width:  calc(100% - 2em);*/
   width: 100%;
@@ -338,7 +365,7 @@ nav li {
 }
 
 .react-datepicker__input-container {
-  width: 10rem !important;
+  width: 11rem !important;
   /*border-bottom: 1px solid lightgray;*/
 }
 
@@ -391,7 +418,7 @@ nav li {
 
 #taskInput .Collapsible__contentInner > div {
   display: grid;
-  grid-template-columns: 5rem 1fr;
+  grid-template-columns: 6rem 1fr;
   gap: 1rem;
   }
 
@@ -496,7 +523,7 @@ nav li {
 
 .taskList .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
   display: grid;
-  grid-template-columns: 5rem 1fr;
+  grid-template-columns: 6rem 1fr;
   gap: 1rem;
 }
 

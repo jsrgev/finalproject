@@ -60,7 +60,11 @@ class Feed extends React.Component {
 		let heading = (userId) ?
 			<div className="heading" > {
 				(this.props.users) ?
-				`${this.getFullName(userId)}'s Shared Tasks`
+				`${
+					(userId === this.props.user._id) ?
+					"My" :
+					`${this.getFullName(userId)}'s`
+				} Shared Tasks`
 				 :
 				"Loading"
 			}
