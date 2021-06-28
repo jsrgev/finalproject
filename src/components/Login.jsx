@@ -16,7 +16,6 @@ class Login extends React.Component {
     }
   }
   componentDidMount = () => {
-    // console.log(this.props.location);
   // logout sets loggedOut to true, so following message can be displayed
   (this.props.location.loggedOut === true) && this.setState({confirmation: "You've successfully logged out."})
   // successful register sets state.justRegistered to true, so following message can be displayed
@@ -25,9 +24,6 @@ class Login extends React.Component {
   changeField = (e) => {
     this.setState({[e.target.name]:e.target.value})
   }
-  // changePassword = (e) => {
-    // this.setState({password:e.target.value})
-  // }
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({errors: "", confirmation: ""});
@@ -38,18 +34,14 @@ class Login extends React.Component {
     axios.post('http://localhost:4000/user/login', login)
     .then(response => {
       if (response.data.auth) {
-        // console.log(response.data);
         this.setState({confirmation:"You've successfully logged in."})
         localStorage.setItem("token", response.data.token);
-        // console.log(response.data);
         localStorage.setItem("user", JSON.stringify(response.data.userInfo));
         this.props.setLoginStatus(true);
         this.props.setUser(response.data.userInfo)
-    // console.log(this.props);
         this.props.history.push('/');
       } else {
         this.setState({errors: response.data.message})
-        // console.log(this.state)
       }
     })
   }
@@ -70,15 +62,11 @@ class Login extends React.Component {
     .catch(err =>console.log(err))
   }
   render() {
-    // console.log(this.props)
-    // console.log(this.state);
     let alerts = (this.state.confirmation) ?
       <div className="alerts"><div>{this.state.confirmation}</div></div> :
       (this.state.errors) ?
       <div className="alerts"><div className="error">{this.state.errors}</div></div> : null
   // }
-
-    // console.log(this.props.loggedIn);
     return (
           <main id="login">
           <h2>Login</h2>
@@ -107,13 +95,6 @@ class Login extends React.Component {
   }
 }
 
-// export default Login;
-
-// const mapStateToProps = (state) => {
-//   return {
-//     loggedIn: state.userReducer.loggedIn
-//   }
-// }
 
 const dispatchStateToProps = (dispatch) => {
   return {

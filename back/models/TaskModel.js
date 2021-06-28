@@ -37,6 +37,10 @@ const taskTemplate = new mongoose.Schema({
 		type:Boolean,
 		required:true
 	},
+	dateShared: {
+		type:Date,
+		required:false
+	},
 	completed: {
 		type:Boolean,
 		default:false

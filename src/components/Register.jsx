@@ -14,80 +14,61 @@ class RegisterForm extends React.Component {
       password: "",
       password2: "",
       errors: [],
-      // cleared: false
     }
   }
-  changeFirstName = (e) => {
-    this.setState({firstName:e.target.value})
-  }
-  changeLastName = (e) => {
-    this.setState({lastName:e.target.value})
-  }
-  changeUsername = (e) => {
-    this.setState({username:e.target.value})
-  }
-  changeEmail = (e) => {
-    this.setState({email:e.target.value})
-  }
-  changePassword = (e) => {
-    this.setState({password:e.target.value})
-  }
-  changePassword2 = (e) => {
-    this.setState({password2:e.target.value})
+  changeField = (e) => {
+    this.setState({[e.target.name]:e.target.value})
   }
   checkForErrors = () => {
-    let errors = [];
-    // Check form for errors
-    const {firstName, lastName, username, email, password, password2} = this.state;
-    if (!firstName || !lastName || !email || !username || !password || !password2) {
-      errors.push ({msg: 'Please fill in all fields.'})
-    }
-    if (password !== password2 && password.length>0 && password2.length>0) {
-      errors.push ({msg: 'Passwords do not match.'})
-    }
-    if (password.length<6 && password.length>0) {
-      errors.push ({msg: 'Password must be at least 6 characters.'})
-    }
-    if (password === username) {
-      errors.push ({msg: 'Password cannot match username.'})
-    }
-    if (password === email) {
-      errors.push ({msg: 'Password cannot match email.'})
-    }
-    if (password === firstName || password === lastName || password === firstName+lastName) {
-      errors.push ({msg: 'Password cannot be your name.'})
-    }
-    if (password === "password") {
-      errors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
-    }
-    // let counter = 0;
-    // for (let i=0; i<10000000; i++) {
-    //   counter += 2
-    // }
-    this.setState({"errors": errors});
-    return errors;
-    // console.log(errors);
-    // setTimeout(()=>{console.log(this.state.errors)},500);
+      let errors = [];
+      let passwordErrors = [];
+      // Check form for errors
+      const {firstName, lastName, username, email, password, password2} = this.state;
+      if (!firstName || !lastName || !email || !username || !password || !password2) {
+         errors.push ({msg: 'Please fill in all fields.'})
+      }
+
+      if (password.length>0) {
+         if (password.length<6) {
+           passwordErrors.push ({msg: 'Password must be at least 6 characters.'})
+         } else {
+
+            if (password === username) {
+               passwordErrors.push ({msg: 'Password cannot match username.'})
+            }
+            if (password === email) {
+               passwordErrors.push ({msg: 'Password cannot match email.'})
+            }
+            if (password === firstName || password === lastName || password === firstName+lastName) {
+               passwordErrors.push ({msg: 'Password cannot be your name.'})
+            }
+            if (password === "password") {
+               passwordErrors.push ({msg: 'Password is too easy to guess. Please choose a different one.'})
+            }
+         }
+         if (passwordErrors.length===0 && password !== password2 && password2.length>0) {
+            passwordErrors.push ({msg: 'Passwords do not match.'})
+         }
+      }
+
+      this.setState({"errors": [...errors,...passwordErrors]});
+      return errors;
   }
   onSubmit = async (e) => {
     e.preventDefault();
-    // this.setState({errors: []});
     await this.checkForErrors();
-    // let done = await this.checkForErrors();
-    // console.log(done);
-    const registered = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-    }
-    // console.log(this.state.errors);
+    // const registered = {
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName,
+    //   username: this.state.username,
+    //   email: this.state.email,
+    //   password: this.state.password,
+    // }
     if (this.state.errors.length>0)  {
       return;
     }
-    const {password, errors, ...registered2} = this.state;
-    console.log({registered, registered2});
+    const {password2, errors, ...registered} = this.state;
+    // console.log({registered, registered2});
     // return;
     axios.post('http://localhost:4000/user/register', registered)
     .then(response=> {
@@ -120,32 +101,38 @@ class RegisterForm extends React.Component {
             <form onSubmit={this.onSubmit}>
               <div><label>First Name</label>
               <input type="text"
-              onChange={this.changeFirstName}
+              name="firstName"
+              onChange={this.changeField}
               value={this.state.firstName}
               /></div>
               <div><label>Last Name</label>
               <input type="text"
-              onChange={this.changeLastName}
+              name="lastName"
+              onChange={this.changeField}
               value={this.state.lastName}
               /></div>
               <div><label>Username</label>
               <input type="text"
-              onChange={this.changeUsername}
+              name="username"
+              onChange={this.changeField}
               value={this.state.username}
               /></div>
               <div><label>Email</label>
               <input type="email"
-              onChange={this.changeEmail}
+              name="email"
+              onChange={this.changeField}
               value={this.state.email}
               /></div>
               <div><label>Password</label>
               <input type="password"
-              onChange={this.changePassword}
+              name="password"
+              onChange={this.changeField}
               value={this.state.password}
               /></div>
               <div><label>Confirm password</label>
               <input type="password"
-              onChange={this.changePassword2}
+              name="password2"
+              onChange={this.changeField}
               value={this.state.password2}
               /></div>
               <div id="submitDiv">

@@ -16,7 +16,8 @@ class TaskInput extends React.Component {
 	      description: "",
 	      penaltyText: "",
 	      penaltyUrl: "",
-	      shared: false
+	      shared: false,
+	      dateShared: "",
 		}
 	}
 	changeTaskName = (e) => {
@@ -39,8 +40,11 @@ class TaskInput extends React.Component {
 	}
 	changeShared = (value) => {
 	    this.setState({shared:value})
+	    let date = value ? new Date() : "";
+		  this.setState({dateShared:date});
 	}
 	handleClick = () => {
+		// console.log(this.state);
 		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
 		if (taskName.length === 0) {
 			return;
@@ -72,12 +76,11 @@ class TaskInput extends React.Component {
 			}
 		}
 
-	    const newTask = { ...this.state, userId: this.props.user.id};
+	    const newTask = { ...this.state, userId: this.props.user._id};
 
 	    axios.post('http://localhost:4000/task/addTask', newTask)
 	    .then(response=> {
-	    	// console.log(response.data);
-	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false});
+	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
 	    document.querySelector(".react-datepicker__input-container>input").value="";
 	    this.props.updateTasks();
 		this.props.thereAreTasks();
@@ -86,14 +89,6 @@ class TaskInput extends React.Component {
 	    .catch(err=>console.log(err))
 	  }
 
-	// updateFeed = () => {
-	//     axios.get('http://localhost:4000/task/getAllPublicTasks')
-	//     .then(response=> {
-	// 	    this.props.setAllPublicTasks(response.data.tasks);
-	// 	    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
-	// 	})
-	// 	.catch(err => console.log(err))
-	// }
 	render () {
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
 		let trigger =  <>
@@ -111,9 +106,6 @@ class TaskInput extends React.Component {
 		if (taskName.length>0 && document.getElementById("mainInput").closest(".is-open")) {
 			triggerDisabled = true;
 		}
-		// console.log(this.state.taskName.length>0);
-		// console.log(document.getElementById("mainInput").closest(".is-open"));
-		// console.log(this.state.taskName.length>0 && document.getElementById("mainInput").closest(".is-open"));
 		return (
 			<div id="taskInput">
 			    <Collapsible
@@ -135,16 +127,17 @@ class TaskInput extends React.Component {
 					    <label>Penalty URL</label>
 					    <input value={penaltyUrl} onChange={this.changePenaltyUrl} />
 				    </div>
-		          <div className="controls">
-		            <div className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}>
-		              {shared ? "Shared" : "Share"}
-		              <span className="icons">
-		                <i className="far fa-share-square"></i>
-		                {/*<i className="fas fa-share-square"></i>*/}
-		              </span>
-		            </div>
-					</div>
-			    	{/*<div>Shared <input type="checkbox" checked={this.state.shared} onChange={this.changeShared}/></div>*/}
+	          <div className="controls">
+		          <div></div>
+	            <div className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}>
+	              {shared ? "Shared" : "Share"}
+	              <span className="icons">
+	                <i className="far fa-share-square"></i>
+	                {/*<i className="fas fa-share-square"></i>*/}
+	              </span>
+	            </div>
+		          <div></div>
+						</div>
 			    </Collapsible>
 			</div>
 		)

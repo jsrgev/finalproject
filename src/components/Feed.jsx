@@ -3,13 +3,13 @@ import PostDisplay from './PostDisplay.jsx';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
-import {getFullName} from '../functions';
+// import {getFullName} from '../functions';
 
 class Feed extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-			sharedTasks: true
+			tasksFetched: false
 		}
 	}
 	componentDidMount = () => {
@@ -20,7 +20,8 @@ class Feed extends React.Component {
 	    axios.get('http://localhost:4000/task/getAllPublicTasks')
 	    .then(response=> {
 		    this.props.setAllPublicTasks(response.data.tasks);
-		    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
+		    this.setState({tasksFetched:true});
+		    // ((response.data.result) && response.data.tasks.length===0) && this.setState({presumedSharedTasks: false});
 		})
 		.catch(err => console.log(err))
 	}
@@ -47,9 +48,9 @@ class Feed extends React.Component {
 	// 	let userPublicTasks = allPublicTasks.filter(a => a.userId === userId);
 	// 	// console.log(userPublicTasks);
 	// }
-	
+
 	render() {
-		console.log(this.props);
+		// console.log(this.props);
 		let {allPublicTasks, userId}  = this.props;
 
 		let tasksToDisplay = (userId) ?
@@ -70,17 +71,21 @@ class Feed extends React.Component {
 		return (
 			<div id="feed">
 				{heading}
-				{(!this.state.sharedTasks) ?
-					<div className="loadingScreen">There are currently no shared tasks.</div>
-					:
-					tasksToDisplay.length>0 ?
+				{(!this.state.tasksFetched) ?
+					// at first, assume there are shared tasks
+					<div className="loadingScreen">Loading ...</div> :
+
+					(tasksToDisplay.length===0 && userId) ?
+					<div className="loadingScreen">This user is not sharing any tasks right now.</div> :
+
+					(tasksToDisplay.length===0 && !userId) ?
+					<div className="loadingScreen">There are currently no shared tasks to show.</div> :
+
 					tasksToDisplay.map(({_id},i) => {
 						return(
 							<PostDisplay id={_id} key={i} updateFeed={this.updateFeed} />
 							)
 					})
-				 :
-				<div className="loadingScreen">Loading ...</div>
 				}
 			</div>
 

@@ -54,8 +54,6 @@ class TaskSection extends React.Component {
 		if (this.props.user && !this.state.tasksUpdated) {
 			this.updateTasks();
 		};
-		// let scheduled = [];
-		// let unscheduled = [];
 		let uncompleted = [];
 		let completed = [];
 		if (this.props.tasks) {
@@ -68,12 +66,7 @@ class TaskSection extends React.Component {
 			this.props.tasks.forEach(a => {
 				(a.completed) && completed.push(a);
 			});
-			// this.props.tasks.forEach(a => {
-			// 	(!a.dateDue && a.completed) && completed.push(a);
-			// });
-			// allUncompleted = scheduled.concat(unscheduled);
 		}
-		// let completedReverse = [...completed];
 		completed.reverse();
 
 		let taskList = (!this.state.areTasks) ?

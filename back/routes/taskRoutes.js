@@ -74,7 +74,14 @@ const stopCron = (taskId) => {
 // ROUTES
 
 router.post('/addTask', async (req,res) => {
+	// let  =
 	const newTask = new taskTemplateCopy({...req.body});
+	// if (req.body.shared) {
+	// 	let obj = {...req.body,sharedDate:new Date()};
+	// 	// let a = 
+	// 	console.log(newTask);
+	// 	console.log(obj);
+	// }
 	newTask.save()
 	.then(data => {
 		startCronJobs();

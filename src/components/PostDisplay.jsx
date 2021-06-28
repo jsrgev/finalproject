@@ -107,6 +107,7 @@ class PostDisplay extends React.Component {
 	    	likeCountDisplay = `${likes.length} likes`
 	    }
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
+	    let penaltyDisplay = penaltyText && <div>Penalty: {penaltyText}</div>
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
@@ -122,7 +123,7 @@ class PostDisplay extends React.Component {
 						</Link>
 					</div>
 					<div>{description}</div>
-					<div>Penalty: {penaltyText}</div>
+					{penaltyDisplay}
 				</div>
 				<div className="postBottom">
 					<button onClick={() => this.handleClickLike(thisUserLiked)}>Like</button>

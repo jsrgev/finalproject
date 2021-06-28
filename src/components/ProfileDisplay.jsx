@@ -29,11 +29,11 @@ class Profile extends React.Component {
 				<img className="avatar-medium" src={avatarUrl} alt="avatar" />
 				<div id="profileGrid">
 					<div>About</div><div>{about}</div>
-					<div>Member since</div><div>{formatDate(dateEntered,false)}</div>
 					{genderDisplay}
 					{locationDisplay}
 					{birthdateDisplay}
 					{linksDisplay}
+					<div>Member since</div><div>{formatDate(dateEntered,false)}</div>
 				</div>
 				{editButton}
 		</>

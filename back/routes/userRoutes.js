@@ -15,7 +15,7 @@ dotenv.config();
 
 router.post('/register', async (req,res) => {
 	// console.log("running!");
-	// console.log(req.body);
+	console.log(req.body);
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
 

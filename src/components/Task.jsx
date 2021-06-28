@@ -51,6 +51,7 @@ class Task extends React.Component {
     })
     .then(response=> {
       this.props.updateTasks();
+      this.props.updateFeed();
     })
     .catch(err=>console.log(err))
   }
@@ -66,6 +67,7 @@ class Task extends React.Component {
     })
     .then(response=> {
       this.props.updateTasks();
+      this.props.updateFeed();
     })
     .catch(err=>console.log(err))
   }
@@ -97,17 +99,17 @@ class Task extends React.Component {
           {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
           {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
           <div className="controls">
+            <div onClick={()=>this.editTask()}>Edit
+              <span className="icons">
+                <i className="far fa-edit"></i>
+                {/*<i className="fas fa-edit"></i>*/}
+              </span>
+            </div>
             <div className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}>
               {shared ? "Shared" : "Share"}
               <span className="icons">
                 <i className="far fa-share-square"></i>
                 {/*<i className="fas fa-share-square"></i>*/}
-              </span>
-            </div>
-            <div onClick={()=>this.editTask()}>Edit
-              <span className="icons">
-                <i className="far fa-edit"></i>
-                {/*<i className="fas fa-edit"></i>*/}
               </span>
             </div>
             <div onClick={this.deleteTask}>Delete
