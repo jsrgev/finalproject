@@ -61,6 +61,7 @@ body {
    background:
   radial-gradient(circle at 2.03% 52.04%, #00d2ff, transparent 59%),radial-gradient(circle at 97.97% 29.93%, #3a7bd5, transparent 67%),radial-gradient(circle at 14.44% 30.78%, #1117bf, transparent 98%),radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
   background-attachment: fixed;
+  background: ghostwhite;
 }
 
 /*form {
@@ -191,6 +192,21 @@ nav li {
     transform: rotateZ(180deg); }
 
 
+.post-completed {
+
+}
+
+.post-active {
+
+}
+
+.post-penalized {
+
+}
+
+.post-proposed {
+
+}
 
 /* REGISTER & LOGIN */
 
