@@ -15,12 +15,7 @@ import {setLoginStatus,setUser} from './redux/actions';
 
 class App extends React.Component {
   componentDidMount = () => {
-      // console.log(localStorage.getItem("token"));
-      // console.log(this.props.loggedIn);
     if (localStorage.getItem("token")) {
-    // console.log(localStorage.getItem("token"));
-      // console.log("token")
-      // console.log(JSON.parse(localStorage.getItem("user")));
       this.props.setLoginStatus(true);
       this.props.setUser(JSON.parse(localStorage.getItem("user")));
     }
@@ -64,10 +59,9 @@ const mapStateToProps = (state) => {
 const dispatchStateToProps = (dispatch) => {
   return {
     setLoginStatus: (value) => dispatch(setLoginStatus(value)),
-    setUser: (id) => dispatch(setUser(id)),
+    setUser: (info) => dispatch(setUser(info)),
   }
 }
 
 export default connect(mapStateToProps, dispatchStateToProps)(App);
 
-// export default App;

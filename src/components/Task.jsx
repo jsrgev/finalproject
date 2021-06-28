@@ -42,13 +42,10 @@ class Task extends React.Component {
     })
     .catch(err=>console.log(err))
   }
-  changeCompleted = (value) => {
-    // console.log(this.props.task.penaltyUrl + this.props.shared.shared);
-    let task = this.props.tasks.find(a => a._id === this.props.taskId);
-    let penalty = (task.penaltyUrl && task.shared) ? true : false;
-    // console.log(penalty)
-    axios.post('http://localhost:4000/task/updateUserTaskCompleted', {
-      "taskId": this.props.item._id,
+  changeCompleted = (value,penaltyUrl,shared) => {
+    let penalty = (penaltyUrl && shared) ? true : false;
+      axios.post('http://localhost:4000/task/updateUserTaskCompleted', {
+      "taskId": this.props.taskId,
       "value": value,
       "penalty": penalty
     })
@@ -79,7 +76,7 @@ class Task extends React.Component {
     let completedClass = completed ? "completed" : "uncompleted";
     let pastClass = !dateDue ? null : isPast(new Date(dateDue)) ? "past": null;
 
-    let sibling = <div className="sibling" onClick={()=>this.changeCompleted(!completed)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i></div>;
+    let sibling = <div className="sibling" onClick={()=>this.changeCompleted(!completed, penaltyUrl, shared)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i></div>;
 
     let trigger = <>
         <div>{taskName}</div>

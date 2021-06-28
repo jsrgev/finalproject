@@ -507,6 +507,7 @@ nav li {
 
 
 .controls {
+  display: grid;
   grid-template-columns: repeat(3, 1fr) !important;
   /*background: white;*/
   justify-items: center;
