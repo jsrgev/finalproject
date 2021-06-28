@@ -33,7 +33,12 @@ a.active {
 nav a {
   font-weight: 600;
   color: var(--blue);
+  position: sticky;
+  top: 2rem;
+  z-index: 2;
 }
+
+
 
 textarea::placeholder, input::placeholder {
   color: var(--darkgray);
@@ -69,19 +74,19 @@ body {
   gap: 1rem;
 }
 
-nav, main:not(#splitMain), #taskSection, footer, .postDisplay, .loadingScreen {
+nav, footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen {
   padding: 1rem;
   border-radius: 10px;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
-nav, main:not(#splitMain), footer, .postDisplay, .loadingScreen {
+nav, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
   background-color: var(--transparentwhite);
 }
 
 
-#splitMain {
+.splitScreen {
   display: grid;
   gap: 1rem;
   grid-template-columns: 3fr 2fr;
@@ -117,6 +122,12 @@ nav li {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+}
+
+.heading {
+  background: var(--blue);
+  border-radius: 10px;
+  padding: .5rem 1rem;
 }
 
 .postDisplay {

@@ -2,12 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setUser} from '../redux/actions';
-import DateInput from './DateInput';
+// import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
-// import Collapsible from 'react-collapsible';
-// import { isDate, isPast } from "date-fns";
 
-class ProfileInput extends React.Component {
+class ProfileEdit extends React.Component {
   constructor(){
 	    super();
 	    this.state = {
@@ -36,8 +34,9 @@ class ProfileInput extends React.Component {
 		})
 	}
 	updateField = (e) => {
-		// console.log(e.target.value);
 	  this.setState({[e.target.name]:e.target.value})
+	}
+	updateGender = (e) => {
 	  if (e.target.name === "gender") {
 	  	let {avatarUrl} = this.state;
 	  	let newAvatarUrl = avatarUrl;
@@ -64,16 +63,12 @@ class ProfileInput extends React.Component {
 	  }
 	}
 	handleSubmit = () => {
-		console.log(this.state);
-		// let user = {...this.state}
 		let data = {
 			userId : this.props.user._id,
 			user :{...this.state}
 		}
 		axios.post('http://localhost:4000/user/updateProfile', data)
 	    .then(res => {
-	  	console.log(res.data);
-	  	// console.log(JSON.stringify.res.data)
       localStorage.setItem("user", JSON.stringify(res.data));
       this.props.setUser(res.data);
 			this.props.getUsers();
@@ -81,15 +76,6 @@ class ProfileInput extends React.Component {
 	  })
 	   .catch(err=>console.log(err))
 	}
-
-	// updateFeed = () => {
-	//     axios.get('http://localhost:4000/task/getAllPublicTasks')
-	//     .then(response=> {
-	// 	    this.props.setAllPublicTasks(response.data.tasks);
-	// 	    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});
-	// 	})
-	// 	.catch(err => console.log(err))
-	// }
 	render () {
 		let {firstName, lastName, avatarUrl} = this.state;
 		return (
@@ -103,22 +89,20 @@ class ProfileInput extends React.Component {
 						{/*<div>Birthday</div><div><div>{this.state.birthdate}</div></div>*/}
 						{/*<div>Links</div><div><div>{this.state.links}</div></div>*/}
 						<div>About</div><div><input value={this.state.about} name="about" onChange={this.updateField} /></div>
-						{/*<div>Current Tasks</div>*/}
 						<div>Gender</div>
 				      <div name="gender" value={this.state.gender} onChange={this.updateField} >
-				        <input type="radio" checked={this.state.gender === "male"} value="male" name="gender" /> Male
-				        <input type="radio" checked={this.state.gender === "female"} value="female" name="gender" /> Female
-				        <input type="radio" checked={this.state.gender === "noAnswer"} value="noAnswer" name="gender" /> No answer
+				        <input type="radio" checked={this.state.gender === "male"} onChange={this.updateGender} value="male" name="gender" /> Male
+				        <input type="radio" checked={this.state.gender === "female"} onChange={this.updateGender} value="female" name="gender" /> Female
+				        <input type="radio" checked={this.state.gender === "noAnswer"} onChange={this.updateGender} value="noAnswer" name="gender" /> No answer
 				      </div>
 					</div>
-					<button onClick={()=>this.props.editProfile(false``)}>Cancel</button>
+					<button onClick={()=>this.props.editProfile(false)}>Cancel</button>
 					<button onClick={this.handleSubmit}>Submit</button>
 				</div>
 			</>
 		)
 	}
 }
-
 
 
 const mapStateToProps = (state) => {
@@ -135,5 +119,5 @@ const dispatchStateToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, dispatchStateToProps)(ProfileInput);
+export default connect(mapStateToProps, dispatchStateToProps)(ProfileEdit);
 

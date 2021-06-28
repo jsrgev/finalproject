@@ -10,6 +10,10 @@ const axios = require('axios');
 var CronJob = require('cron').CronJob;
 var CronJobManager = require('cron-job-manager');
 
+// process.env.port in case 4000 not available
+const port = process.env.port || 4000
+
+
 // delete the following?
 app.use(express.urlencoded({ extended: false}));
 
@@ -50,7 +54,6 @@ const startCronJobs = (req,res) => {
 startCronJobs()
 
 
-const port = 4000
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
 
 

@@ -2,11 +2,11 @@ import React from 'react';
 import Feed from './Feed.jsx';
 import TaskSection from './TaskSection.jsx';
 
-class SplitDisplay extends React.Component {
+class Home extends React.Component {
   render() {
     return (
       <>
-        <main id="splitMain">
+        <main className="splitScreen">
           <Feed />    
           <TaskSection />
         </main>
@@ -15,4 +15,4 @@ class SplitDisplay extends React.Component {
   }
 }
 
-export default SplitDisplay;
+export default Home;

@@ -14,7 +14,7 @@ class NavBar extends React.Component {
 		const username = this.props.user.username;
 			return (
 			<nav>
-				<NavLink exact to='/'>Task Challenge</NavLink>
+				<NavLink exact to='/'>Finish It!</NavLink>
 				{/*<NavLink exact to='/'>Home</NavLink>*/}
 				<ul>
 				<NavLink exact to='/'>Home</NavLink>

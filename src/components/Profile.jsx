@@ -3,7 +3,8 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 // import {formatDate} from '../functions';
-import ProfileInput from './ProfileInput';
+import Feed from './Feed';
+import ProfileEdit from './ProfileEdit';
 import ProfileDisplay from './ProfileDisplay';
 
 class Profile extends React.Component {
@@ -26,29 +27,25 @@ class Profile extends React.Component {
 	}
 	editProfile = (value) => {
 		this.setState({editMode: value})
-		// console.log("edit");
 	}
 	getUserId = () => {
 			let username = this.props.match.params.username;
 			return this.props.users.find(a => a.username === username)._id
 	}
 	render () {
-		// if (this.props.users.length===0) {
-			// return (
-				// <div className="loadingScreen">Loading ...</div>
-			// )
-		// } else {
-			// let username = this.props.match.params.username;
-			// let userId = this.props.users.find(a => a.username === username)._id
+			let userId = this.props.users.length>0 && this.getUserId();
 			return (
 				<>
-		      <main id="profile">
+		      <main className="splitScreen">
+		      <Feed userId={userId} />
+		      <div id="profile">
 		      	{ this.props.users.length===0 ?
-				<div className="loadingScreen">Loading ...</div> :
+				<div>Loading ...</div> :
 		      		this.state.editMode ?
-						<ProfileInput editProfile={this.editProfile} getUsers={this.getUsers} /> :
-		      	<ProfileDisplay userId={this.getUserId()} editProfile={this.editProfile} />
+						<ProfileEdit editProfile={this.editProfile} getUsers={this.getUsers} /> :
+		      	<ProfileDisplay userId={userId} editProfile={this.editProfile} />
 		      	}
+		      	</div>
 		      </main>
 		      </>
 			)
@@ -60,8 +57,6 @@ const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
     users: state.allUserReducer.users,
-    // tasks: state.userTaskReducer.tasks,
-    // allPublicTasks: state.allPublicTaskReducer.tasks
   }
 }
 

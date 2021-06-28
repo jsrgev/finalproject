@@ -2,7 +2,7 @@ import React from 'react';
 // import axios from 'axios';
 import './App.css';
 import NavBar from './components/NavBar.jsx';
-import SplitDisplay from './components/SplitDisplay.jsx';
+import Home from './components/Home.jsx';
 import Profile from './components/Profile.jsx';
 import About from './components/About.jsx';
 import Login from './components/Login.jsx';
@@ -39,7 +39,7 @@ class App extends React.Component {
           <Route path="/about" component={About} />
           <Route path="/profile/:username" component={Profile} />
           <Route path="/account" component={Account} />
-          <Route path="/" component={SplitDisplay} />
+          <Route path="/" component={Home} />
         </Switch>
           </>
           }
