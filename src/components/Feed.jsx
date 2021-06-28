@@ -48,7 +48,9 @@ class Feed extends React.Component {
 	// 	let userPublicTasks = allPublicTasks.filter(a => a.userId === userId);
 	// 	// console.log(userPublicTasks);
 	// }
-
+	sortPosts = (tasksToDisplay) => {
+		console.log(tasksToDisplay);
+	}
 	render() {
 		// console.log(this.props);
 		let {allPublicTasks, userId}  = this.props;
@@ -74,6 +76,7 @@ class Feed extends React.Component {
 		// console.log(tasksToDisplay)
 		return (
 			<div id="feed">
+			<button onClick={()=>this.sortPosts(tasksToDisplay)}>Sort</button>
 				{heading}
 				{(!this.state.tasksFetched) ?
 					// at first, assume there are shared tasks

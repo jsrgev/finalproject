@@ -4,37 +4,43 @@ import Collapsible from 'react-collapsible';
 import {formatDate} from '../functions';
 import { isPast } from "date-fns";
 import {connect} from 'react-redux';
+import TaskEdit from './TaskEdit';
 // import {setUserTasks} from '../redux/actions';
 
 class Task extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {}
-  // }
+  constructor() {
+    super();
+    this.state = {
+      taskName: "",
+      dateDue: "",
+      description: "",
+      penaltyText: "",
+      penaltyUrl: "",
+      shared: "",
+      dateShared: "",
+      editMode: false
+      // expanded: false
+    }
+  }
   // componentDidMount = () => {
   //   this.state = this.props.item;
   //   // console.log(this.state);
   // }
-  changeTaskName = (e) => {
-      // this.setState({taskName:e.target.value})
-  }
-  changeDateDue = (e) => {
-      // this.setState({dateDue:e.target.value})
+  changeField = (e) => {
+      // this.setState({[e.target.name]:e.target.value})
   }
   changeDateDue = (date) => {
       // this.setState({dateDue:date})
   }
-  changeDescription = (e) => {
-      // this.setState({description:e.target.value})
-  }
-  changePenalty = (e) => {
-      // this.setState({penalty:e.target.value})
-  }
   changeShared = (value) => {
+      let date = value ? new Date() : "";
+      // this.setState({dateShared:date});
+
     axios.post('http://localhost:4000/task/updateUserTask', {
       "taskId": this.props.taskId,
       "field": "shared",
-      "value": value
+      "value": value,
+      "dateShared": date
     })
     .then(response=> {
       this.props.updateTasks();
@@ -57,7 +63,7 @@ class Task extends React.Component {
   }
 
   editTask = () => {
-    console.log("edit");
+    this.setState({editMode:true})
   }
   deleteTask = () => {
     axios.post('http://localhost:4000/task/updateUserTask', {
@@ -88,40 +94,36 @@ class Task extends React.Component {
     let penaltyTextDisplay = penaltyText && <div><label>Penalty:</label><span>{penaltyText}</span></div>
     let penaltyUrlDisplay = penaltyUrl && <div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>
 
-
     return (
-      <div className={`${completedClass} ${pastClass}`}>
-        <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
-          {descriptionDisplay}
-          {penaltyTextDisplay}
-          {penaltyUrlDisplay}
-          {/*<div><label>Description:</label><span>{description}</span></div>*/}
-          {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
-          {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
-          <div className="controls">
-            <div onClick={()=>this.editTask()}>Edit
-              <span className="icons">
-                <i className="far fa-edit"></i>
-                {/*<i className="fas fa-edit"></i>*/}
-              </span>
+      <>
+      {this.state.editMode ?
+        <TaskEdit /> :
+        <div className={`${completedClass} ${pastClass}`}>
+          <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
+            {descriptionDisplay}
+            {penaltyTextDisplay}
+            {penaltyUrlDisplay}
+            <div><label>Privacy:</label><span>{shared ? "Public" : "Private"}</span></div>
+            {/*<div><label>Description:</label><span>{description}</span></div>*/}
+            {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
+            {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
+            <div className="controls">
+              <div onClick={()=>this.editTask()}>Edit
+                <span className="icons">
+                  <i className="far fa-edit"></i>
+                </span>
+              </div>
+              <div onClick={this.deleteTask}>Delete
+                <span className="icons">
+                  <i className="far fa-trash-alt"></i>
+                </span>
+              </div>
             </div>
-            <div className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}>
-              {shared ? "Shared" : "Share"}
-              <span className="icons">
-                <i className="far fa-share-square"></i>
-                {/*<i className="fas fa-share-square"></i>*/}
-              </span>
-            </div>
-            <div onClick={this.deleteTask}>Delete
-              <span className="icons">
-                <i className="far fa-trash-alt"></i>
-                {/*<i className="far fa-trash-alt"></i>*/}
-              </span>
-            </div>
-          </div>
-        </Collapsible>
-      </div>
-    );
+          </Collapsible>
+        </div>
+      }
+        </>
+      );
   };
 }
 

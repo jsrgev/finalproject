@@ -16,6 +16,7 @@ body, input, textarea {
   font-family: calibri, sans-serif;
   font-family: 'Rubik', sans-serif;
   font-size: 1rem;
+  color: #000;
 }
 
 h2 {
@@ -28,7 +29,7 @@ a {
 }
 
 a.active {
-  color: black;
+  color: #fff;
   pointer-events: none;
 }
 
@@ -52,6 +53,7 @@ header a {
   font-size: 2rem;
     position: relative;
     top: 0.3rem;
+    line-height: 1rem;
 }
 
 #title {
@@ -445,6 +447,11 @@ header li {
   padding: 0;
   font-style: italic;
   background: inherit;
+}
+
+#taskInput span[name="shared"] {
+  font-style: italic;
+  color: #000;
 }
 
 .Collapsible__contentInner textarea {
