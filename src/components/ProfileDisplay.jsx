@@ -10,7 +10,7 @@ class Profile extends React.Component {
 		let user = this.props.users.find(a => a._id === this.props.userId);
 		let {username, firstName, lastName, location, gender, birthdate, avatarUrl, links, dateEntered, about} = user;
 		let editButton  = (username === this.props.user.username) ?
-				<button onClick={()=>this.props.editProfile(true)}>Edit</button>  :
+				<button onClick={()=>this.props.editProfile(true)}>Edit <i className="far fa-edit"></i></button>  :
 				null;
 		let genderDisplay = (gender === "male") ?
 						<><div>Gender</div><div>Male</div></> :
@@ -25,8 +25,10 @@ class Profile extends React.Component {
 						<><div>Links</div><div>{links}</div></> ;
 		return (
 			<>
-				<h2>{`${firstName} ${lastName}`}</h2>
-				<img className="avatar-medium" src={avatarUrl} alt="avatar" />
+				<div className="profileHeader">
+					<h2>{`${firstName} ${lastName}`}</h2>
+					<img className="avatar-medium" src={avatarUrl} alt="avatar" />
+				</div>
 				<div id="profileGrid">
 					<div>About</div><div>{about}</div>
 					{genderDisplay}
@@ -35,8 +37,8 @@ class Profile extends React.Component {
 					{linksDisplay}
 					<div>Member since</div><div>{formatDate(dateEntered,false)}</div>
 				</div>
-				{editButton}
-		</>
+				<div className="controls">{editButton}</div>
+			</>
 			)
 		// }
 	}

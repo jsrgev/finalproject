@@ -99,18 +99,22 @@ class PostDisplay extends React.Component {
 
 	    let username = this.getUsername(userId);
 
-	    let thisUserLiked = likes.some(a => a === this.props.user._id)
-
 	    let likeCountDisplay;
 	    if (likes.length === 0) {
-	    	likeCountDisplay = ""
+	    	likeCountDisplay = "Like"
 	    } else if (likes.length === 1) {
 	    	likeCountDisplay = "1 like"
 	    } else {
 	    	likeCountDisplay = `${likes.length} likes`
 	    }
+
+	    let thisUserLiked = likes.some(a => a === this.props.user._id)
+
+	    let likeUnlike = thisUserLiked ?
+		    <>Unlike <i class="far fa-thumbs-down"></i></> :
+		    <>Like <i class="far fa-thumbs-up"></i></>;
+
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
-	    let penaltyDisplay = penaltyText && <div className="post-penalty">Penalty: {penaltyText}</div>
 	    let status;
 	    if (completed) {
 		    status = "completed"
@@ -160,8 +164,8 @@ class PostDisplay extends React.Component {
 		    	<div>{formatDate(dateCompleted)}</div>
 	    	</>
 		return (
-			<div className="postDisplay">
-				<div className={`postHeader post-${status}`}>
+			<div className={`postDisplay post-${status}`}>
+				<div className="postHeader">
 					<div>
 						<Link to={`/profile/${username}`}>
 							{this.avatarDisplay(userId,"small")}
@@ -171,24 +175,33 @@ class PostDisplay extends React.Component {
 				</div>
 				<div className="postContent">
 					<div className="post-taskName">{taskName}</div>
-					<div className="post-description">{description}</div>
-					{penaltyDisplay}
+	    		{ description &&
+	    			<div className="post-description">{description}</div>
+	    		}
+	    		{ penaltyText &&
+	    			<div className="post-penalty">Penalty: {penaltyText}</div>
+	    		}
+	    		{ likes.length>0 &&
+	    			<div className="post-likes">{likeCountDisplay}</div>
+	    		}
 				</div>
-				<div className="postBottom">
+				{/*<div className="postBottom">*/}
 					{/*<div>{likeCountDisplay}</div>*/}
 					{/*<div>Added: {formatDate(dateEntered)}</div>*/}
-				</div>
-				<div className="commentInput">
-					<div>
-						{this.avatarDisplay(this.props.user._id,"mini")}
-					</div>
-					<div>
-			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} />
+				{/*</div>*/}
+				<div className="commentInputWrapper">
+					<div className="commentInput">
+						<div>
+							{this.avatarDisplay(this.props.user._id,"mini")}
+						</div>
+						<div>
+				    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} />
+				    </div>
 			    </div>
-		    </div>
+			  </div>
 		    <div className="controls">
-					<button onClick={() => this.handleClickLike(thisUserLiked)}>{likeCountDisplay}</button>
-			    <button onClick={this.handleClickComment}>Comment</button>
+					<button onClick={() => this.handleClickLike(thisUserLiked)}>{likeUnlike}</button>
+			    <button onClick={this.handleClickComment}>Comment <i className="far fa-comment"></i></button>
 			  </div>
 			    {comments.length>0 &&
 			    	// <div className="commentList">

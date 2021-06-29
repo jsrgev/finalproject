@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 // import {getFullName} from '../functions';
 import { BASE_API_URL } from '../utils/constants';
+import { isPast } from "date-fns";
+import {formatDate} from '../functions';
 
 class Feed extends React.Component {
 	constructor(){
@@ -49,8 +51,34 @@ class Feed extends React.Component {
 	// 	let userPublicTasks = allPublicTasks.filter(a => a.userId === userId);
 	// 	// console.log(userPublicTasks);
 	// }
+	setStatus = (completed, dateDue) => {
+    if (completed) {
+	    return "completed"
+    } else if (!dateDue) {
+    	return "shared"
+    } else {
+    	if (isPast(new Date(dateDue))) {
+	    	return "failed"
+    	} else {
+	    	return "shared"
+    	}
+    }
+	}
 	sortPosts = (tasksToDisplay) => {
-		console.log(tasksToDisplay);
+		let newArray = [];
+		for (let item of tasksToDisplay) {
+			let status = this.setStatus(item.completed, item.dateDue);
+			let sortDate = (status === "completed") ?
+					item.dateCompleted :
+					(status === "shared") ?
+					item.dateShared :
+					item.dateDue;
+			let obj = {...item, status, sortDate}
+			newArray.push(obj);
+			
+		}
+		console.log(newArray);
+
 	}
 	render() {
 		// console.log(this.props);
@@ -59,7 +87,9 @@ class Feed extends React.Component {
 		let tasksToDisplay = (userId) ?
 			allPublicTasks.filter(a => a.userId === userId) :
 			allPublicTasks;
-		
+
+		this.sortPosts(tasksToDisplay);
+
 		let heading = (userId) ?
 			<div className="heading" > {
 				(this.props.users) ?
@@ -72,12 +102,13 @@ class Feed extends React.Component {
 				"Loading"
 			}
 			</div> :
-			<div className="heading">Newsfeed</div>;
+			null;
+			{/*<div className="heading">Newsfeed</div>;*/}
 
 		// console.log(tasksToDisplay)
 		return (
 			<div id="feed">
-			<button onClick={()=>this.sortPosts(tasksToDisplay)}>Sort</button>
+			{/*<button onClick={()=>this.sortPosts(tasksToDisplay)}>Sort</button>*/}
 				{heading}
 				{(!this.state.tasksFetched) ?
 					// at first, assume there are shared tasks

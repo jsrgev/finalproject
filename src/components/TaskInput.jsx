@@ -119,7 +119,7 @@ class TaskInput extends React.Component {
 
 		// console.log(open	);
 		return (
-			<div id="taskInput">
+			<div className="taskInput">
 			    <Collapsible
 				    trigger={trigger}
 				    triggerSibling={() => sibling}

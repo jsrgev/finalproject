@@ -5,6 +5,8 @@
   --transparentwhite: #ffffffe6 ;
   --red: #F05157;
   --background: #f5f9f3;
+  --green: #3de298;
+  --offwhite: #f3f7f7;
 }
 
 
@@ -132,6 +134,10 @@ footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen, .heading
 }
 
 
+textarea {
+  padding: 0;
+  background: transparent;
+}
 
 /* HEADER */
 
@@ -187,8 +193,9 @@ header li {
 .postDisplay {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  padding: .1rem 1rem 1rem;
+  /*gap: 1rem;*/
+  padding: 0 1rem 1rem;
+  padding: 0 1rem;
 }
 
 .postHeader {
@@ -196,9 +203,11 @@ header li {
   /*font-weight: 600;*/
   justify-content: space-between;
   align-items: baseline;
-  margin: 0 -1rem;
-  padding: 0 1rem;
-  box-shadow: 1px 1px 1px #d3d3d3b8;
+  /*box-shadow: 1px 1px 1px #d3d3d3b8;*/
+}
+
+.postHeader > div:not(:first-child) {
+  /*padding-bottom: .1rem;*/
 }
 
 .postHeader > div:nth-child(2) {
@@ -217,7 +226,6 @@ header li {
   outline: none;
   border:  none;
   font-style: italic;
-  /*height: 1em;*/
 }
 
 
@@ -225,6 +233,7 @@ header li {
   display: flex;
   color:  var(--blue);
   font-weight: 600;
+  padding: .5rem 0;
 }
 
 .postDisplay .Collapsible__trigger *:first-child {
@@ -242,34 +251,85 @@ header li {
 .commentDisplay div:last-child {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
 } 
 
 .postDisplay .Collapsible__trigger i {
-    transition: transform 700ms; }
+  transition: transform 700ms; }
 
 .postDisplay .Collapsible__trigger.is-open i {
-    transform: rotateZ(180deg); }
+  transform: rotateZ(180deg); }
 
-
-.post-completed {
-  border-bottom: 2px solid var(--blue);
+.postContent {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+  margin: 0 -1rem;
+  padding: 1rem;
 }
 
-.post-shared {
-  border-bottom: 2px solid #3de298;
+.post-completed .postContent {
+  border-top: 2px solid var(--blue);
+  /*border-bottom: 2px solid var(--blue);*/
 }
 
-.post-failed {
-  border-bottom: 2px solid var(--red);
+.post-shared .postContent {
+  border-top: 2px solid var(--green);
+  /*border-bottom: 2px solid var(--green);*/
+}
+
+.post-failed .postContent {
+  border-top: 2px solid var(--red);
+  /*border-bottom: 2px solid var(--red);*/
 }
 
 .post-proposed {
-
 }
-
 
 .post-taskName {
   font-weight: 600;
+}
+
+.commentInputWrapper {
+  background: var(--offwhite);
+  padding: .5rem 1rem 0;
+  margin: 0 -1rem;
+}
+
+.commentInput {
+  display: flex;
+  align-items: baseline;
+  border-bottom: 1px solid var(--blue);
+}
+
+.commentInput div:first-child {
+  /*flex-grow: 1;*/
+  height: 0;
+}
+
+/*.commentInput {
+  position: relative;
+  bottom: 0px;
+}*/
+
+.commentInput img {
+  position: relative;
+  bottom: 0px;
+}
+
+.commentInput div:last-child {
+  flex-grow: 1;
+  line-height: 0;
+}
+
+/*.postDisplay .controls {
+  background: var(--offwhite);
+  padding: 1rem;
+  margin: 0 -1rem;
+}*/
+
+.postDisplay .Collapsible__contentInner > div:last-child {
+  padding-bottom: 1rem;
 }
 
 
@@ -327,11 +387,40 @@ header li {
 
 /* PROFILE */
 
+.profileHeader {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  column-gap: 1rem;
+  border-bottom: 2px solid var(--green);
+  justify-items: center;
+  align-items: center;
+}
+
 #profileGrid {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 1rem;
+  padding: 1rem 0;
 }
+
+#profile input:not(input[type="radio"]), #profile textarea {
+  width: 100%;
+  resize: none;
+  outline: none;
+  border:  none;
+  font-style: italic;
+  border-bottom: 1px solid var(--blue);
+}
+
+div[name="gender"] {
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="radio"] {
+    margin: 0 .5rem 0 0;
+}
+
 
 
 /* ACCOUNT */
@@ -350,7 +439,7 @@ header li {
   gap: 2rem;
 }
 
-#taskInput .Collapsible__trigger {
+.taskInput .Collapsible__trigger {
   display: inline-grid;
   grid-template-columns: 15rem 11rem 1rem;
   width: 100%;
@@ -420,7 +509,7 @@ header li {
   /*border-bottom: 1px solid lightgray;*/
 }
 
-#taskInput i.fa-plus {
+.taskInput i.fa-plus {
     top: -.1rem;
   font-size: .7rem;
   /*position: absolute;*/
@@ -428,7 +517,7 @@ header li {
   /*right: 25%;*/
 }
 
-#taskInput i.fa-circle {
+.taskInput i.fa-circle {
   position: relative;
   visibility: hidden;
   /*left: 0;*/
@@ -441,27 +530,36 @@ header li {
 }
 
 
-#taskInput .Collapsible__contentInner {
-  margin-top: 1rem;
+.taskInput .Collapsible__contentInner {
+  /*margin-top: 1rem;*/
   display: grid;
   grid-template-columns: 1fr;
   gap: .5rem;
-    background: #b9d6ff;
-    background: #ecf6fe;
+    /*background: #b9d6ff;*/
+    /*background: #ecf6fe;*/
     border-radius: 10px;
     padding: 1rem;
-    border: 1px solid var(--blue);
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  /*padding: 1rem 1rem 0;*/
+    /*border: 1px solid var(--blue);*/
 }
 
 
-#taskInput .Collapsible__contentInner > div {
+.taskInput .Collapsible__contentInner > div {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: 1rem;
-  }
+}
 
 
-#taskInput input {
+.Collapsible__contentInner .taskInput .Collapsible__contentInner {
+  padding: 1rem 1rem 0;
+}
+
+
+
+.taskInput input {
   outline: none;
   padding: 0;
   border: none;
@@ -475,17 +573,16 @@ header li {
 }
 
 
-#taskInput textarea {
+.taskInput textarea {
   width: 100%;
   resize: none;
   outline: none;
   border:  none;
   padding: 0;
   font-style: italic;
-  background: inherit;
 }
 
-#taskInput span[name="shared"] {
+.taskInput span[name="shared"] {
   font-style: italic;
   color: #000;
 }
@@ -553,15 +650,16 @@ header li {
 
 
 .taskList .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
-  margin-top: 1rem;
+  /*margin-top: 1rem;*/
   display: grid;
   grid-template-columns: 1fr;
   gap: .5rem;
   background: #b9d6ff;
   background: #ecf6fe;
-  border-radius: 10px;
-  padding: 1rem;
-  border: 1px solid var(--blue);
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem 1rem 0;
+  /*border: 1px solid var(--blue);*/
 }
 
 .taskList .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
@@ -570,6 +668,10 @@ header li {
   gap: 1rem;
 }
 
+#taskSection .controls {
+  border-radius: 0 0 15px 15px;
+  padding: .5rem 1rem;
+}
 
 .completedTaskList > div > .Collapsible__trigger {
   display: flex;
@@ -606,10 +708,16 @@ header li {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(2, 1fr) !important;
+  /*grid-template-columns: repeat(2, 1fr) !important;*/
   /*background: white;*/
-  justify-items: center;
+  display: flex !important;
+  /*justify-items: center;*/
+  justify-content: space-around;
   position: relative;
+  background: var(--offwhite);
+  padding: 1rem;
+  margin: 0 -1rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .controls .icons {
@@ -634,8 +742,8 @@ header li {
 
 .avatar-medium {
   width: 4rem;
-  position: relative;
-  bottom: -0.3rem;
+  /*position: relative;*/
+  /*bottom: -0.45rem;*/
   padding-right: 1rem;
 }
 

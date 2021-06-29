@@ -81,24 +81,31 @@ class ProfileEdit extends React.Component {
 		let {firstName, lastName, avatarUrl} = this.state;
 		return (
 			<>
-				<h2>{`${firstName} ${lastName}`}</h2>
-				<img className="avatar-medium" src={avatarUrl} alt="avatar" />
+				<div className="profileHeader">
+					<h2>{`${firstName} ${lastName}`}</h2>
+					<img className="avatar-medium" src={avatarUrl} alt="avatar" />
+				</div>
 				<div id="profileInput">
 					<div id="profileGrid">
 						{/*<div>Location</div><div><input value={this.state.location} name="location" onChange={this.updateField} /></div>*/}
 						<div>Avatar link</div><div><TextareaAutosize value={this.state.avatarUrl} name="avatarUrl" onChange={this.updateField} /></div>
 						{/*<div>Birthday</div><div><div>{this.state.birthdate}</div></div>*/}
 						{/*<div>Links</div><div><div>{this.state.links}</div></div>*/}
-						<div>About</div><div><input value={this.state.about} name="about" onChange={this.updateField} /></div>
+						<div>About</div><div><TextareaAutosize value={this.state.about} name="about" onChange={this.updateField} /></div>
 						<div>Gender</div>
 				      <div name="gender" value={this.state.gender} onChange={this.updateField} >
-				        <input type="radio" checked={this.state.gender === "male"} onChange={this.updateGender} value="male" name="gender" /> Male
-				        <input type="radio" checked={this.state.gender === "female"} onChange={this.updateGender} value="female" name="gender" /> Female
-				        <input type="radio" checked={this.state.gender === "noAnswer"} onChange={this.updateGender} value="noAnswer" name="gender" /> No answer
+				        <span><input type="radio" checked={this.state.gender === "male"} onChange={this.updateGender} value="male" name="gender" />
+				        <label>Male</label></span>
+				        <span><input type="radio" checked={this.state.gender === "female"} onChange={this.updateGender} value="female" name="gender" />
+				        <label>Female</label></span>
+				        <span><input type="radio" checked={this.state.gender === "noAnswer"} onChange={this.updateGender} value="noAnswer" name="gender" />
+				        <label>No answer</label></span>
 				      </div>
 					</div>
-					<button onClick={()=>this.props.editProfile(false)}>Cancel</button>
-					<button onClick={this.handleSubmit}>Submit</button>
+					<div className="controls">
+						<button onClick={()=>this.props.editProfile(false)}>Cancel <i className="fas fa-times"></i></button>
+						<button onClick={this.handleSubmit}>Save <i className="fas fa-check"></i></button>
+					</div>
 				</div>
 			</>
 		)

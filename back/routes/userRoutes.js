@@ -2,7 +2,6 @@ const express = require('express');
 const router = express();
 const userTemplateCopy = require('../models/UserModel');
 const bcrypt = require('bcrypt');
-// const passport = require('passport');
 
 const jwt = require('jsonwebtoken');
 
@@ -14,8 +13,6 @@ dotenv.config();
 
 
 router.post('/register', async (req,res) => {
-	// console.log("running!");
-	console.log(req.body);
 	const {firstName, lastName, username, email, password, password2} = req.body;
 	let errors = [];
 
@@ -35,8 +32,6 @@ router.post('/register', async (req,res) => {
 
 	// encrypt password
 	const saltPassword = await bcrypt.genSalt(10);
-	// console.log(password)
-	// console.log(saltPassword)
 	const securePassword = await bcrypt.hash(password, saltPassword);
 
 	let avatarUrl = `https://joeschmoe.io/api/v1/${username}`
@@ -60,7 +55,6 @@ router.post('/login', (req,res) => {
 
 	// Check form for errors
 	if (!username || !password) {
-		// console.log("nope");
 		res.send({auth: false, message: 'Please fill in both fields.'});
 		return;
 	}
@@ -79,19 +73,7 @@ router.post('/login', (req,res) => {
 				const token = jwt.sign({id}, process.env.PRIVATE_KEY, {
 					expiresIn: "30d"
 				})
-				// send user info, excluding password
-				// console.log(user._doc)
-				// console.log(user.lastName)
 				let {password, __v, ...userInfo} = user._doc;
-				// 	userInfo
-				// 	id: user._id,
-				// 	firstName: user.firstName,
-				// 	lastName: user.lastName,
-				// 	username: user.username,
-				// 	email: user.email,
-				// 	date: user.date
-				// }
-				// console.log(userInfo);
 				res.json({auth:true, token, userInfo});
 			} else {
 				res.send({auth: false, message: "Password is incorrect."});
@@ -133,7 +115,6 @@ router.get('/logout', (req,res) => {
 
 
 router.get('/getUsers', async (req,res) => {
-	// console.log(req.body);
 	User.find({},{password:0})
 		.then(users => {
 			if(!users) {
@@ -146,22 +127,18 @@ router.get('/getUsers', async (req,res) => {
 })
 
 router.post('/updateProfile', (req,res) => {
-	console.log(req.body);
 	let {userId, user} = req.body; 
 	User.updateOne(
 		{ _id: userId },
   			user
   		)
 	.then(results => {
-		// console.log(results);
 		return User.findOne({ _id: userId},{password:0})
 	})
 	.then(user => {
-		// console.log(user);
 		res.send(user);
 	})
 	.catch(err => console.log(err));
-	// res.send(req.body);
 })
 
 

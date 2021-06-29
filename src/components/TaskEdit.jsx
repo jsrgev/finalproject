@@ -127,7 +127,7 @@ class TaskEdit extends React.Component {
 			</div>
 			</>
 		return (
-			<div id="taskInput">
+			<div className="taskInput">
 			    <Collapsible
 				    trigger={trigger}
 				    triggerSibling={() => sibling}
