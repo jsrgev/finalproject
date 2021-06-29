@@ -5,6 +5,7 @@ import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
 import { isDate, isPast } from "date-fns";
+import { BASE_API_URL } from '../utils/constants';
 
 class TaskEdit extends React.Component {
   constructor(){
@@ -78,7 +79,7 @@ class TaskEdit extends React.Component {
 
 	    const thisTask = {...this.state, userId: this.props.user._id};
 	    const {expanded, ...newTask} = thisTask;
-	    axios.post('http://localhost:4000/task/addTask', newTask)
+	    axios.post(`${BASE_API_URL}/task/addTask`, newTask)
 	    .then(response=> {
 	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
 	    document.querySelector(".react-datepicker__input-container>input").value="";

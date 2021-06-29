@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
 // import TextareaAutosize from 'react-textarea-autosize';
 // import Collapsible from 'react-collapsible';
+import { BASE_API_URL } from '../utils/constants';
 
 class CommentDisplay extends React.Component {
 	// constructor() {
@@ -76,7 +77,7 @@ class CommentDisplay extends React.Component {
 	 //    .catch(err=>console.log(err))
   //   }
     updateTaskLikes = (value) => {
-	    axios.post('http://localhost:4000/task/updatePublicTask', {
+	    axios.post(`${BASE_API_URL}/task/updatePublicTask`, {
     		"taskId": this.props.id,
     		"field": "likes",
     		"userId": this.props.user._id,

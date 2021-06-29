@@ -6,6 +6,7 @@ import { isPast } from "date-fns";
 import {connect} from 'react-redux';
 import TaskEdit from './TaskEdit';
 // import {setUserTasks} from '../redux/actions';
+import { BASE_API_URL } from '../utils/constants';
 
 class Task extends React.Component {
   constructor() {
@@ -36,7 +37,7 @@ class Task extends React.Component {
       let date = value ? new Date() : "";
       // this.setState({dateShared:date});
 
-    axios.post('http://localhost:4000/task/updateUserTask', {
+    axios.post(`${BASE_API_URL}/task/updateUserTask`, {
       "taskId": this.props.taskId,
       "field": "shared",
       "value": value,
@@ -50,7 +51,7 @@ class Task extends React.Component {
   }
   changeCompleted = (value,penaltyUrl,shared) => {
     let penalty = (penaltyUrl && shared) ? true : false;
-      axios.post('http://localhost:4000/task/updateUserTaskCompleted', {
+      axios.post(`${BASE_API_URL}/task/updateUserTaskCompleted`, {
       "taskId": this.props.taskId,
       "value": value,
       "penalty": penalty
@@ -66,7 +67,7 @@ class Task extends React.Component {
     this.setState({editMode:value})
   }
   deleteTask = () => {
-    axios.post('http://localhost:4000/task/updateUserTask', {
+    axios.post(`${BASE_API_URL}/task/updateUserTask`, {
       "taskId": this.props.taskId,
       "field": "active",
       "value": false

@@ -4,6 +4,7 @@ import '../App.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {setLoginStatus,setUser} from '../redux/actions';
+import { BASE_API_URL } from '../utils/constants';
 
 class Login extends React.Component {
   constructor(){
@@ -31,7 +32,7 @@ class Login extends React.Component {
       username: this.state.username,
       password: this.state.password
     }
-    axios.post('http://localhost:4000/user/login', login)
+    axios.post(`${BASE_API_URL}/user/login`, login)
     .then(response => {
       if (response.data.auth) {
         this.setState({confirmation:"You've successfully logged in."})
@@ -47,7 +48,7 @@ class Login extends React.Component {
   }
   handleClick = () => {
     console.log(localStorage.getItem("token"));
-    axios.get('http://localhost:4000/user/isUserAuthenticated', {
+    axios.get(`${BASE_API_URL}/user/isUserAuthenticated`, {
       headers: {
         "x-access-token": localStorage.getItem("token")
       }

@@ -6,6 +6,7 @@ import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 import Feed from './Feed';
 import ProfileEdit from './ProfileEdit';
 import ProfileDisplay from './ProfileDisplay';
+import { BASE_API_URL } from '../utils/constants';
 
 class Profile extends React.Component {
 	constructor () {
@@ -18,7 +19,7 @@ class Profile extends React.Component {
 		this.getUsers();
 	}
 	getUsers = () => {
-	    axios.get('http://localhost:4000/user/getUsers')
+	    axios.get(`${BASE_API_URL}/user/getUsers`)
 	    .then(response=> {
 		    // console.log(response.data);
 		    this.props.setAllUsers(response.data.users);

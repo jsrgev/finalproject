@@ -8,6 +8,7 @@ import {formatDate} from '../functions';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
 import CommentDisplay from './CommentDisplay';
+import { BASE_API_URL } from '../utils/constants';
 
 class PostDisplay extends React.Component {
 	constructor() {
@@ -59,7 +60,7 @@ class PostDisplay extends React.Component {
     	}
     }
     submitComment = (value) => {
-	    axios.post('http://localhost:4000/task/addComment', {
+	    axios.post(`${BASE_API_URL}/task/addComment`, {
     		"taskId": this.props.id,
     		"field": "comments",
     		"userId": this.props.user._id,
@@ -72,7 +73,7 @@ class PostDisplay extends React.Component {
 	    .catch(err=>console.log(err))
     }
     updateTaskLikes = (value) => {
-	    axios.post('http://localhost:4000/task/updatePublicTask', {
+	    axios.post(`${BASE_API_URL}/task/updatePublicTask`, {
     		"taskId": this.props.id,
     		"field": "likes",
     		"userId": this.props.user._id,

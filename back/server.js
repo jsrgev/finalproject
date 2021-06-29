@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -11,7 +12,16 @@ var CronJob = require('cron').CronJob;
 var CronJobManager = require('cron-job-manager');
 
 // process.env.port in case 4000 not available
-const port = process.env.port || 4000
+const port = process.env.port || 4000;
+
+
+if (process.env.NODE_ENV === 'production') {
+
+}
+
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
+
 
 
 // delete the following?
@@ -44,7 +54,7 @@ var CronJobManager = require('cron-job-manager');
 var manager = new CronJobManager();
 
 const startCronJobs = (req,res) => {
-	axios.get('http://localhost:4000/task/startCronJobs')
+	axios.get(`http://localhost:${port}/task/startCronJobs`)
       .then(response=> {
         console.log(response.data);
 	  })

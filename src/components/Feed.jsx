@@ -4,6 +4,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 // import {getFullName} from '../functions';
+import { BASE_API_URL } from '../utils/constants';
 
 class Feed extends React.Component {
 	constructor(){
@@ -17,7 +18,7 @@ class Feed extends React.Component {
 		this.getUsers();
 	}
 	updateFeed = () => {
-	    axios.get('http://localhost:4000/task/getAllPublicTasks')
+	    axios.get(`${BASE_API_URL}/task/getAllPublicTasks`)
 	    .then(response=> {
 		    this.props.setAllPublicTasks(response.data.tasks);
 		    this.setState({tasksFetched:true});
@@ -36,7 +37,7 @@ class Feed extends React.Component {
     }
   }
 	getUsers = () => {
-	    axios.get('http://localhost:4000/user/getUsers')
+	    axios.get(`${BASE_API_URL}/user/getUsers`)
 	    .then(response=> {
 		    this.props.setAllUsers(response.data.users);
 		})

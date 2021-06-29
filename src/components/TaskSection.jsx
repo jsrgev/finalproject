@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import TaskInput from './TaskInput.jsx';
 import {setUserTasks, setAllPublicTasks} from '../redux/actions';
 import Collapsible from 'react-collapsible';
+import { BASE_API_URL } from '../utils/constants';
 
 
 class TaskSection extends React.Component {
@@ -19,7 +20,7 @@ class TaskSection extends React.Component {
 		this.setState({areTasks: true});
 	}
 	updateTasks = () => {
-	    axios.post('http://localhost:4000/task/getUserTasks', {id: this.props.user._id})
+	    axios.post(`${BASE_API_URL}/task/getUserTasks`, {id: this.props.user._id})
 	    .then(response=> {
 			// console.log(this.props.tasks.length);
     	// console.log(response.data)
@@ -35,7 +36,7 @@ class TaskSection extends React.Component {
 		.catch(err => console.log(err))
 	}
 	updateFeed = () => {
-	    axios.get('http://localhost:4000/task/getAllPublicTasks')
+	    axios.get(`${BASE_API_URL}/task/getAllPublicTasks`)
 	    .then(response=> {
 		    this.props.setAllPublicTasks(response.data.tasks);
 		    ((response.data.result) && response.data.tasks.length===0) && this.setState({sharedTasks: false});

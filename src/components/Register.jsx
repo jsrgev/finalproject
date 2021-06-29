@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import '../App.css';
 import {Link} from 'react-router-dom';
+import { BASE_API_URL } from '../utils/constants';
 
 class RegisterForm extends React.Component {
   constructor(){
@@ -70,7 +71,7 @@ class RegisterForm extends React.Component {
     const {password2, errors, ...registered} = this.state;
     // console.log({registered, registered2});
     // return;
-    axios.post('http://localhost:4000/user/register', registered)
+    axios.post(`${BASE_API_URL}/user/register`, registered)
     .then(response=> {
     // console.log(response.data);
      if (response.data.errors) {

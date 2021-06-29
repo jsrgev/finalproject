@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {setUser} from '../redux/actions';
 // import DateInput from './DateInput';
 import TextareaAutosize from 'react-textarea-autosize';
+import { BASE_API_URL } from '../utils/constants';
 
 class ProfileEdit extends React.Component {
   constructor(){
@@ -67,7 +68,7 @@ class ProfileEdit extends React.Component {
 			userId : this.props.user._id,
 			user :{...this.state}
 		}
-		axios.post('http://localhost:4000/user/updateProfile', data)
+		axios.post(`${BASE_API_URL}/user/updateProfile`, data)
 	    .then(res => {
       localStorage.setItem("user", JSON.stringify(res.data));
       this.props.setUser(res.data);
