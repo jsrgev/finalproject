@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Rubik:ital,wght@0,400;0,600;1,400&display=swap');
 :root {
-  --blue: #5075ff;
+  --blue: #2b97f7;
   --darkgray: #53575a;
   --transparentwhite: #ffffffe6 ;
-  --transparentwhite: #fff ;
+  --red: #F05157;
+  --background: #f5f9f3;
 }
 
 
@@ -30,15 +31,19 @@ a {
 }
 
 a.active {
-  color: #000;
   pointer-events: none;
 }
 
-header a:first-child {
-  text-align: center;
+ul a.active {
+  color: var(--red);
 }
 
+/*header a:first-child {
+  text-align: center;
+}*/
+
 header {
+  /*border-radius: 10px;*/
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -54,20 +59,19 @@ header a {
   font-family: 'Libre Baskerville', serif;
   font-family: 'Fugaz One', cursive;
   text-transform: uppercase;
-  font-size: 2rem;
-    position: relative;
-    top: 0.3rem;
-    line-height: 1rem;
-}
+  font-size: 3rem;
+  position: absolute;
+  bottom: -1.7rem;
+  color: var(--red);
+  left: 50%;
+  transform: translateX(-50%);
+  }
 
-#title {
-  color: #F05157;
-}
 
 .heading {
   font-weight: 600;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--blue);
 }
 
 textarea::placeholder, input::placeholder {
@@ -92,7 +96,7 @@ body {
   radial-gradient(circle at 2.03% 52.04%, #00d2ff, transparent 59%),radial-gradient(circle at 97.97% 29.93%, #3a7bd5, transparent 67%),radial-gradient(circle at 14.44% 30.78%, #1117bf, transparent 98%),radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
   background-attachment: fixed;
   background: ghostwhite;
-  background: #fdfdfd;
+  background: var(--background);
 }
 
 /*form {
@@ -106,15 +110,15 @@ body {
   gap: 1rem;
 }
 
-header, footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen {
+footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen, .heading {
   padding: 1rem;
   border-radius: 10px;
-  /*-webkit-backdrop-filter: blur(20px);*/
-  /*backdrop-filter: blur(20px);*/
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   box-shadow: -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
 }
 
-header, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
+footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen, .heading {
   background-color: var(--transparentwhite);
 }
 
@@ -136,14 +140,26 @@ header {
   /*position: sticky;*/
   /*top: 2rem;*/
   /*z-index: 2;*/
+  background: linear-gradient(270deg, #fffa00, transparent);
+  /*padding: .2rem 1rem;*/
+  padding: 0;
+  border: none;
 }
 
+header div:first-child {
+  position: relative;
+  padding: 0;
+  margin: 0 0 2px;
+  background: var(--background);
+}
 
 header ul {
-  padding: 0;
   margin: 0;
   list-style-type: none;
   justify-items: left;
+  margin: 0 0 2px;
+  padding-right: 1rem;
+  background: var(--background);
 }
 
 header li {
@@ -162,8 +178,7 @@ header li {
 }
 
 .heading {
-  background: var(--blue);
-  background: #ffb423;
+  /*background: var(--blue);*/
   border-radius: 10px;
   padding: .3rem 1rem;
 }
@@ -172,14 +187,17 @@ header li {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+  padding: .1rem 1rem 1rem;
 }
 
 .postHeader {
   display: flex;
-  font-weight: 600;
+  /*font-weight: 600;*/
+  justify-content: space-between;
+  align-items: baseline;
 }
 
-.postHeader *:first-child {
+.postHeader > div:nth-child(2) {
   flex-grow: 1;
 }
 
@@ -230,15 +248,15 @@ header li {
 
 
 .post-completed {
-
+  border-bottom: 2px solid var(--blue);
 }
 
-.post-active {
-
+.post-shared {
+  border-bottom: 2px solid #3de298;
 }
 
-.post-penalized {
-
+.post-failed {
+  border-bottom: 2px solid var(--red);
 }
 
 .post-proposed {
@@ -315,6 +333,7 @@ header li {
 
 #taskSection  {
   background-color: #ffffe0f5;
+  background: #ffffcb;
   display: grid;
   grid-template-columns: 1fr;
   align-content: flex-start;
@@ -360,7 +379,7 @@ header li {
 
 #taskSection i {
   position: relative;
-  top: .1rem;
+  /*top: .1rem;*/
 }
 
 #mainInput i {
@@ -388,19 +407,22 @@ header li {
   width: 1rem;
   right: 1rem;
   text-align: center;
-  color: var(--blue);
   /*border-bottom: 1px solid lightgray;*/
 }
 
 #taskInput i.fa-plus {
-  top: -.1rem;
+    top: -.1rem;
   font-size: .7rem;
+  /*position: absolute;*/
+  /*transform: translateX(50%);*/
+  /*right: 25%;*/
 }
 
 #taskInput i.fa-circle {
   position: relative;
   visibility: hidden;
-  top: -1.2rem;
+  /*left: 0;*/
+  top: -1.1rem;
 }
 
 .i-wrapper:hover i.fa-circle {
@@ -409,6 +431,24 @@ header li {
 }
 
 
+#taskInput .Collapsible__contentInner {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+    background: #b9d6ff;
+    background: #ecf6fe;
+    border-radius: 10px;
+    padding: 1rem;
+    border: 1px solid var(--blue);
+}
+
+
+#taskInput .Collapsible__contentInner > div {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  }
 
 
 #taskInput input {
@@ -417,6 +457,7 @@ header li {
   border: none;
   background-color: inherit;
   font-style: italic;
+  /*border-bottom: 1px solid var(--blue);*/
 }
 
 .Collapsible__contentInner input {
@@ -451,11 +492,15 @@ header li {
 
 .sibling {
   display: inline-block;
+  /*border-bottom: 1px solid lightgray;*/
+  /*height: 18px;*/
+  /*padding-left: 1em;*/
   position: absolute;
   right: 1em;
 }
 
 .is-closed ~ .Collapsible__contentOuter .sibling {
+  /*background-color: aquamarine;*/
   position: static;
 }
 
@@ -495,7 +540,9 @@ header li {
   color: var(--darkgray);
 }
 
-/*#taskInput .Collapsible__contentInner {
+
+
+.taskList .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -505,30 +552,9 @@ header li {
   border-radius: 10px;
   padding: 1rem;
   border: 1px solid var(--blue);
-}*/
-
-
-/*#taskInput .Collapsible__contentInner > div {
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  gap: 1rem;
-  }
-*/
-
-#taskSection .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
-  /*margin-top: 1rem;*/
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .5rem;
-  background: #b9d6ff;
-  background: #ecf6fe;
-  background: #fdfdfd;
-  border-radius: 0 0 10px 10px;
-  padding: 1rem;
-  /*border: 1px solid var(--blue);*/
 }
 
-#taskSection .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
+.taskList .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: 1rem;
@@ -571,6 +597,7 @@ header li {
 .controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr) !important;
+  /*background: white;*/
   justify-items: center;
   position: relative;
 }
@@ -597,15 +624,24 @@ header li {
 
 .avatar-medium {
   width: 4rem;
+  position: relative;
+  bottom: -0.3rem;
+  padding-right: 1rem;
 }
 
 .avatar-small {
   width: 2.5rem;
+  position: relative;
+  bottom: -0.3rem;
+  padding-right: 1rem;
 }
 
 .avatar-mini {
   width: 1.5rem;
-}
+  position: relative;
+  bottom: -0.3rem;
+  padding-right: 1rem;
+  }
 
 
 

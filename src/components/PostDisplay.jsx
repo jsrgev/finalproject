@@ -113,13 +113,19 @@ class PostDisplay extends React.Component {
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
 	    let penaltyDisplay = penaltyText && <div>Penalty: {penaltyText}</div>
 	    let status;
-	    if (!completed) {
+	    if (completed) {
+		    status = "completed"
+		    // console.log(`${taskName} completed`)
+	    } else if (!dateDue) {
 	    	status = "shared"
 	    } else {
-	    	if (isPast(dateDue)) {
+		    	// console.log(``);
+	    	if (isPast(new Date(dateDue))) {
 		    	status = "failed"
+			    // console.log(`${taskName}: isPast → true`)
 	    	} else {
-		    	status = "completed"
+		    	status = "shared"
+			    // console.log(`${taskName} isPast → false`)
 	    	}
 	    }
 	    let headline = (status === "shared") ?
@@ -127,9 +133,13 @@ class PostDisplay extends React.Component {
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.avatarDisplay(userId,"small")}
+					</Link>
+					</div>
+					<div>
+					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
 					</Link>
-	    	shared a task.</div>
+	    	&nbsp;shared a task.</div>
 	    	<div>{formatDate(dateShared)}</div>
 	    	</> :
 	    	(status === "failed") ?
@@ -137,22 +147,30 @@ class PostDisplay extends React.Component {
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.avatarDisplay(userId,"small")}
+					</Link>
+					</div>
+					<div>
+					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
 					</Link>
-	    	didn't finish a task on time!</div>
+	    	&nbsp;didn't finish a task on time!</div>
 	    	<div>{formatDate(dateDue)}</div></> :
 	    	<>
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.avatarDisplay(userId,"small")}
+					</Link>
+					</div>
+					<div>
+					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
 					</Link>
-	    	finished a task!</div>
+	    	&nbsp;finished a task!</div>
 	    	<div>{formatDate(dateCompleted)}</div>
 	    	</>
 		return (
 			<div className="postDisplay">
-				<div className="postHeader">
+				<div className={`postHeader post-${status}`}>
 {/*						<Link to={`/profile/${username}`}>
 							{this.avatarDisplay(userId,"small")}
 							{this.getFullName(userId)}
@@ -175,7 +193,7 @@ class PostDisplay extends React.Component {
 				<div className="postBottom">
 					<button onClick={() => this.handleClickLike(thisUserLiked)}>Like</button>
 					<div>{likeCountDisplay}</div>
-					<div>Added: {formatDate(dateEntered)}</div>
+					{/*<div>Added: {formatDate(dateEntered)}</div>*/}
 				</div>
 				<div className="commentInput">
 				{this.avatarDisplay(this.props.user._id,"mini")}
