@@ -3,7 +3,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 // import {setAllPublicTasks} from '../redux/actions';
-// import { format, isToday, isTomorrow, isYesterday } from "date-fns";
+import { isPast } from "date-fns";
 import {formatDate} from '../functions';
 import TextareaAutosize from 'react-textarea-autosize';
 import Collapsible from 'react-collapsible';
@@ -90,7 +90,7 @@ class PostDisplay extends React.Component {
    	render () {
 		let taskId = this.props.id;
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		let {completed, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments} = item;
+		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments} = item;
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    let dateElement = formatDate(dateDue) ?
 	      <div>Due: {formatDate(dateDue)}</div> :
@@ -109,21 +109,65 @@ class PostDisplay extends React.Component {
 	    }
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
 	    let penaltyDisplay = penaltyText && <div>Penalty: {penaltyText}</div>
+	    let status;
+	    if (!completed) {
+	    	status = "shared"
+	    } else {
+	    	if (isPast(dateDue)) {
+		    	status = "failed"
+	    	} else {
+		    	status = "completed"
+	    	}
+	    }
+	    let headline = (status === "shared") ?
+	    	<>
+				<div>
+					<Link to={`/profile/${username}`}>
+						{this.avatarDisplay(userId,"small")}
+						{this.getFullName(userId)}
+					</Link>
+	    	`shared a task.`</div>
+	    	<div>{dateShared}</div>
+	    	</> :
+	    	(status === "failed") ?
+	    	<>
+				<div>
+					<Link to={`/profile/${username}`}>
+						{this.avatarDisplay(userId,"small")}
+						{this.getFullName(userId)}
+					</Link>
+	    	`didn't finish a task on time!`</div>
+	    	<div>{dateDue}</div></> :
+	    	<>
+				<div>
+					<Link to={`/profile/${username}`}>
+						{this.avatarDisplay(userId,"small")}
+						{this.getFullName(userId)}
+					</Link>
+	    	`finished a task!`</div>
+	    	<div>{dateCompleted}</div>
+	    	</>
 		return (
 			<div className="postDisplay">
 				<div className="postHeader">
+{/*						<Link to={`/profile/${username}`}>
+							{this.avatarDisplay(userId,"small")}
+							{this.getFullName(userId)}
+						</Link>*/}
+					{headline}
+
 					<div>{taskName}</div>
 					{completed && <div>Completed</div>}
 					{dateElement}
 				</div>
 				<div className="postContent">
-					<div>
+					{/*<div>
 						<Link to={`/profile/${username}`}>
 							{this.avatarDisplay(userId,"small")}
 							{this.getFullName(userId)}
 						</Link>
 					</div>
-					<div>{description}</div>
+*/}					<div>{description}</div>
 					{penaltyDisplay}
 				</div>
 				<div className="postBottom">

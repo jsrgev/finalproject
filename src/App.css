@@ -3,6 +3,7 @@
   --blue: #5075ff;
   --darkgray: #53575a;
   --transparentwhite: #ffffffe6 ;
+  --transparentwhite: #fff ;
 }
 
 
@@ -91,6 +92,7 @@ body {
   radial-gradient(circle at 2.03% 52.04%, #00d2ff, transparent 59%),radial-gradient(circle at 97.97% 29.93%, #3a7bd5, transparent 67%),radial-gradient(circle at 14.44% 30.78%, #1117bf, transparent 98%),radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
   background-attachment: fixed;
   background: ghostwhite;
+  background: #fdfdfd;
 }
 
 /*form {
@@ -107,8 +109,9 @@ body {
 header, footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen {
   padding: 1rem;
   border-radius: 10px;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  /*-webkit-backdrop-filter: blur(20px);*/
+  /*backdrop-filter: blur(20px);*/
+  box-shadow: -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
 }
 
 header, footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen {
@@ -160,8 +163,9 @@ header li {
 
 .heading {
   background: var(--blue);
+  background: #ffb423;
   border-radius: 10px;
-  padding: .5rem 1rem;
+  padding: .3rem 1rem;
 }
 
 .postDisplay {
@@ -384,21 +388,18 @@ header li {
   width: 1rem;
   right: 1rem;
   text-align: center;
+  color: var(--blue);
   /*border-bottom: 1px solid lightgray;*/
 }
 
 #taskInput i.fa-plus {
   top: -.1rem;
   font-size: .7rem;
-  /*position: absolute;*/
-  /*transform: translateX(50%);*/
-  /*right: 25%;*/
 }
 
 #taskInput i.fa-circle {
   position: relative;
   visibility: hidden;
-  /*left: 0;*/
   top: -1.2rem;
 }
 
@@ -408,24 +409,6 @@ header li {
 }
 
 
-#taskInput .Collapsible__contentInner {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .5rem;
-    background: #b9d6ff;
-    background: #ecf6fe;
-    border-radius: 10px;
-    padding: 1rem;
-    border: 1px solid var(--blue);
-}
-
-
-#taskInput .Collapsible__contentInner > div {
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  gap: 1rem;
-  }
 
 
 #taskInput input {
@@ -434,7 +417,6 @@ header li {
   border: none;
   background-color: inherit;
   font-style: italic;
-  /*border-bottom: 1px solid var(--blue);*/
 }
 
 .Collapsible__contentInner input {
@@ -469,15 +451,11 @@ header li {
 
 .sibling {
   display: inline-block;
-  /*border-bottom: 1px solid lightgray;*/
-  /*height: 18px;*/
-  /*padding-left: 1em;*/
   position: absolute;
   right: 1em;
 }
 
 .is-closed ~ .Collapsible__contentOuter .sibling {
-  /*background-color: aquamarine;*/
   position: static;
 }
 
@@ -517,9 +495,7 @@ header li {
   color: var(--darkgray);
 }
 
-
-
-.taskList .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
+/*#taskInput .Collapsible__contentInner {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -529,9 +505,30 @@ header li {
   border-radius: 10px;
   padding: 1rem;
   border: 1px solid var(--blue);
+}*/
+
+
+/*#taskInput .Collapsible__contentInner > div {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  }
+*/
+
+#taskSection .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
+  /*margin-top: 1rem;*/
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+  background: #b9d6ff;
+  background: #ecf6fe;
+  background: #fdfdfd;
+  border-radius: 0 0 10px 10px;
+  padding: 1rem;
+  /*border: 1px solid var(--blue);*/
 }
 
-.taskList .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
+#taskSection .Collapsible__contentInner > div:not(.completedTaskList > div > div > .Collapsible__contentInner div) {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: 1rem;
@@ -574,7 +571,6 @@ header li {
 .controls {
   display: grid;
   grid-template-columns: repeat(2, 1fr) !important;
-  /*background: white;*/
   justify-items: center;
   position: relative;
 }
