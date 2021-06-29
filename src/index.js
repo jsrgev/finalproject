@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 
 import {reducer} from './redux/reducer.js';
 
-const store = createStore(reducer, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const store = createStore(reducer, compose(applyMiddleware(thunk), window.window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 
 

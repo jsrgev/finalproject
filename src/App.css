@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Fugaz+One&family=Libre+Baskerville:ital@0;1&family=Lilita+One&family=Rubik:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Rubik:ital,wght@0,400;0,600;1,400&display=swap');
 :root {
   --blue: #5075ff;
   --darkgray: #53575a;
@@ -29,8 +29,12 @@ a {
 }
 
 a.active {
-  color: #fff;
+  color: #000;
   pointer-events: none;
+}
+
+header a:first-child {
+  text-align: center;
 }
 
 header {
@@ -44,7 +48,6 @@ header a {
 }
 
 #title {
-  font-family: 'Fugaz One', cursive;
   font-family: 'Chewy', cursive;
   font-family: 'Lilita One', cursive;
   font-family: 'Libre Baskerville', serif;
@@ -570,7 +573,7 @@ header li {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) !important;
+  grid-template-columns: repeat(2, 1fr) !important;
   /*background: white;*/
   justify-items: center;
   position: relative;

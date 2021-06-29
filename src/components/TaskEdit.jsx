@@ -17,8 +17,21 @@ class TaskEdit extends React.Component {
 	      penaltyUrl: "",
 	      shared: false,
 	      dateShared: "",
-	      expanded: false
+	      // expanded: false
 		}
+	}
+	componentDidMount = () => {
+		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared} = this.props.task;
+		this.setState({
+			taskName,
+      dateDue,
+      description,
+      penaltyText,
+      penaltyUrl,
+      shared,
+      dateShared
+      // expanded: false
+		})
 	}
 	changeField = (e) => {
 	  this.setState({[e.target.name]:e.target.value})
@@ -78,7 +91,28 @@ class TaskEdit extends React.Component {
 	setExpanded = (value) => {
 		this.setState({expanded:value});
 	}
+	saveTask = () => {
+		console.log(this.state);
+	    // this.setState({shared:true})
+	    // let date = new Date();
+		  // this.setState({dateShared:date});
+
+    // axios.post('http://localhost:4000/task/updateUserTaskShared', {
+    //   "taskId": this.props.task._id,
+    //   "field": "shared",
+    //   "dateShared": date
+    // })
+    // .then(response=> {
+    //   // this.props.updateTasks();
+    //   // this.props.updateFeed();
+    //   console.log(response);
+    // })
+    // .catch(err=>console.log(err))
+
+
+	}
 	render () {
+		  // console.log(this.state);
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
 		let trigger =  <>
 			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
@@ -91,32 +125,6 @@ class TaskEdit extends React.Component {
 				<i className="far fa-circle"></i>
 			</div>
 			</>
-		// to prevent collapsing once user already has information entered
-		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyUrl.length>0)
-					&& this.state.expanded) ? true : false;
-
-		// let expanded = console.log(document.querySelector("#taskInput .Collapsible__trigger")) ?
-			// document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open") :
-			// false;
-
-		// console.log(document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open"));
-		// console.log(expanded);
-		// let open = document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open");
-		
-		// if (taskName.length>0 && expanded) {
-			// triggerDisabled = true;
-		// }
-
-		// if (
-				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
-					// &&
-				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
-			// ) {
-
-			// console.log(document.querySelector("#taskInput .Collapsible__trigger"));
-		// }
-
-		// console.log(open	);
 		return (
 			<div id="taskInput">
 			    <Collapsible
@@ -140,22 +148,24 @@ class TaskEdit extends React.Component {
 				    <div>
 					    <label>IFTTT URL</label>
 					    <input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />
+					    {/*<input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />*/}
 				    </div>
 				    <div>
 					    <label>Privacy</label>
 					    <span name="shared" onClick={()=>this.changeShared(!shared)}>{shared ? "Public" : "Private"}</span>
 				    </div>
-	          {/*<div className="controls">*/}
-		          {/*<div></div>*/}
-	            {/*<div name="shared" className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}> Will be */}
-	              {/*{shared ? " Public" : " Private"}*/}
-	              {/*<span className="icons">*/}
-	                {/*<i className="far fa-share-square"></i>*/}
-	                {/*<i className="fas fa-share-square"></i>*/}
-	              {/*</span>*/}
-	            {/*</div>*/}
-		          {/*<div></div>*/}
-						{/*</div>*/}
+            <div className="controls">
+              <div onClick={()=>this.props.editTask(false)}>Cancel
+                <span className="icons">
+                  <i className="fas fa-times"></i>
+                </span>
+              </div>
+              <div onClick={this.saveTask}>Save
+                <span className="icons">
+                  <i className="fas fa-check"></i>
+                </span>
+              </div>
+            </div>
 			    </Collapsible>
 			</div>
 		)

@@ -11,13 +11,13 @@ class Task extends React.Component {
   constructor() {
     super();
     this.state = {
-      taskName: "",
-      dateDue: "",
-      description: "",
-      penaltyText: "",
-      penaltyUrl: "",
-      shared: "",
-      dateShared: "",
+      // taskName: "",
+      // dateDue: "",
+      // description: "",
+      // penaltyText: "",
+      // penaltyUrl: "",
+      // shared: "",
+      // dateShared: "",
       editMode: false
       // expanded: false
     }
@@ -62,8 +62,8 @@ class Task extends React.Component {
     .catch(err=>console.log(err))
   }
 
-  editTask = () => {
-    this.setState({editMode:true})
+  editTask = (value) => {
+    this.setState({editMode:value})
   }
   deleteTask = () => {
     axios.post('http://localhost:4000/task/updateUserTask', {
@@ -97,7 +97,7 @@ class Task extends React.Component {
     return (
       <>
       {this.state.editMode ?
-        <TaskEdit /> :
+        <TaskEdit task={task} editTask={this.editTask} /> :
         <div className={`${completedClass} ${pastClass}`}>
           <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
             {descriptionDisplay}
@@ -108,7 +108,7 @@ class Task extends React.Component {
             {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
             {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
             <div className="controls">
-              <div onClick={()=>this.editTask()}>Edit
+              <div onClick={()=>this.editTask(true)}>Edit
                 <span className="icons">
                   <i className="far fa-edit"></i>
                 </span>

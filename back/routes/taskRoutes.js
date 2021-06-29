@@ -74,14 +74,7 @@ const stopCron = (taskId) => {
 // ROUTES
 
 router.post('/addTask', async (req,res) => {
-	// let  =
 	const newTask = new taskTemplateCopy({...req.body});
-	// if (req.body.shared) {
-	// 	let obj = {...req.body,sharedDate:new Date()};
-	// 	// let a = 
-	// 	console.log(newTask);
-	// 	console.log(obj);
-	// }
 	newTask.save()
 	.then(data => {
 		startCronJobs();
@@ -138,6 +131,51 @@ router.post('/updatePublicTask', async (req,res) => {
 	}
 })
 
+router.post('/updateUserTask', async (req,res) => {
+	let {taskId, field, value} = req.body;
+	Task.updateOne(
+			{ _id: taskId },
+	  			{ [field]: value }
+	  		)
+	.then(results => {
+		startCronJobs();
+		res.send(results)
+	})
+	.catch(err => console.log(err))
+	}
+)
+
+router.post('/updateUserTask', async (req,res) => {
+	let {taskId, field, value} = req.body;
+	Task.updateOne(
+			{ _id: taskId },
+	  			{ [field]: value }
+	  		)
+	.then(results => {
+		startCronJobs();
+		res.send(results)
+	})
+	.catch(err => console.log(err))
+	}
+)
+
+
+router.post('/updateUserTaskShared', async (req,res) => {
+	let {taskId, field, dateShared} = req.body;
+	Task.updateOne(
+			{ _id: taskId },
+	  			{ [field]: true,
+	  				dateShared }
+	  		)
+	.then(results => {
+		// startCronJobs();
+		res.send(results)
+	})
+	.catch(err => console.log(err))
+	}
+)
+
+
 // changing a task to completed or back to uncompleted
 router.post('/updateUserTaskCompleted', async (req,res) => {
 	let {taskId, value, penalty} = req.body;
@@ -152,21 +190,6 @@ router.post('/updateUserTaskCompleted', async (req,res) => {
 	  				"completed": value,
 	  				"dateCompleted": date 
 		  		}
-	  		)
-	.then(results => {
-		startCronJobs();
-		res.send(results)
-	})
-	.catch(err => console.log(err))
-	}
-)
-
-
-router.post('/updateUserTask', async (req,res) => {
-	let {taskId, field, value} = req.body;
-	Task.updateOne(
-			{ _id: taskId },
-	  			{ [field]: value }
 	  		)
 	.then(results => {
 		startCronJobs();
