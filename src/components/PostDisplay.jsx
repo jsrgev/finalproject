@@ -50,7 +50,6 @@ class PostDisplay extends React.Component {
     handleClickLike = (value) => {
     		this.setState({liked: !value});
     		this.updateTaskLikes(!value);
-
     }
     handleClickComment = () => {
     	if (this.state.comment.length > 0) {
@@ -111,7 +110,7 @@ class PostDisplay extends React.Component {
 	    	likeCountDisplay = `${likes.length} likes`
 	    }
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
-	    let penaltyDisplay = penaltyText && <div>Penalty: {penaltyText}</div>
+	    let penaltyDisplay = penaltyText && <div className="post-penalty">Penalty: {penaltyText}</div>
 	    let status;
 	    if (completed) {
 		    status = "completed"
@@ -128,85 +127,77 @@ class PostDisplay extends React.Component {
 			    // console.log(`${taskName} isPast → false`)
 	    	}
 	    }
+
 	    let headline = (status === "shared") ?
 	    	<>
 				<div>
 					<Link to={`/profile/${username}`}>
-						{this.avatarDisplay(userId,"small")}
-					</Link>
-					</div>
-					<div>
-					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
 					</Link>
-	    	&nbsp;shared a task.</div>
+	    		&nbsp;shared a task.
+	    	</div>
+
 	    	<div>{formatDate(dateShared)}</div>
-	    	</> :
+	    	</>
+	    	:
 	    	(status === "failed") ?
 	    	<>
 				<div>
 					<Link to={`/profile/${username}`}>
-						{this.avatarDisplay(userId,"small")}
-					</Link>
-					</div>
-					<div>
-					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
 					</Link>
-	    	&nbsp;didn't finish a task on time!</div>
-	    	<div>{formatDate(dateDue)}</div></> :
+	    		&nbsp;didn't finish a task on time!
+	    	</div>
+
+	    	<div>{formatDate(dateDue)}</div></>
+	    	:
 	    	<>
-				<div>
-					<Link to={`/profile/${username}`}>
-						{this.avatarDisplay(userId,"small")}
-					</Link>
-					</div>
 					<div>
-					<Link to={`/profile/${username}`}>
-						{this.getFullName(userId)}
-					</Link>
-	    	&nbsp;finished a task!</div>
-	    	<div>{formatDate(dateCompleted)}</div>
+						<Link to={`/profile/${username}`}>
+							{this.getFullName(userId)}
+						</Link>
+			    	&nbsp;finished a task!</div>
+		    	<div>{formatDate(dateCompleted)}</div>
 	    	</>
 		return (
 			<div className="postDisplay">
 				<div className={`postHeader post-${status}`}>
-{/*						<Link to={`/profile/${username}`}>
-							{this.avatarDisplay(userId,"small")}
-							{this.getFullName(userId)}
-						</Link>*/}
-					{headline}
-
-				</div>
-					<div>{taskName}</div>
-					{dateElement}
-				<div className="postContent">
-					{/*<div>
+					<div>
 						<Link to={`/profile/${username}`}>
 							{this.avatarDisplay(userId,"small")}
-							{this.getFullName(userId)}
 						</Link>
 					</div>
-*/}					<div>{description}</div>
+					{headline}
+				</div>
+				<div className="postContent">
+					<div className="post-taskName">{taskName}</div>
+					<div className="post-description">{description}</div>
 					{penaltyDisplay}
 				</div>
 				<div className="postBottom">
-					<button onClick={() => this.handleClickLike(thisUserLiked)}>Like</button>
-					<div>{likeCountDisplay}</div>
+					{/*<div>{likeCountDisplay}</div>*/}
 					{/*<div>Added: {formatDate(dateEntered)}</div>*/}
 				</div>
 				<div className="commentInput">
-				{this.avatarDisplay(this.props.user._id,"mini")}
-			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} /><button onClick={this.handleClickComment}>Submit</button></div>
-
+					<div>
+						{this.avatarDisplay(this.props.user._id,"mini")}
+					</div>
+					<div>
+			    <TextareaAutosize placeholder="Write a comment" value={this.state.comment} onChange={this.changeComment} />
+			    </div>
+		    </div>
+		    <div className="controls">
+					<button onClick={() => this.handleClickLike(thisUserLiked)}>{likeCountDisplay}</button>
+			    <button onClick={this.handleClickComment}>Comment</button>
+			  </div>
 			    {comments.length>0 &&
 			    	// <div className="commentList">
 						<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
-					      {comments.map((item,i) =>{
-					      	return <CommentDisplay avatarDisplay={this.avatarDisplay} item={item} key={i} />
+				      {comments.map((item,i) =>{
+				      	return <CommentDisplay avatarDisplay={this.avatarDisplay} item={item} key={i} />
 					      })
-					      }
-					    </Collapsible>
+				      }
+				    </Collapsible>
 				    // </div>
 			    }
 			    

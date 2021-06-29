@@ -72,6 +72,7 @@ header a {
   font-weight: 600;
   text-transform: uppercase;
   color: var(--blue);
+  text-align: center;
 }
 
 textarea::placeholder, input::placeholder {
@@ -195,6 +196,9 @@ header li {
   /*font-weight: 600;*/
   justify-content: space-between;
   align-items: baseline;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+  box-shadow: 1px 1px 1px #d3d3d3b8;
 }
 
 .postHeader > div:nth-child(2) {
@@ -262,6 +266,12 @@ header li {
 .post-proposed {
 
 }
+
+
+.post-taskName {
+  font-weight: 600;
+}
+
 
 /* REGISTER & LOGIN */
 
