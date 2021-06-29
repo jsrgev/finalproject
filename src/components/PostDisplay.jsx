@@ -87,14 +87,17 @@ class PostDisplay extends React.Component {
     changeComment = (e) => {
     	this.setState({comment: e.target.value})
     }
+    
    	render () {
 		let taskId = this.props.id;
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments} = item;
+		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments, dateShared} = item;
+	    
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    let dateElement = formatDate(dateDue) ?
 	      <div>Due: {formatDate(dateDue)}</div> :
 	      null;
+
 	    let username = this.getUsername(userId);
 
 	    let thisUserLiked = likes.some(a => a === this.props.user._id)
@@ -126,8 +129,8 @@ class PostDisplay extends React.Component {
 						{this.avatarDisplay(userId,"small")}
 						{this.getFullName(userId)}
 					</Link>
-	    	`shared a task.`</div>
-	    	<div>{dateShared}</div>
+	    	shared a task.</div>
+	    	<div>{formatDate(dateShared)}</div>
 	    	</> :
 	    	(status === "failed") ?
 	    	<>
@@ -136,16 +139,16 @@ class PostDisplay extends React.Component {
 						{this.avatarDisplay(userId,"small")}
 						{this.getFullName(userId)}
 					</Link>
-	    	`didn't finish a task on time!`</div>
-	    	<div>{dateDue}</div></> :
+	    	didn't finish a task on time!</div>
+	    	<div>{formatDate(dateDue)}</div></> :
 	    	<>
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.avatarDisplay(userId,"small")}
 						{this.getFullName(userId)}
 					</Link>
-	    	`finished a task!`</div>
-	    	<div>{dateCompleted}</div>
+	    	finished a task!</div>
+	    	<div>{formatDate(dateCompleted)}</div>
 	    	</>
 		return (
 			<div className="postDisplay">
@@ -156,10 +159,9 @@ class PostDisplay extends React.Component {
 						</Link>*/}
 					{headline}
 
-					<div>{taskName}</div>
-					{completed && <div>Completed</div>}
-					{dateElement}
 				</div>
+					<div>{taskName}</div>
+					{dateElement}
 				<div className="postContent">
 					{/*<div>
 						<Link to={`/profile/${username}`}>
