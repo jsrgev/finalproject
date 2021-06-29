@@ -12,7 +12,7 @@ var CronJob = require('cron').CronJob;
 var CronJobManager = require('cron-job-manager');
 
 // process.env.port in case 4000 not available
-const port = process.env.port || 4000;
+const port = process.env.PORT || 4000;
 
 
 if (process.env.NODE_ENV === 'production') {
