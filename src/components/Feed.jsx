@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 // import {getFullName} from '../functions';
 import { BASE_API_URL } from '../utils/constants';
-import { isPast } from "date-fns";
+import { isPast, compareDesc } from "date-fns";
 import {formatDate} from '../functions';
 
 class Feed extends React.Component {
@@ -69,17 +69,22 @@ class Feed extends React.Component {
 		for (let item of tasksToDisplay) {
 			let status = this.setStatus(item.completed, item.dateDue);
 			let sortDate = (status === "completed") ?
-					item.dateCompleted :
+					new Date(item.dateCompleted) :
 					(status === "shared") ?
-					item.dateShared :
-					item.dateDue;
-			let obj = {...item, status, sortDate}
+					new Date(item.dateShared) :
+					new Date(item.dateDue);
+			let obj = {...item, status, sortDate};
 			newArray.push(obj);
-			
 		}
-		console.log(newArray);
-
+		let sortedArray = newArray.sort((a,b)=>{
+			// console.log(`${a.taskname}\n${a.sortDate} ~\n${b.taskname}\n${b.sortDate} :\n   ${compareDesc(a.sortDate,b.sortDate)}`);
+			return compareDesc(a.sortDate,b.sortDate);
+		});
+		// console.log(sortedArray)
+		return sortedArray;
 	}
+
+	// }
 	render() {
 		// console.log(this.props);
 		let {allPublicTasks, userId}  = this.props;
@@ -88,7 +93,15 @@ class Feed extends React.Component {
 			allPublicTasks.filter(a => a.userId === userId) :
 			allPublicTasks;
 
-		this.sortPosts(tasksToDisplay);
+		let sortedArray = this.sortPosts(tasksToDisplay);
+		// console.log(sortedArray);
+		// let poodle = {sortDate: new Date("2021-06-28T21:55:38.680Z")};
+		// let bridge = {sortDate: new Date("2021-06-28T22:02:15.627Z")};
+		// let sorted = [bridge,poodle].sort((a,b)=>{
+		// 	// console.log(compareDesc(a.sortDate,b.sortDate));
+		// 	compareDesc(a,b);
+		// });
+		// console.log(sorted);
 
 		let heading = (userId) ?
 			<div className="heading" > {
@@ -114,13 +127,13 @@ class Feed extends React.Component {
 					// at first, assume there are shared tasks
 					<div className="loadingScreen">Loading ...</div> :
 
-					(tasksToDisplay.length===0 && userId) ?
+					(sortedArray.length===0 && userId) ?
 					<div className="loadingScreen">This user is not sharing any tasks right now.</div> :
 
-					(tasksToDisplay.length===0 && !userId) ?
+					(sortedArray.length===0 && !userId) ?
 					<div className="loadingScreen">There are currently no shared tasks to show.</div> :
 
-					tasksToDisplay.map(({_id},i) => {
+					sortedArray.map(({_id},i) => {
 						return(
 							<PostDisplay id={_id} key={i} updateFeed={this.updateFeed} />
 							)

@@ -98,7 +98,7 @@ class Task extends React.Component {
     return (
       <>
       {this.state.editMode ?
-        <TaskEdit task={task} editTask={this.editTask} /> :
+        <TaskEdit task={task} taskId={this.props.taskId} editTask={this.editTask} /> :
         <div className={`${completedClass} ${pastClass}`}>
           <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
             {descriptionDisplay}

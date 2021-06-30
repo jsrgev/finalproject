@@ -42,58 +42,82 @@ class TaskEdit extends React.Component {
 	}
 	changeShared = (value) => {
 	    this.setState({shared:value})
-	    let date = value ? new Date() : "";
-		  this.setState({dateShared:date});
+	   //  let date = value ? new Date() : "";
+		  // this.setState({dateShared:date});
 	}
-	handleClick = () => {
-		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
+	saveTask = () => {
+		if (!dateDue) {
+			this.setState({dateDue:""});
+		}
+		
+		let {taskName, penaltyUrl, penaltyText, dateDue, shared, dateShared} = this.state;
 		if (taskName.length === 0) {
 			return;
 		};
 
-		if (dateDue.length>0) {
-			if (!isDate(dateDue)) {
-				alert("There is a problem with the date or time you entered. Please correct it and try again.");
-				return;
-			}
-			if (isPast(dateDue)) {
-				alert("If you wish to include a due date, it must be in the future.");
-				return;
-			}
-		} 
+		// console.log(dateDue);
+		// console.log(typeof(dateDue))
 
-		if (penaltyUrl.length>0) {
-			if (dateDue.length===0 && penaltyText.length===0) {
-				alert("If you include a penalty URL, you must add a description of it and a due date.");
-				return;
-			}
-			if (dateDue.length===0) {
-				alert("If you include a penalty URL, you must add a due date.");
-				return;
-			}
-			if (penaltyText.length===0) {
-				alert("If you include a penalty URL, you must add a description of it.");
-				return;
-			}
-		}
 
-	    const thisTask = {...this.state, userId: this.props.user._id};
-	    const {expanded, ...newTask} = thisTask;
-	    axios.post(`${BASE_API_URL}/task/addTask`, newTask)
+
+		// if (dateDue.length>0) {
+		// 	if (!isDate(dateDue)) {
+		// 		alert("There is a problem with the date or time you entered. Please correct it and try again.");
+		// 		// return;
+		// 	}
+		// 	if (isPast(dateDue)) {
+		// 		alert("If you wish to include a due date, it must be in the future.");
+		// 		// return;
+		// 	}
+		// } 
+
+		// if (penaltyUrl.length>0) {
+		// 	if (dateDue.length===0 && penaltyText.length===0) {
+		// 		alert("If you include a penalty URL, you must add a description of it and a due date.");
+		// 		return;
+		// 	}
+		// 	if (dateDue.length===0) {
+		// 		alert("If you include a penalty URL, you must add a due date.");
+		// 		return;
+		// 	}
+		// 	if (penaltyText.length===0) {
+		// 		alert("If you include a penalty URL, you must add a description of it.");
+		// 		return;
+		// 	}
+		// }
+
+			// set dateShared before sending
+			if (!dateShared && shared) {
+			  this.setState({dateShared:new Date()});
+			} else if (dateShared && !shared) {
+			  this.setState({dateShared:null});
+			}
+
+	    // const thisTask = {...this.state, userId: this.props.user._id};
+
+	    // const {expanded, ...newTask} = thisTask;
+	    axios.post(`${BASE_API_URL}/task/updateUserTaskAllFields`, {
+	    	taskId: this.props.taskId, 
+	    	thisTask: {...this.state}, 
+	    })
 	    .then(response=> {
-	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
-	    document.querySelector(".react-datepicker__input-container>input").value="";
-	    this.props.updateTasks();
-		this.props.thereAreTasks();
-		this.props.updateFeed();
+	    	console.log(response)
+	 //    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
+	 //    document.querySelector(".react-datepicker__input-container>input").value="";
+	 //    this.props.updateTasks();
+		// this.props.thereAreTasks();
+		// this.props.updateFeed();
 	  })
 	    .catch(err=>console.log(err))
 	  }
-	setExpanded = (value) => {
-		this.setState({expanded:value});
-	}
-	saveTask = () => {
-		console.log(this.state);
+
+	// setExpanded = (value) => {
+		// this.setState({expanded:value});
+	// }
+	// saveTask = () => {
+		// console.log(this.state);
+		// 	let date = value ? new Date() : "";
+		//   this.setState({dateShared:date});
 	    // this.setState({shared:true})
 	    // let date = new Date();
 		  // this.setState({dateShared:date});
@@ -111,7 +135,7 @@ class TaskEdit extends React.Component {
     // .catch(err=>console.log(err))
 
 
-	}
+	// }
 	render () {
 		  // console.log(this.state);
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
@@ -135,8 +159,8 @@ class TaskEdit extends React.Component {
 				    transitionCloseTime="70"
 				    triggerDisabled="true"
 				    open="true"
-				    onOpening={()=>this.setExpanded(true)}
-				    onClosing={()=>this.setExpanded(false)}
+				    // onOpening={()=>this.setExpanded(true)}
+				    // onClosing={()=>this.setExpanded(false)}
 				    >
 				    <div>
 					    <label>Description</label>

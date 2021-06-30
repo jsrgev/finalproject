@@ -145,6 +145,26 @@ router.post('/updateUserTask', async (req,res) => {
 	}
 )
 
+router.post('/updateUserTaskAllFields', async (req,res) => {
+	console.log(req.body)
+	let {taskId, thisTask} = req.body;
+	console.log(taskId)
+	console.log(thisTask)
+	// Task.updateOne(
+	// 		{ _id: taskId },
+	//   			{ [field]: value }
+	//   		)
+	// .then(results => {
+	// 	startCronJobs();
+	// 	res.send(results)
+	// })
+	// .catch(err => console.log(err))
+	res.send("ok")
+	}
+)
+
+
+
 router.post('/updateUserTask', async (req,res) => {
 	let {taskId, field, value} = req.body;
 	Task.updateOne(
