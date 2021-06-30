@@ -150,15 +150,15 @@ router.post('/updateUserTaskAllFields', async (req,res) => {
 	let {taskId, thisTask} = req.body;
 	console.log(taskId)
 	console.log(thisTask)
-	// Task.updateOne(
-	// 		{ _id: taskId },
-	//   			{ [field]: value }
-	//   		)
-	// .then(results => {
-	// 	startCronJobs();
-	// 	res.send(results)
-	// })
-	// .catch(err => console.log(err))
+	Task.updateOne(
+			{ _id: taskId },
+	  			thisTask
+	  		)
+	.then(results => {
+		startCronJobs();
+		res.send(results)
+	})
+	.catch(err => console.log(err))
 	res.send("ok")
 	}
 )

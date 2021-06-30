@@ -487,6 +487,9 @@ input[type="radio"] {
   /*background-color: aliceblue;*/
 }
 
+.taskInput .sibling {
+  width: 100%;
+}
 
 .taskList  {
   display: grid;
@@ -530,7 +533,7 @@ input[type="radio"] {
 .react-datepicker-wrapper {
   display: inline-block;
   position: absolute;
-  right: 2rem;
+  left: 16rem;
 }
 
 .react-datepicker__input-container {
@@ -562,10 +565,12 @@ input[type="radio"] {
     transform: translateY(23%)
 }
 
-.taskInput i.fa-circle {
+
+
+.taskInput .sibling i {
   /*position: relative;*/
   /*visibility: hidden;*/
-  color: transparent;
+  /*color: transparent;*/
   width: 1rem;
   right: 0;
   /*left: 0;*/
@@ -573,7 +578,12 @@ input[type="radio"] {
   position: absolute;
 }
 
-i.fa-circle:hover {
+#taskSection > div:first-child i.fa-circle {
+  color: transparent;
+}
+
+
+#taskSection > div:first-child i.fa-circle:hover {
   visibility: visible !important;
   color: var(--blue);
 }
@@ -837,9 +847,7 @@ button, input[type="submit"] {
   color: var(--darkgray);
 }
 
-button:hover, input[type="submit"]:hover,
-/*button:focus*/
-{
+button:hover, input[type="submit"]:hover {
   box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
   color: var(--blue);
 }

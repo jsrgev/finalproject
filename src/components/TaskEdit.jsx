@@ -18,10 +18,11 @@ class TaskEdit extends React.Component {
 	      penaltyUrl: "",
 	      shared: false,
 	      dateShared: "",
+	      completed: false
 		}
 	}
 	componentDidMount = () => {
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared} = this.props.task;
+		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared, completed} = this.props.task;
 		this.setState({
 			taskName,
       dateDue,
@@ -29,7 +30,8 @@ class TaskEdit extends React.Component {
       penaltyText,
       penaltyUrl,
       shared,
-      dateShared
+      dateShared,
+      completed
 		})
 	}
 	changeField = (e) => {
@@ -44,45 +46,37 @@ class TaskEdit extends React.Component {
 		  // this.setState({dateShared:date});
 	}
 	saveTask = () => {
-		if (!dateDue) {
-			this.setState({dateDue:""});
-		}
-
 		let {taskName, penaltyUrl, penaltyText, dateDue, shared, dateShared} = this.state;
+		let convertedDate = new Date(dateDue);
 		if (taskName.length === 0) {
 			return;
 		};
 
-		// console.log(dateDue);
-		// console.log(typeof(dateDue))
+		if (convertedDate.length>0) {
+			if (!isDate(convertedDate)) {
+				alert("There is a problem with the date or time you entered. Please correct it and try again.");
+				// return;
+			}
+			if (isPast(convertedDate)) {
+				alert("If you wish to include a due date, it must be in the future.");
+				// return;
+			}
+		} 
 
-
-
-		// if (dateDue.length>0) {
-		// 	if (!isDate(dateDue)) {
-		// 		alert("There is a problem with the date or time you entered. Please correct it and try again.");
-		// 		// return;
-		// 	}
-		// 	if (isPast(dateDue)) {
-		// 		alert("If you wish to include a due date, it must be in the future.");
-		// 		// return;
-		// 	}
-		// } 
-
-		// if (penaltyUrl.length>0) {
-		// 	if (dateDue.length===0 && penaltyText.length===0) {
-		// 		alert("If you include a penalty URL, you must add a description of it and a due date.");
-		// 		return;
-		// 	}
-		// 	if (dateDue.length===0) {
-		// 		alert("If you include a penalty URL, you must add a due date.");
-		// 		return;
-		// 	}
-		// 	if (penaltyText.length===0) {
-		// 		alert("If you include a penalty URL, you must add a description of it.");
-		// 		return;
-		// 	}
-		// }
+		if (penaltyUrl.length>0) {
+			if (convertedDate.length===0 && penaltyText.length===0) {
+				alert("If you include a penalty URL, you must add a description of it and a due date.");
+				return;
+			}
+			if (convertedDate.length===0) {
+				alert("If you include a penalty URL, you must add a due date.");
+				return;
+			}
+			if (penaltyText.length===0) {
+				alert("If you include a penalty URL, you must add a description of it.");
+				return;
+			}
+		}
 
 			// set dateShared before sending
 			if (!dateShared && shared) {
@@ -91,40 +85,37 @@ class TaskEdit extends React.Component {
 			  this.setState({dateShared:null});
 			}
 
-	    // const thisTask = {...this.state, userId: this.props.user._id};
-
-	    // const {expanded, ...newTask} = thisTask;
 	    axios.post(`${BASE_API_URL}/task/updateUserTaskAllFields`, {
 	    	taskId: this.props.taskId, 
 	    	thisTask: {...this.state}, 
 	    })
 	    .then(response=> {
-	    	console.log(response)
-	 //    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
-	 //    document.querySelector(".react-datepicker__input-container>input").value="";
-	 //    this.props.updateTasks();
-		// this.props.thereAreTasks();
-		// this.props.updateFeed();
+	    	console.log(response);
+	    this.props.updateTasks();
+			this.props.updateFeed();
+			this.props.editTask(false)
 	  })
+
 	    .catch(err=>console.log(err))
 	  }
 
 	render () {
-		  // console.log(this.state);
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
+		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, completed} = this.state;
 		let trigger =  <>
 			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
 			</>
 
-		let sibling = <>
-			<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={dateDue} />
-			<div className="i-wrapper" onClick={this.handleClick}>
-				<i className="fas fa-plus"></i>
-				<i className="far fa-circle"></i>
-			</div>
-			</>
+		let sibling =
+			<div className="sibling">
+				<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={this.props.task.dateDue} />
+        <i className="far fa-circle"></i>
+        <i className="far fa-check-circle" onClick={()=>this.props.changeCompleted(!completed, penaltyUrl, shared)}></i>
+      </div>;
+
+		let completedClass = completed ? "completed" : "uncompleted";
+
 		return (
-			<div className="taskInput">
+			<div className={`${completedClass} taskInput`}>
 			    <Collapsible
 				    trigger={trigger}
 				    triggerSibling={() => sibling}
@@ -150,7 +141,7 @@ class TaskEdit extends React.Component {
 					    <span name="shared" onClick={()=>this.changeShared(!shared)}>{shared ? "Public" : "Private"}</span>
 				    </div>
             <div className="controls">
-                <button  onClick={()=>this.props.editTask(false)}>
+                <button onClick={()=>this.props.editTask(false)}>
                   Cancel<i className="fas fa-times"></i>
                 </button>
                 <button onClick={this.saveTask}>

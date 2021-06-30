@@ -34,7 +34,9 @@ class TaskInput extends React.Component {
 	}
 	handleClick = () => {
 		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
+		console.log(dateDue);
 		if (taskName.length === 0) {
+			alert("Please enter a task name.");
 			return;
 		};
 
@@ -89,8 +91,8 @@ class TaskInput extends React.Component {
 			<div className="sibling">
 				<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={dateDue} />
 				{/*<div className="i-wrapper" onClick={this.handleClick}>*/}
-					<i className="fas fa-plus" onClick={this.handleClick}></i>
-					<i className="far fa-circle"></i>
+					<i className="fas fa-plus"></i>
+					<i className="far fa-circle" onClick={this.handleClick}></i>
 				{/*</div>*/}
 			</div>
 		// to prevent collapsing once user already has information entered

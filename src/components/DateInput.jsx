@@ -1,13 +1,12 @@
-import React, {	useState } from "react";
+import React, {	useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { isSameDay } from "date-fns";
-
 import "react-datepicker/dist/react-datepicker.css";
 
 // some of below adapted from https://github.com/Hacker0x01/react-datepicker/pull/1718, to block out past times on current day
 
 const DateInput = ({changeDateDue, dateDue}) => {
-	const [startDate, setStartDate] = useState(dateDue);
+	const [startDate, setStartDate] = useState();
 
 	const isSelectedDateInFuture = (startDate ? !isSameDay(startDate, new Date()) : false);
 	// console.log(startDate);
@@ -24,6 +23,12 @@ const DateInput = ({changeDateDue, dateDue}) => {
 		setStartDate(date);
 		changeDateDue(date);
 		};
+	useEffect(()=>{
+		(dateDue) && setStartDate(new Date(dateDue));
+	},[])
+	useEffect(()=>{
+		// console.log(startDate);
+	})
 	// console.log(dateDue)
 	return (
 		< DatePicker

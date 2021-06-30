@@ -62,7 +62,7 @@ class Task extends React.Component {
     })
     .catch(err=>console.log(err))
   }
-
+      
   editTask = (value) => {
     this.setState({editMode:value})
   }
@@ -85,7 +85,11 @@ class Task extends React.Component {
     let completedClass = completed ? "completed" : "uncompleted";
     let pastClass = !dateDue ? null : isPast(new Date(dateDue)) ? "past": null;
 
-    let sibling = <div className="sibling" onClick={()=>this.changeCompleted(!completed, penaltyUrl, shared)}><i className="far fa-circle"></i><i className="far fa-check-circle"></i></div>;
+    let sibling =
+      <div className="sibling" onClick={()=>this.changeCompleted(!completed, penaltyUrl, shared)}>
+        <i className="far fa-circle"></i>
+        <i className="far fa-check-circle"></i>
+      </div>;
 
     let trigger = <>
         <div>{taskName}</div>
@@ -98,16 +102,13 @@ class Task extends React.Component {
     return (
       <>
       {this.state.editMode ?
-        <TaskEdit task={task} taskId={this.props.taskId} editTask={this.editTask} /> :
+        <TaskEdit task={task} taskId={this.props.taskId} editTask={this.editTask} changeCompleted={this.changeCompleted} updateTasks={this.props.updateTasks} updateFeed={this.props.updateFeed} /> :
         <div className={`${completedClass} ${pastClass}`}>
           <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
             {descriptionDisplay}
             {penaltyTextDisplay}
             {penaltyUrlDisplay}
             <div><label>Privacy:</label><span>{shared ? "Public" : "Private"}</span></div>
-            {/*<div><label>Description:</label><span>{description}</span></div>*/}
-            {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
-            {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
             <div className="controls">
               <button onClick={()=>this.editTask(true)}>
                 Edit <i className="far fa-edit"></i>
@@ -130,12 +131,6 @@ const mapStateToProps = (state) => {
     tasks: state.userTaskReducer.tasks
   }
 }
-
-// const dispatchStateToProps = (dispatch) => {
-//   return {
-//     setUserTasks: (array) => dispatch(setUserTasks(array)),
-//   }
-// }
 
 export default connect(mapStateToProps)(Task);
 
