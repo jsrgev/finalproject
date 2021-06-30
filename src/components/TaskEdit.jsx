@@ -18,7 +18,6 @@ class TaskEdit extends React.Component {
 	      penaltyUrl: "",
 	      shared: false,
 	      dateShared: "",
-	      // expanded: false
 		}
 	}
 	componentDidMount = () => {
@@ -31,7 +30,6 @@ class TaskEdit extends React.Component {
       penaltyUrl,
       shared,
       dateShared
-      // expanded: false
 		})
 	}
 	changeField = (e) => {
@@ -49,7 +47,7 @@ class TaskEdit extends React.Component {
 		if (!dateDue) {
 			this.setState({dateDue:""});
 		}
-		
+
 		let {taskName, penaltyUrl, penaltyText, dateDue, shared, dateShared} = this.state;
 		if (taskName.length === 0) {
 			return;
@@ -111,31 +109,6 @@ class TaskEdit extends React.Component {
 	    .catch(err=>console.log(err))
 	  }
 
-	// setExpanded = (value) => {
-		// this.setState({expanded:value});
-	// }
-	// saveTask = () => {
-		// console.log(this.state);
-		// 	let date = value ? new Date() : "";
-		//   this.setState({dateShared:date});
-	    // this.setState({shared:true})
-	    // let date = new Date();
-		  // this.setState({dateShared:date});
-
-    // axios.post('http://localhost:4000/task/updateUserTaskShared', {
-    //   "taskId": this.props.task._id,
-    //   "field": "shared",
-    //   "dateShared": date
-    // })
-    // .then(response=> {
-    //   // this.props.updateTasks();
-    //   // this.props.updateFeed();
-    //   console.log(response);
-    // })
-    // .catch(err=>console.log(err))
-
-
-	// }
 	render () {
 		  // console.log(this.state);
 		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
@@ -159,8 +132,6 @@ class TaskEdit extends React.Component {
 				    transitionCloseTime="70"
 				    triggerDisabled="true"
 				    open="true"
-				    // onOpening={()=>this.setExpanded(true)}
-				    // onClosing={()=>this.setExpanded(false)}
 				    >
 				    <div>
 					    <label>Description</label>
@@ -173,7 +144,6 @@ class TaskEdit extends React.Component {
 				    <div>
 					    <label>IFTTT URL</label>
 					    <input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />
-					    {/*<input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />*/}
 				    </div>
 				    <div>
 					    <label>Privacy</label>

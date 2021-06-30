@@ -3,7 +3,6 @@ import PostDisplay from './PostDisplay.jsx';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
-// import {getFullName} from '../functions';
 import { BASE_API_URL } from '../utils/constants';
 import { isPast, compareDesc } from "date-fns";
 import {formatDate} from '../functions';
@@ -24,7 +23,6 @@ class Feed extends React.Component {
 	    .then(response=> {
 		    this.props.setAllPublicTasks(response.data.tasks);
 		    this.setState({tasksFetched:true});
-		    // ((response.data.result) && response.data.tasks.length===0) && this.setState({presumedSharedTasks: false});
 		})
 		.catch(err => console.log(err))
 	}
@@ -46,11 +44,6 @@ class Feed extends React.Component {
 		.catch(err => console.log(err))
 	}
 
-	// filterPosts = (userId) => {
-	// 	let allPublicTasks = this.props.allPublicTasks;
-	// 	let userPublicTasks = allPublicTasks.filter(a => a.userId === userId);
-	// 	// console.log(userPublicTasks);
-	// }
 	setStatus = (completed, dateDue) => {
     if (completed) {
 	    return "completed"
@@ -77,16 +70,12 @@ class Feed extends React.Component {
 			newArray.push(obj);
 		}
 		let sortedArray = newArray.sort((a,b)=>{
-			// console.log(`${a.taskname}\n${a.sortDate} ~\n${b.taskname}\n${b.sortDate} :\n   ${compareDesc(a.sortDate,b.sortDate)}`);
 			return compareDesc(a.sortDate,b.sortDate);
 		});
-		// console.log(sortedArray)
 		return sortedArray;
 	}
 
-	// }
 	render() {
-		// console.log(this.props);
 		let {allPublicTasks, userId}  = this.props;
 
 		let tasksToDisplay = (userId) ?
@@ -94,15 +83,6 @@ class Feed extends React.Component {
 			allPublicTasks;
 
 		let sortedArray = this.sortPosts(tasksToDisplay);
-		// console.log(sortedArray);
-		// let poodle = {sortDate: new Date("2021-06-28T21:55:38.680Z")};
-		// let bridge = {sortDate: new Date("2021-06-28T22:02:15.627Z")};
-		// let sorted = [bridge,poodle].sort((a,b)=>{
-		// 	// console.log(compareDesc(a.sortDate,b.sortDate));
-		// 	compareDesc(a,b);
-		// });
-		// console.log(sorted);
-
 		let heading = (userId) ?
 			<div className="heading" > {
 				(this.props.users) ?
@@ -118,10 +98,8 @@ class Feed extends React.Component {
 			null;
 			{/*<div className="heading">Newsfeed</div>;*/}
 
-		// console.log(tasksToDisplay)
 		return (
 			<div id="feed">
-			{/*<button onClick={()=>this.sortPosts(tasksToDisplay)}>Sort</button>*/}
 				{heading}
 				{(!this.state.tasksFetched) ?
 					// at first, assume there are shared tasks

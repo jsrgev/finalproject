@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
-// import {setAllPublicTasks} from '../redux/actions';
 import { isPast } from "date-fns";
 import {formatDate} from '../functions';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -118,17 +117,13 @@ class PostDisplay extends React.Component {
 	    let status;
 	    if (completed) {
 		    status = "completed"
-		    // console.log(`${taskName} completed`)
 	    } else if (!dateDue) {
 	    	status = "shared"
 	    } else {
-		    	// console.log(``);
 	    	if (isPast(new Date(dateDue))) {
 		    	status = "failed"
-			    // console.log(`${taskName}: isPast → true`)
 	    	} else {
 		    	status = "shared"
-			    // console.log(`${taskName} isPast → false`)
 	    	}
 	    }
 
@@ -227,12 +222,6 @@ const mapStateToProps = (state) => {
     allPublicTasks: state.allPublicTaskReducer.tasks
   }
 }
-
-// const dispatchStateToProps = (dispatch) => {
-//   return {
-//     setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
-//   }
-// }
 
 
 export default connect(mapStateToProps)(PostDisplay);

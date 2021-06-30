@@ -95,29 +95,6 @@ class TaskInput extends React.Component {
 		// to prevent collapsing once user already has information entered
 		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyUrl.length>0)
 					&& this.state.expanded) ? true : false;
-
-		// let expanded = console.log(document.querySelector("#taskInput .Collapsible__trigger")) ?
-			// document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open") :
-			// false;
-
-		// console.log(document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open"));
-		// console.log(expanded);
-		// let open = document.querySelector("#taskInput .Collapsible__trigger").classList.contains("is-open");
-		
-		// if (taskName.length>0 && expanded) {
-			// triggerDisabled = true;
-		// }
-
-		// if (
-				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
-					// &&
-				// typeof(console.log(document.querySelector("#taskInput .Collapsible__trigger"))) !== "null"
-			// ) {
-
-			// console.log(document.querySelector("#taskInput .Collapsible__trigger"));
-		// }
-
-		// console.log(open	);
 		return (
 			<div className="taskInput">
 			    <Collapsible
@@ -145,17 +122,6 @@ class TaskInput extends React.Component {
 					    <label>Privacy</label>
 					    <span name="shared" onClick={()=>this.changeShared(!shared)}>{shared ? "Public" : "Private"}</span>
 				    </div>
-	          {/*<div className="controls">*/}
-		          {/*<div></div>*/}
-	            {/*<div name="shared" className={shared ? " shared" : ""} onClick={()=>this.changeShared(!shared)}> Will be */}
-	              {/*{shared ? " Public" : " Private"}*/}
-	              {/*<span className="icons">*/}
-	                {/*<i className="far fa-share-square"></i>*/}
-	                {/*<i className="fas fa-share-square"></i>*/}
-	              {/*</span>*/}
-	            {/*</div>*/}
-		          {/*<div></div>*/}
-						{/*</div>*/}
 			    </Collapsible>
 			</div>
 		)
