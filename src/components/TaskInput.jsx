@@ -85,13 +85,14 @@ class TaskInput extends React.Component {
 			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
 			</>
 
-		let sibling = <>
-			<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={dateDue} />
-			<div className="i-wrapper" onClick={this.handleClick}>
-				<i className="fas fa-plus"></i>
-				<i className="far fa-circle"></i>
+		let sibling =
+			<div className="sibling">
+				<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={dateDue} />
+				{/*<div className="i-wrapper" onClick={this.handleClick}>*/}
+					<i className="fas fa-plus" onClick={this.handleClick}></i>
+					<i className="far fa-circle"></i>
+				{/*</div>*/}
 			</div>
-			</>
 		// to prevent collapsing once user already has information entered
 		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyUrl.length>0)
 					&& this.state.expanded) ? true : false;

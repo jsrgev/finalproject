@@ -109,16 +109,12 @@ class Task extends React.Component {
             {/*<div><label>Penalty:</label><span>{penaltyText}</span></div>*/}
             {/*<div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>*/}
             <div className="controls">
-              <div onClick={()=>this.editTask(true)}>Edit
-                <span className="icons">
-                  <i className="far fa-edit"></i>
-                </span>
-              </div>
-              <div onClick={this.deleteTask}>Delete
-                <span className="icons">
-                  <i className="far fa-trash-alt"></i>
-                </span>
-              </div>
+              <button onClick={()=>this.editTask(true)}>
+                Edit <i className="far fa-edit"></i>
+              </button>
+              <button onClick={this.deleteTask}>
+                Delete<i className="far fa-trash-alt"></i>
+              </button>
             </div>
           </Collapsible>
         </div>

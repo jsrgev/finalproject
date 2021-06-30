@@ -10,7 +10,7 @@ class Profile extends React.Component {
 		let user = this.props.users.find(a => a._id === this.props.userId);
 		let {username, firstName, lastName, location, gender, birthdate, avatarUrl, links, dateEntered, about} = user;
 		let editButton  = (username === this.props.user.username) ?
-				<button onClick={()=>this.props.editProfile(true)}>Edit <i className="far fa-edit"></i></button>  :
+				<button onClick={()=>this.props.editProfile(true)}>Edit<i className="far fa-edit"></i></button>  :
 				null;
 		let genderDisplay = (gender === "male") ?
 						<><div>Gender</div><div>Male</div></> :

@@ -100,7 +100,7 @@ class PostDisplay extends React.Component {
 
 	    let likeCountDisplay;
 	    if (likes.length === 0) {
-	    	likeCountDisplay = "Like"
+	    	likeCountDisplay = "0 likes"
 	    } else if (likes.length === 1) {
 	    	likeCountDisplay = "1 like"
 	    } else {
@@ -110,8 +110,8 @@ class PostDisplay extends React.Component {
 	    let thisUserLiked = likes.some(a => a === this.props.user._id)
 
 	    let likeUnlike = thisUserLiked ?
-		    <>Unlike <i class="far fa-thumbs-down"></i></> :
-		    <>Like <i class="far fa-thumbs-up"></i></>;
+		    <><i class="far fa-thumbs-down"></i></> :
+		    <><i class="far fa-thumbs-up"></i></>;
 
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
 	    let status;
@@ -132,8 +132,7 @@ class PostDisplay extends React.Component {
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
-					</Link>
-	    		&nbsp;shared a task.
+					</Link> shared a task.
 	    	</div>
 
 	    	<div>{formatDate(dateShared)}</div>
@@ -144,8 +143,7 @@ class PostDisplay extends React.Component {
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
-					</Link>
-	    		&nbsp;didn't finish a task on time!
+					</Link> didn't finish a task on time!
 	    	</div>
 
 	    	<div>{formatDate(dateDue)}</div></>
@@ -154,8 +152,7 @@ class PostDisplay extends React.Component {
 					<div>
 						<Link to={`/profile/${username}`}>
 							{this.getFullName(userId)}
-						</Link>
-			    	&nbsp;finished a task!</div>
+						</Link> finished a task!</div>
 		    	<div>{formatDate(dateCompleted)}</div>
 	    	</>
 		return (
@@ -170,14 +167,11 @@ class PostDisplay extends React.Component {
 				</div>
 				<div className="postContent">
 					<div className="post-taskName">{taskName}</div>
-	    		{ description &&
+	    		{ description && 
 	    			<div className="post-description">{description}</div>
 	    		}
 	    		{ penaltyText &&
 	    			<div className="post-penalty">Penalty: {penaltyText}</div>
-	    		}
-	    		{ likes.length>0 &&
-	    			<div className="post-likes">{likeCountDisplay}</div>
 	    		}
 				</div>
 				{/*<div className="postBottom">*/}
@@ -195,8 +189,14 @@ class PostDisplay extends React.Component {
 			    </div>
 			  </div>
 		    <div className="controls">
-					<button onClick={() => this.handleClickLike(thisUserLiked)}>{likeUnlike}</button>
-			    <button onClick={this.handleClickComment}>Comment <i className="far fa-comment"></i></button>
+					<div className="post-likes">
+		    		{/*{(likes.length>0) && `${likeCountDisplay}`}*/}
+		    		{likeCountDisplay}
+		    		<button onClick={() => this.handleClickLike(thisUserLiked)}>
+		    		{likeUnlike}
+		    		</button>
+	    		</div>
+			    <button onClick={this.handleClickComment}>Comment<i className="far fa-comment"></i></button>
 			  </div>
 			    {comments.length>0 &&
 			    	// <div className="commentList">

@@ -103,8 +103,8 @@ class ProfileEdit extends React.Component {
 				      </div>
 					</div>
 					<div className="controls">
-						<button onClick={()=>this.props.editProfile(false)}>Cancel <i className="fas fa-times"></i></button>
-						<button onClick={this.handleSubmit}>Save <i className="fas fa-check"></i></button>
+						<button onClick={()=>this.props.editProfile(false)}>Cancel<i className="fas fa-times"></i></button>
+						<button onClick={this.handleSubmit}>Save<i className="fas fa-check"></i></button>
 					</div>
 				</div>
 			</>

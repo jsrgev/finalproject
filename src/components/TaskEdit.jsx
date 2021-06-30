@@ -150,16 +150,12 @@ class TaskEdit extends React.Component {
 					    <span name="shared" onClick={()=>this.changeShared(!shared)}>{shared ? "Public" : "Private"}</span>
 				    </div>
             <div className="controls">
-              <div onClick={()=>this.props.editTask(false)}>Cancel
-                <span className="icons">
-                  <i className="fas fa-times"></i>
-                </span>
-              </div>
-              <div onClick={this.saveTask}>Save
-                <span className="icons">
-                  <i className="fas fa-check"></i>
-                </span>
-              </div>
+                <button  onClick={()=>this.props.editTask(false)}>
+                  Cancel<i className="fas fa-times"></i>
+                </button>
+                <button onClick={this.saveTask}>
+                  Save<i className="fas fa-check"></i>
+                </button>
             </div>
 			    </Collapsible>
 			</div>
