@@ -23,9 +23,27 @@ body, input, textarea, button {
   color: #000;
 }
 
+
 h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-top: 0;
+  /*font-weight: 600;*/
+  /*text-transform: uppercase;*/
+  color: var(--blue);
+  text-align: center;
+    font-size: 1.4rem;
+    font-family: 'Fugaz One';
+  }
+
+h3 {
+  /*font-size: 1rem;*/
+  /*margin-top: 0;*/
+  /*font-weight: 600;*/
+  /*text-transform: uppercase;*/
+  /*color: var(--blue);*/
+  text-align: center;
+    font-size: 1.2rem;
+    /*font-family: 'Fugaz One';*/
 }
 
 a {
@@ -38,6 +56,10 @@ a.active {
 
 ul a.active {
   color: var(--red);
+}
+
+a, a:visited {
+  color: var(--blue);
 }
 
 /*header a:first-child {
@@ -83,8 +105,6 @@ textarea::placeholder, input::placeholder {
 
 
 
-
-
 /* MAIN LAYOUT */
 
 
@@ -110,7 +130,7 @@ body {
 
 #root {
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen, .heading {
@@ -350,7 +370,7 @@ header li {
 #register form div:not(#submitDiv), #login form div:not(#submitDiv) {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 7.5rem 11rem;
+  grid-template-columns: 9rem 11rem;
 }
 
 
@@ -367,6 +387,16 @@ header li {
   grid-template-columns: 1fr;
 }
 
+form input {
+  /*width: 100%;*/
+  /*resize: none;*/
+  outline: none;
+  border:  none;
+  /*font-style: italic;*/
+  border-bottom: 1px solid var(--blue);
+  padding: 0;
+  background: transparent;
+}
 
 #submitDiv input {
   margin:  1rem auto 0;
@@ -415,6 +445,10 @@ header li {
   font-style: italic;
   border-bottom: 1px solid var(--blue);
 }
+
+
+
+
 
 div[name="gender"] {
   display: flex;
@@ -515,7 +549,7 @@ input[type="radio"] {
   right: 0;
   text-align: center;
   /*border-bottom: 1px solid lightgray;
-}*/
+  }*/
 
 .taskInput i.fa-plus {
   text-align: center;
@@ -792,7 +826,7 @@ footer {
 }
 
 
-button {
+button, input[type="submit"] {
   outline: none;
   background: transparent;
   /*background: #2b97f71c;*/
@@ -803,14 +837,14 @@ button {
   color: var(--darkgray);
 }
 
-button:hover,
+button:hover, input[type="submit"]:hover,
 /*button:focus*/
 {
   box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
   color: var(--blue);
 }
 
-button:active {
+button:active,  input[type="submit"]:active {
   color: var(--blue);
   box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8;
 }

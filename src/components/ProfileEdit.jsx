@@ -82,7 +82,7 @@ class ProfileEdit extends React.Component {
 		return (
 			<>
 				<div className="profileHeader">
-					<h2>{`${firstName} ${lastName}`}</h2>
+					<h3>{`${firstName} ${lastName}`}</h3>
 					<img className="avatar-medium" src={avatarUrl} alt="avatar" />
 				</div>
 				<div id="profileInput">
