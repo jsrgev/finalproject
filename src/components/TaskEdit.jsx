@@ -90,7 +90,6 @@ class TaskEdit extends React.Component {
 	    	thisTask: {...this.state}, 
 	    })
 	    .then(response=> {
-	    	console.log(response);
 	    this.props.updateTasks();
 			this.props.updateFeed();
 			this.props.editTask(false)
