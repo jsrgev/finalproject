@@ -78,11 +78,9 @@ header a {
 }
 
 #title {
-  font-family: 'Chewy', cursive;
-  font-family: 'Lilita One', cursive;
-  font-family: 'Libre Baskerville', serif;
   font-family: 'Fugaz One', cursive;
   text-transform: uppercase;
+  text-shadow: -2px 0px 0px white;
   font-size: 3rem;
   position: absolute;
   bottom: -1.7rem;
@@ -167,7 +165,7 @@ header {
   /*position: sticky;*/
   /*top: 2rem;*/
   /*z-index: 2;*/
-  background: linear-gradient(270deg, #fffa00, transparent);
+  background: linear-gradient(270deg, #fffa00, var(--background));
   /*padding: .2rem 1rem;*/
   padding: 0;
   border: none;
@@ -469,7 +467,6 @@ input[type="radio"] {
 /* TASKS */
 
 #taskSection  {
-  background-color: #ffffe0f5;
   background: #ffffcb;
   display: grid;
   grid-template-columns: 1fr;
@@ -477,57 +474,57 @@ input[type="radio"] {
   gap: 2rem;
 }
 
-.taskInput .Collapsible__trigger {
+#taskSection .Collapsible {
+  position: relative;
+}
+
+#taskSection .Collapsible__trigger {
   display: inline-grid;
   grid-template-columns: 15rem 11rem 1rem;
   width: 100%;
   gap: 1rem;
-  /*border-bottom: 1px solid lightgray;*/
+  border-bottom: 1px solid lightgray;
+}
+
+
+#taskSection .Collapsible__contentOuter {
+  color: var(--darkgray);
+}
+
+.sibling {
+  display: inline-block;
+  position: absolute;
+  right: 1em;
+  right: 0;
+}
+
+
+
+
+/* input section */
+
+#taskSection .taskInput .Collapsible__trigger {
   border-bottom: 1px solid var(--blue);
-  /*background-color: aliceblue;*/
+}
+
+.taskInput input {
+  outline: none;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  font-style: italic;
 }
 
 .taskInput .sibling {
   width: 100%;
 }
 
-.taskList  {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-content: flex-start;
-  gap: 1rem;
+.is-closed ~ .Collapsible__contentOuter .sibling {
+  position: static;
 }
 
-#taskSection .Collapsible {
-  position: relative;
-}
-
-.taskList .Collapsible__trigger:not(.completedTaskList > div > span) {
-  display: inline-grid;
-  grid-template-columns: 15rem 11rem 1rem;
-  /*grid-template-columns: 1fr 10rem;*/
-  /*width:  calc(100% - 2em);*/
-  width: 100%;
-  gap: 1rem;
-  border-bottom: 1px solid lightgray;
-}
-
-#taskSection .Collapsible__trigger > *:first-child {
-  flex-grow: 1;
-}
-
-#taskSection .Collapsible__trigger > *:last-child {
-  /*text-align: center;*/
-}
-
-
-/*#taskSection i {*/
-  /*position: relative;*/
-  /*top: .1rem;*/
-/*}*/
-
-#mainInput i {
-  color: var(--blue);
+.Collapsible__contentInner input {
+  border-bottom: 1px solid var(--blue) !important;
 }
 
 .react-datepicker-wrapper {
@@ -538,21 +535,11 @@ input[type="radio"] {
 
 .react-datepicker__input-container {
   width: 11rem !important;
-  /*border-bottom: 1px solid lightgray;*/
 }
 
-/*.react-datepicker__tab-loop {
-  display: inline-block;
-}*/
-
-/*.i-wrapper {
-  display: inline-block;
-  position: absolute;
-  width: 1rem;
-  right: 0;
-  text-align: center;
-  /*border-bottom: 1px solid lightgray;
-  }*/
+#mainInput i {
+  color: var(--blue);
+}
 
 .taskInput i.fa-plus {
   text-align: center;
@@ -560,21 +547,12 @@ input[type="radio"] {
   position: absolute;
   width: 1rem;
   right: 0;
-  /*transform: translateX(50%);*/
-  /*right: 25%;*/
-    transform: translateY(23%)
+  transform: translateY(23%)
 }
 
-
-
 .taskInput .sibling i {
-  /*position: relative;*/
-  /*visibility: hidden;*/
-  /*color: transparent;*/
   width: 1rem;
   right: 0;
-  /*left: 0;*/
-  /*top: -1.1rem;*/
   position: absolute;
 }
 
@@ -582,55 +560,69 @@ input[type="radio"] {
   color: transparent;
 }
 
-
 #taskSection > div:first-child i.fa-circle:hover {
   visibility: visible !important;
   color: var(--blue);
 }
 
 
-.taskInput .Collapsible__contentInner {
-  /*margin-top: 1rem;*/
+/* Task List */
+
+.taskList  {
   display: grid;
   grid-template-columns: 1fr;
-  gap: .5rem;
-    /*background: #b9d6ff;*/
-    /*background: #ecf6fe;*/
-    border-radius: 10px;
-    padding: 1rem;
-  background: #fff;
-  border-radius: 0 0 10px 10px;
-  /*padding: 1rem 1rem 0;*/
-    /*border: 1px solid var(--blue);*/
+  align-content: flex-start;
+  gap: 1rem;
+}
+
+#taskSection .taskList .Collapsible__contentInner {
+  padding: 1rem 1rem 0;
+}
+
+.completed-Collapsible__trigger {
+  display: flex;
+  color:  var(--blue);
+  font-weight: 600;
+}
+
+.completed-Collapsible__trigger > *:first-child {
+  flex-grow: 1;
+}
+
+.completed-Collapsible__trigger i {
+  transition: transform 700ms;
+}
+
+.completed-Collapsible__trigger.is-open i {
+  transform: rotateZ(180deg); }
+
+.completed-Collapsible__contentInner {
+  padding-top: 1rem;
 }
 
 
-.taskInput .Collapsible__contentInner > div {
+
+
+/* input inner content */
+
+#taskSection .Collapsible__contentInner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .5rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+}
+
+#taskSection .Collapsible__contentInner > div {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: 1rem;
 }
 
-
 .Collapsible__contentInner .taskInput .Collapsible__contentInner {
   padding: 1rem 1rem 0;
 }
-
-
-
-.taskInput input {
-  outline: none;
-  padding: 0;
-  border: none;
-  background-color: inherit;
-  font-style: italic;
-  /*border-bottom: 1px solid var(--blue);*/
-}
-
-.Collapsible__contentInner input {
-  border-bottom: 1px solid var(--blue) !important;
-}
-
 
 .taskInput textarea {
   width: 100%;
@@ -641,35 +633,17 @@ input[type="radio"] {
   font-style: italic;
 }
 
+.Collapsible__contentInner textarea {
+  border-bottom: 1px solid var(--blue) !important;
+}
+
 .taskInput span[name="shared"] {
   font-style: italic;
   color: #000;
 }
 
-.Collapsible__contentInner textarea {
-  border-bottom: 1px solid var(--blue) !important;
-}
 
 
-
-#taskSection .Collapsible__contentOuter {
-  color: var(--darkgray);
-}
-
-.sibling {
-  display: inline-block;
-  /*border-bottom: 1px solid lightgray;*/
-  /*height: 18px;*/
-  /*padding-left: 1em;*/
-  position: absolute;
-  right: 1em;
-  right: 0;
-}
-
-.is-closed ~ .Collapsible__contentOuter .sibling {
-  /*background-color: aquamarine;*/
-  position: static;
-}
 
  /* uncompleted tasks icons and color */
 
@@ -709,72 +683,16 @@ input[type="radio"] {
 
 
 
-.taskList .Collapsible__contentInner:not(.completedTaskList > div > div > .Collapsible__contentInner) {
-  /*margin-top: 1rem;*/
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: .5rem;
-  background: #b9d6ff;
-  background: #ecf6fe;
-  background: #fff;
-  border-radius: 0 0 10px 10px;
-  padding: 1rem 1rem 0;
-  /*border: 1px solid var(--blue);*/
-}
 
-/*s*/
-
-.taskList .Collapsible__contentInner > div {
-
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  gap: 1rem;
-}
-
-#taskSection .controls {
-  border-radius: 0 0 10px 10px;
-  padding: .5rem 1rem;
-}
-
-.completedTaskList > div > .Collapsible__trigger {
-  display: flex;
-  color:  var(--blue);
-  font-weight: 600;
-}
-
-.completedTaskList > div > .Collapsible__trigger *:first-child {
-  flex-grow: 1;
-}
-
-.completedTaskList .Collapsible__trigger i {
-    transition: transform 700ms; }
-
-.completedTaskList .Collapsible__trigger.is-open i {
-    transform: rotateZ(180deg); }
-
-.completedTaskList .Collapsible__contentInner {
-    padding-top: 1rem;
-}
-
-.Collapsible__contentInner {
+.Collapsible__contentInner, .completed-Collapsible__contentInner {
   word-wrap: break-word;
   word-break: break-all;
 }
-
-/*.url {
-  word-wrap: break-word;
-  word-break: break-all;
-}*/
-
-
 
 
 .controls {
-  display: grid;
-  /*grid-template-columns: repeat(2, 1fr) !important;*/
-  /*background: white;*/
+  /*display: grid;*/
   display: flex !important;
-  /*justify-items: center;*/
   justify-content: space-around;
   position: relative;
   background: var(--offwhite);
@@ -783,21 +701,6 @@ input[type="radio"] {
   border-radius: 0 0 10px 10px;
 }
 
-/*.controls .icons {
-  font-size: .9rem;
-  margin-left: 1rem;
-  position: relative;
-  top: -.1rem;
-}*/
-
-/*.controls > div:hover {
-  color: var(--blue);
-}*/
-
-/*.controls > div.shared {
-  color: var(--blue);
-  font-weight: 600;
-}*/
 
 
 
@@ -805,8 +708,6 @@ input[type="radio"] {
 
 .avatar-medium {
   width: 4rem;
-  /*position: relative;*/
-  /*bottom: -0.45rem;*/
   padding-right: 1rem;
 }
 
@@ -814,7 +715,6 @@ input[type="radio"] {
   width: 2.5rem;
   position: relative;
   bottom: -0.3rem;
-  /*padding-right: 1rem;*/
 }
 
 .avatar-mini {
@@ -839,7 +739,6 @@ footer {
 button, input[type="submit"] {
   outline: none;
   background: transparent;
-  /*background: #2b97f71c;*/
   box-shadow: inset -1px -1px 1px #d3d3d3b8, inset 1px 1px 1px #ffffffb8;
   border-radius: 10px;
   border: 1px solid var(--blue);

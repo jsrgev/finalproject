@@ -2,20 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
-// import {setAllPublicTasks} from '../redux/actions';
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
-// import TextareaAutosize from 'react-textarea-autosize';
-// import Collapsible from 'react-collapsible';
 import { BASE_API_URL } from '../utils/constants';
 
 class CommentDisplay extends React.Component {
-	// constructor() {
-	// 	super();
-	// 	this.state ={
-	// 		liked: false,
-	// 		comment: ""
-	// 	}
-	// }
 	formatDate =  (date) => {
     	let newDate = new Date(date);
 	      if (isToday(newDate)) {
@@ -63,19 +53,6 @@ class CommentDisplay extends React.Component {
     		this.submitComment(true);
     	}
     }
-  //   submitComment = (value) => {
-	 //    axios.post('http://localhost:4000/task/addComment', {
-  //   		"taskId": this.props.id,
-  //   		"field": "comments",
-  //   		"userId": this.props.user.id,
-  //   		"add": value,
-  //   		"text": this.state.comment
-	 //    })
-	 //    .then(response=> {
-	 //   	this.props.updateFeed()
-		// })
-	 //    .catch(err=>console.log(err))
-  //   }
     updateTaskLikes = (value) => {
 	    axios.post(`${BASE_API_URL}/task/updatePublicTask`, {
     		"taskId": this.props.id,
@@ -88,17 +65,8 @@ class CommentDisplay extends React.Component {
 		})
 	    .catch(err=>console.log(err))
     }
-    // changeComment = (e) => {
-    // 	this.setState({comment: e.target.value})
-    // }
    	render () {
 		let {userId, text, date} = this.props.item;
-		// let taskId = this.props.id;
-		// let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		// let {completed, dateDue, description, penalty, taskName, userId, dateEntered, likes} = item;
-	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
-	    // let dateElement = dateDue &&
-	      // <div>Due: {this.formatDate(dateDue)}</div>;
 	    let username = this.getUsername(userId);
 		return (
 			<div className="commentDisplay">
@@ -123,12 +91,6 @@ const mapStateToProps = (state) => {
     allPublicTasks: state.allPublicTaskReducer.tasks
   }
 }
-
-// const dispatchStateToProps = (dispatch) => {
-//   return {
-//     setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
-//   }
-// }
 
 
 export default connect(mapStateToProps)(CommentDisplay);

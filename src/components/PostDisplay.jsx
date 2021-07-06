@@ -173,6 +173,7 @@ class PostDisplay extends React.Component {
 	    		{ penaltyText &&
 	    			<div className="post-penalty">Penalty: {penaltyText}</div>
 	    		}
+	    		{dateElement}
 				</div>
 				{/*<div className="postBottom">*/}
 					{/*<div>{likeCountDisplay}</div>*/}

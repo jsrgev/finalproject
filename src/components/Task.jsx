@@ -12,42 +12,9 @@ class Task extends React.Component {
   constructor() {
     super();
     this.state = {
-      // taskName: "",
-      // dateDue: "",
-      // description: "",
-      // penaltyText: "",
-      // penaltyUrl: "",
-      // shared: "",
-      // dateShared: "",
-      editMode: false
-      // expanded: false
+      editMode: false,
+      // open: false
     }
-  }
-  // componentDidMount = () => {
-  //   this.state = this.props.item;
-  //   // console.log(this.state);
-  // }
-  changeField = (e) => {
-      // this.setState({[e.target.name]:e.target.value})
-  }
-  changeDateDue = (date) => {
-      // this.setState({dateDue:date})
-  }
-  changeShared = (value) => {
-      let date = value ? new Date() : "";
-      // this.setState({dateShared:date});
-
-    axios.post(`${BASE_API_URL}/task/updateUserTask`, {
-      "taskId": this.props.taskId,
-      "field": "shared",
-      "value": value,
-      "dateShared": date
-    })
-    .then(response=> {
-      this.props.updateTasks();
-      this.props.updateFeed();
-    })
-    .catch(err=>console.log(err))
   }
   changeCompleted = (value,penaltyUrl,shared) => {
     let penalty = (penaltyUrl && shared) ? true : false;
@@ -67,12 +34,14 @@ class Task extends React.Component {
     this.setState({editMode:value})
   }
   deleteTask = () => {
+    // console.log(this.props);
     axios.post(`${BASE_API_URL}/task/updateUserTask`, {
       "taskId": this.props.taskId,
       "field": "active",
       "value": false
     })
     .then(response=> {
+      // this.setState({closed:true});
       this.props.updateTasks();
       this.props.updateFeed();
     })
@@ -104,7 +73,11 @@ class Task extends React.Component {
       {this.state.editMode ?
         <TaskEdit task={task} taskId={this.props.taskId} editTask={this.editTask} changeCompleted={this.changeCompleted} updateTasks={this.props.updateTasks} updateFeed={this.props.updateFeed} /> :
         <div className={`${completedClass} ${pastClass}`}>
-          <Collapsible trigger={trigger} triggerSibling={() => sibling} transitionTime="70" transitionCloseTime="70">
+          <Collapsible
+          trigger={trigger}
+          triggerSibling={() => sibling}
+          transitionTime="70"
+          transitionCloseTime="70">
             {descriptionDisplay}
             {penaltyTextDisplay}
             {penaltyUrlDisplay}

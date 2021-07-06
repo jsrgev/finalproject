@@ -13,9 +13,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-// CRON JOB FUNCTIONS
-
-// let sampleUrl = 'https://maker.ifttt.com/trigger/post/with/key/cGg0CsIdj9AGj_Ius1Ihiw';
 
 const triggerIfttt = (url) => {
 	axios.get(url)

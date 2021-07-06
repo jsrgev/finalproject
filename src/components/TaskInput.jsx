@@ -34,7 +34,6 @@ class TaskInput extends React.Component {
 	}
 	handleClick = () => {
 		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
-		console.log(dateDue);
 		if (taskName.length === 0) {
 			alert("Please enter a task name.");
 			return;

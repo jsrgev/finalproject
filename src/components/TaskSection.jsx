@@ -85,7 +85,12 @@ class TaskSection extends React.Component {
     const trigger = <><div>Completed Tasks</div><div><i className="fas fa-chevron-down"></i></div></>;
 
 		let completedTaskList = completed.length>0 ?
-				<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
+				<Collapsible
+					trigger={trigger}
+					transitionTime="70"
+					transitionCloseTime="70"
+					classParentString="completed-Collapsible"
+					>
 				<div className="taskList ">
 	      {completed.map((item,i) => {
 	      	return <Task taskId={item._id} key={i} updateTasks={this.updateTasks} updateFeed={this.updateFeed} />

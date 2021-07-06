@@ -18,11 +18,11 @@ class TaskEdit extends React.Component {
 	      penaltyUrl: "",
 	      shared: false,
 	      dateShared: "",
-	      completed: false
+	      // completed: false,
 		}
 	}
 	componentDidMount = () => {
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared, completed} = this.props.task;
+		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared, completed, open} = this.props.task;
 		this.setState({
 			taskName,
       dateDue,
@@ -31,7 +31,8 @@ class TaskEdit extends React.Component {
       penaltyUrl,
       shared,
       dateShared,
-      completed
+      completed,
+      // open
 		})
 	}
 	changeField = (e) => {
@@ -122,6 +123,7 @@ class TaskEdit extends React.Component {
 				    transitionCloseTime="70"
 				    triggerDisabled="true"
 				    open="true"
+				    // open={this.state.open}
 				    >
 				    <div>
 					    <label>Description</label>

@@ -9,8 +9,6 @@ const DateInput = ({changeDateDue, dateDue}) => {
 	const [startDate, setStartDate] = useState();
 
 	const isSelectedDateInFuture = (startDate ? !isSameDay(startDate, new Date()) : false);
-	// console.log(startDate);
-	// console.log(isSelectedDateInFuture);
 
 	const date = new Date();
 	let currentMins = date.getMinutes();
@@ -26,10 +24,6 @@ const DateInput = ({changeDateDue, dateDue}) => {
 	useEffect(()=>{
 		(dateDue) && setStartDate(new Date(dateDue));
 	},[])
-	useEffect(()=>{
-		// console.log(startDate);
-	})
-	// console.log(dateDue)
 	return (
 		< DatePicker
 		showTimeSelect
@@ -41,9 +35,6 @@ const DateInput = ({changeDateDue, dateDue}) => {
 		maxTime = { new Date(new Date().setHours(23, 59, 0, 0)) }
 		placeholderText = "Finish By" / >
 	);
-
-
-
 };
 
 export default DateInput;
