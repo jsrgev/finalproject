@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {setAllPublicTasks, setAllUsers} from '../redux/actions';
 import { BASE_API_URL } from '../utils/constants';
 import { isPast, compareDesc } from "date-fns";
-import {formatDate} from '../functions';
 
 class Feed extends React.Component {
 	constructor(){
@@ -96,7 +95,6 @@ class Feed extends React.Component {
 			}
 			</div> :
 			null;
-			{/*<div className="heading">Newsfeed</div>;*/}
 
 		return (
 			<div id="feed">

@@ -89,7 +89,7 @@ class PostDisplay extends React.Component {
    	render () {
 		let taskId = this.props.id;
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
-		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, dateEntered, likes, comments, dateShared} = item;
+		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, likes, comments, dateShared} = item;
 	    
 	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
 	    let dateElement = formatDate(dateDue) ?
@@ -110,8 +110,8 @@ class PostDisplay extends React.Component {
 	    let thisUserLiked = likes.some(a => a === this.props.user._id)
 
 	    let likeUnlike = thisUserLiked ?
-		    <><i class="far fa-thumbs-down"></i></> :
-		    <><i class="far fa-thumbs-up"></i></>;
+		    <><i className="far fa-thumbs-down"></i></> :
+		    <><i className="far fa-thumbs-up"></i></>;
 
 	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
 	    let status;

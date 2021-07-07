@@ -67,6 +67,7 @@ class TaskInput extends React.Component {
 
 	    const thisTask = {...this.state, userId: this.props.user._id};
 	    const {expanded, ...newTask} = thisTask;
+	    console.log(`${BASE_API_URL}/task/addTask`);
 	    axios.post(`${BASE_API_URL}/task/addTask`, newTask)
 	    .then(response=> {
 	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
