@@ -27,7 +27,7 @@
     "build": "react-scripts build && (cd ./back && yarn install)",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start": "react-scripts start"
+    "start": "cd ./back && yarn start"
   },
   "eslintConfig": {
     "extends": [
