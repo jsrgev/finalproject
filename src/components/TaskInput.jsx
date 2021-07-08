@@ -15,7 +15,8 @@ class TaskInput extends React.Component {
 	      dateDue: "",
 	      description: "",
 	      penaltyText: "",
-	      penaltyUrl: "",
+	      penaltyName: "",
+	      penaltyKey: "",
 	      shared: false,
 	      dateShared: "",
 	      expanded: false
@@ -33,7 +34,7 @@ class TaskInput extends React.Component {
 		  this.setState({dateShared:date});
 	}
 	handleClick = () => {
-		let {taskName, penaltyUrl, penaltyText, dateDue} = this.state;
+		let {taskName, penaltyName, penaltyKey, penaltyText, dateDue} = this.state;
 		if (taskName.length === 0) {
 			alert("Please enter a task name.");
 			return;
@@ -48,19 +49,25 @@ class TaskInput extends React.Component {
 				alert("If you wish to include a due date, it must be in the future.");
 				return;
 			}
-		} 
+		}
 
-		if (penaltyUrl.length>0) {
+		if ( (penaltyName.length>0 && penaltyKey.length===0) ||
+			(penaltyKey.length===0 && penaltyName.length>0) ) {
+			alert("To use an IFTTT penalty you must include both the name and the key");
+			return;
+		}
+
+		if (penaltyName.length>0) {
 			if (dateDue.length===0 && penaltyText.length===0) {
-				alert("If you include a penalty URL, you must add a description of it and a due date.");
+				alert("If you include an IFTTT penalty, you must add a description of it and a due date.");
 				return;
 			}
 			if (dateDue.length===0) {
-				alert("If you include a penalty URL, you must add a due date.");
+				alert("If you include an IFTTT penalty, you must add a due date.");
 				return;
 			}
 			if (penaltyText.length===0) {
-				alert("If you include a penalty URL, you must add a description of it.");
+				alert("If you include an IFTTT penalty, you must add a description of it.");
 				return;
 			}
 		}
@@ -70,7 +77,7 @@ class TaskInput extends React.Component {
 	    console.log(`${BASE_API_URL}/task/addTask`);
 	    axios.post(`${BASE_API_URL}/task/addTask`, newTask)
 	    .then(response=> {
-	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyUrl: "", shared: false, dateShared: ""});
+	    this.setState({taskName:"", dateDue:"", description: "", penaltyText: "", penaltyName: "", penaltyKey: "", shared: false, dateShared: ""});
 	    document.querySelector(".react-datepicker__input-container>input").value="";
 	    this.props.updateTasks();
 		this.props.thereAreTasks();
@@ -82,7 +89,7 @@ class TaskInput extends React.Component {
 		this.setState({expanded:value});
 	}
 	render () {
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared} = this.state;
+		let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared} = this.state;
 		let trigger =  <>
 			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
 			</>
@@ -96,7 +103,7 @@ class TaskInput extends React.Component {
 				{/*</div>*/}
 			</div>
 		// to prevent collapsing once user already has information entered
-		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyUrl.length>0)
+		let triggerDisabled = ( (taskName.length>0 || description.length>0 || penaltyText.length>0 || penaltyName.length>0 || penaltyKey.length>0)
 					&& this.state.expanded) ? true : false;
 		return (
 			<div className="taskInput">
@@ -118,8 +125,12 @@ class TaskInput extends React.Component {
 					    <TextareaAutosize name="penaltyText" value={penaltyText} onChange={this.changeField} />
 				    </div>
 				    <div>
-					    <label>IFTTT URL</label>
-					    <input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />
+					    <label>IFTTT Name</label>
+					    <input name="penaltyName" value={penaltyName} onChange={this.changeField} />
+				    </div>
+				    <div>
+					    <label>IFTTT Key</label>
+					    <input name="penaltyKey" value={penaltyKey} onChange={this.changeField} />
 				    </div>
 				    <div>
 					    <label>Privacy</label>

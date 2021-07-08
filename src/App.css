@@ -36,14 +36,15 @@ h2 {
   }
 
 h3 {
-  /*font-size: 1rem;*/
-  /*margin-top: 0;*/
-  /*font-weight: 600;*/
-  /*text-transform: uppercase;*/
-  /*color: var(--blue);*/
   text-align: center;
-    font-size: 1.2rem;
-    /*font-family: 'Fugaz One';*/
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+h4 {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 a {
@@ -733,6 +734,7 @@ input[type="radio"] {
 footer {
   /* for some reason footer was in front of date picker */
   z-index: -1;
+  text-align: center;
 }
 
 

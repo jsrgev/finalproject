@@ -5,7 +5,7 @@ class Footer extends React.Component {
 		return (
 
 			<footer>
-	Built by Josh Regev 2021
+	Built by <a href="http://jsrgev.net/portfolio">Josh Regev</a> ©2021
 			</footer>
 
 		)

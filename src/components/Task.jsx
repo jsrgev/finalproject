@@ -16,12 +16,12 @@ class Task extends React.Component {
       // open: false
     }
   }
-  changeCompleted = (value,penaltyUrl,shared) => {
-    let penalty = (penaltyUrl && shared) ? true : false;
+  changeCompleted = (value,penaltyName,shared) => {
+    let penalty = (penaltyName) ? true : false;
       axios.post(`${BASE_API_URL}/task/updateUserTaskCompleted`, {
       "taskId": this.props.taskId,
       "value": value,
-      "penalty": penalty
+      "penaltyName": penalty
     })
     .then(response=> {
       this.props.updateTasks();
@@ -49,13 +49,13 @@ class Task extends React.Component {
   }
 	render() {
     let task = this.props.tasks.find(a => a._id === this.props.taskId);
-    let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, completed} = task;
+    let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared, completed} = task;
 
     let completedClass = completed ? "completed" : "uncompleted";
     let pastClass = !dateDue ? null : isPast(new Date(dateDue)) ? "past": null;
 
     let sibling =
-      <div className="sibling" onClick={()=>this.changeCompleted(!completed, penaltyUrl, shared)}>
+      <div className="sibling" onClick={()=>this.changeCompleted(!completed, penaltyName, shared)}>
         <i className="far fa-circle"></i>
         <i className="far fa-check-circle"></i>
       </div>;
@@ -64,10 +64,19 @@ class Task extends React.Component {
         <div>{taskName}</div>
         <div>{formatDate(dateDue)}</div>  
       </>
-    let descriptionDisplay = description && <div><label>Description:</label><span>{description}</span></div>
-    let penaltyTextDisplay = penaltyText && <div><label>Penalty:</label><span>{penaltyText}</span></div>
-    let penaltyUrlDisplay = penaltyUrl && <div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>
-
+    let descriptionDisplay = description && <div><label>Description</label><span>{description}</span></div>
+    let penaltyTextDisplay = penaltyText && <div><label>Penalty</label><span>{penaltyText}</span></div>
+    // let penaltyUrlDisplay = penaltyUrl && <div className="url"><label>IFTTT URL:</label><span>{penaltyUrl}</span></div>
+    let penaltyNameDisplay = penaltyName &&
+      <div>
+        <label>IFTTT Name</label>
+        <span>{penaltyName}</span>
+      </div>
+    let penaltyKeyDisplay = penaltyKey &&
+      <div>
+        <label>IFTTT Key</label>
+        <span>{penaltyKey}</span>
+      </div>
     return (
       <>
       {this.state.editMode ?
@@ -80,8 +89,9 @@ class Task extends React.Component {
           transitionCloseTime="70">
             {descriptionDisplay}
             {penaltyTextDisplay}
-            {penaltyUrlDisplay}
-            <div><label>Privacy:</label><span>{shared ? "Public" : "Private"}</span></div>
+            {penaltyNameDisplay}
+            {penaltyKeyDisplay}
+            <div><label>Privacy</label><span>{shared ? "Public" : "Private"}</span></div>
             <div className="controls">
               <button onClick={()=>this.editTask(true)}>
                 Edit <i className="far fa-edit"></i>

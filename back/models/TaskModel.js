@@ -13,7 +13,11 @@ const taskTemplate = new mongoose.Schema({
 		type:String,
 		required:false
 	},
-	penaltyUrl: {
+	penaltyName: {
+		type:String,
+		required:false
+	},
+	penaltyKey: {
 		type:String,
 		required:false
 	},

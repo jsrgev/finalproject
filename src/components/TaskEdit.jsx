@@ -15,20 +15,22 @@ class TaskEdit extends React.Component {
 	      dateDue: "",
 	      description: "",
 	      penaltyText: "",
-	      penaltyUrl: "",
+	      penaltyName: "",
+	      penaltyKey: "",
 	      shared: false,
 	      dateShared: "",
 	      // completed: false,
 		}
 	}
 	componentDidMount = () => {
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, dateShared, completed, open} = this.props.task;
+		let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared, dateShared, completed, open} = this.props.task;
 		this.setState({
 			taskName,
       dateDue,
       description,
       penaltyText,
-      penaltyUrl,
+      penaltyName,
+	    penaltyKey,
       shared,
       dateShared,
       completed,
@@ -47,7 +49,7 @@ class TaskEdit extends React.Component {
 		  // this.setState({dateShared:date});
 	}
 	saveTask = () => {
-		let {taskName, penaltyUrl, penaltyText, dateDue, shared, dateShared} = this.state;
+		let {taskName, penaltyName, penaltyKey, penaltyText, dateDue, shared, dateShared} = this.state;
 		let convertedDate = new Date(dateDue);
 		if (taskName.length === 0) {
 			return;
@@ -64,7 +66,13 @@ class TaskEdit extends React.Component {
 			}
 		} 
 
-		if (penaltyUrl.length>0) {
+		if ( (penaltyName.length>0 && penaltyKey.length===0) ||
+			(penaltyKey.length===0 && penaltyName.length>0) ) {
+			alert("To use an IFTTT penalty you must include both the name and the key");
+			return;
+		}
+
+		if (penaltyName.length>0) {
 			if (convertedDate.length===0 && penaltyText.length===0) {
 				alert("If you include a penalty URL, you must add a description of it and a due date.");
 				return;
@@ -100,7 +108,7 @@ class TaskEdit extends React.Component {
 	  }
 
 	render () {
-		let {taskName, dateDue, description, penaltyText, penaltyUrl, shared, completed} = this.state;
+		let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared, completed} = this.state;
 		let trigger =  <>
 			<TextareaAutosize type="text" name="taskName" placeholder="New task" id="mainInput" className="inputTaskName" value={taskName} onChange={this.changeField} />
 			</>
@@ -109,7 +117,7 @@ class TaskEdit extends React.Component {
 			<div className="sibling">
 				<DateInput name="dateDue" changeDateDue={this.changeDateDue} dateDue={this.props.task.dateDue} />
         <i className="far fa-circle"></i>
-        <i className="far fa-check-circle" onClick={()=>this.props.changeCompleted(!completed, penaltyUrl, shared)}></i>
+        <i className="far fa-check-circle" onClick={()=>this.props.changeCompleted(!completed, penaltyName, shared)}></i>
       </div>;
 
 		let completedClass = completed ? "completed" : "uncompleted";
@@ -134,8 +142,12 @@ class TaskEdit extends React.Component {
 					    <TextareaAutosize name="penaltyText" value={penaltyText} onChange={this.changeField} />
 				    </div>
 				    <div>
-					    <label>IFTTT URL</label>
-					    <input name="penaltyUrl" value={penaltyUrl} onChange={this.changeField} />
+					    <label>IFTTT Name</label>
+					    <input name="penaltyName" value={penaltyName} onChange={this.changeField} />
+				    </div>
+				    <div>
+					    <label>IFTTT Key</label>
+					    <input name="penaltyKey" value={penaltyKey} onChange={this.changeField} />
 				    </div>
 				    <div>
 					    <label>Privacy</label>

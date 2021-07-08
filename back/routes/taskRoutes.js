@@ -23,14 +23,13 @@ const triggerIfttt = (url) => {
 const startCronJobs = async () => {
 	console.log("running 'startCronJobs'");
 	Task.find({
-		shared: true,
+		// shared: true,
 		completed: false,
 		active: true,
-		penaltyUrl: { $ne : ""},
+		penaltyName: { $ne : ""},
 		dateDue: {$gt: new Date()}
 	})
 	.then(results => {
-		// console.log(results);
 		let pending = results.length;
 		if (pending===0) {
 			console.log("There are no pending penalties");
@@ -43,8 +42,9 @@ const startCronJobs = async () => {
 				date,
 				() => {
 					// action to be carried out
-					triggerIfttt(a.penaltyUrl);
-					console.log(`${a.penaltyUrl} is now being triggered.`);
+					let url = `https://maker.ifttt.com/trigger/${a.penaltyName}/with/key/${a.penaltyKey}`;
+					triggerIfttt(url);
+					console.log(`${url} is now being triggered.`);
 				},
 				{
 				  onComplete: () => {console.log("the job has stopped....")}
@@ -192,9 +192,9 @@ router.post('/updateUserTaskShared', async (req,res) => {
 
 // changing a task to completed or back to uncompleted
 router.post('/updateUserTaskCompleted', async (req,res) => {
-	let {taskId, value, penalty} = req.body;
+	let {taskId, value, penaltyName} = req.body;
 	// if completing task with pending penalty, stop cronjob immediately
-	if (value && penalty) {
+	if (value && penaltyName) {
 		stopCron(taskId);
 	}
 	let date = value ? new Date() : ""
