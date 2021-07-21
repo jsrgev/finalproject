@@ -687,7 +687,7 @@ input[type="radio"] {
 
 .Collapsible__contentInner, .completed-Collapsible__contentInner {
   word-wrap: break-word;
-  word-break: break-all;
+  /*word-break: break-all;*/
 }
 
 
@@ -737,6 +737,9 @@ footer {
   text-align: center;
 }
 
+footer a {
+  z-index: 2;
+}
 
 button, input[type="submit"] {
   outline: none;
