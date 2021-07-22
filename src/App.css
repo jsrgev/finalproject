@@ -27,8 +27,6 @@ body, input, textarea, button {
 h2 {
   font-size: 1rem;
   margin-top: 0;
-  /*font-weight: 600;*/
-  /*text-transform: uppercase;*/
   color: var(--blue);
   text-align: center;
     font-size: 1.4rem;
@@ -63,12 +61,8 @@ a, a:visited {
   color: var(--blue);
 }
 
-/*header a:first-child {
-  text-align: center;
-}*/
 
 header {
-  /*border-radius: 10px;*/
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -112,8 +106,6 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding:  2rem 3rem;
-/*  background:
-*/    /*radial-gradient(circle at 28.56% 78.55%, #1CD8D2, transparent 84%),radial-gradient(circle at 91.45% 15.32%, #93EDC7, transparent 100%),radial-gradient(circle at 82.83% 61.29%, #3333ff, transparent 81%);*/
    background:
   radial-gradient(circle at 2.03% 52.04%, #00d2ff, transparent 59%),radial-gradient(circle at 97.97% 29.93%, #3a7bd5, transparent 67%),radial-gradient(circle at 14.44% 30.78%, #1117bf, transparent 98%),radial-gradient(circle at 50% 50%, #ffffff, #ffffff 100%);
   background-attachment: fixed;
@@ -121,11 +113,6 @@ body {
   background: var(--background);
 }
 
-/*form {
-  display: grid;
-  grid-template-columns: 10rem;
-  gap: 1rem;
-}*/
 
 #root {
   display: grid;
@@ -158,16 +145,13 @@ textarea {
   background: transparent;
 }
 
+
 /* HEADER */
 
 header {
   display: grid;
   grid-template-columns: 1fr max-content;
-  /*position: sticky;*/
-  /*top: 2rem;*/
-  /*z-index: 2;*/
   background: linear-gradient(270deg, #fffa00, var(--background));
-  /*padding: .2rem 1rem;*/
   padding: 0;
   border: none;
 }
@@ -204,7 +188,6 @@ header li {
 }
 
 .heading {
-  /*background: var(--blue);*/
   border-radius: 10px;
   padding: .3rem 1rem;
 }
@@ -212,25 +195,18 @@ header li {
 .postDisplay {
   display: grid;
   grid-template-columns: 1fr;
-  /*gap: 1rem;*/
   padding: 0 1rem 1rem;
   padding: 0 1rem;
 }
 
 .postHeader {
   display: grid;
-  /*font-weight: 600;*/
-  /*justify-content: space-between;*/
-  /*align-items: baseline;*/
-  /*box-shadow: 1px 1px 1px #d3d3d3b8;*/
   align-items: end;
   grid-template-columns: max-content 1fr max-content;
   gap: 1rem;
 }
 
-.postHeader > div:not(:first-child) {
-  /*padding-bottom: .1rem;*/
-}
+
 
 .postHeader > div:nth-child(2) {
   flex-grow: 1;
@@ -293,21 +269,16 @@ header li {
 
 .post-completed .postContent {
   border-top: 2px solid var(--blue);
-  /*border-bottom: 2px solid var(--blue);*/
 }
 
 .post-shared .postContent {
   border-top: 2px solid var(--green);
-  /*border-bottom: 2px solid var(--green);*/
 }
 
 .post-failed .postContent {
   border-top: 2px solid var(--red);
-  /*border-bottom: 2px solid var(--red);*/
 }
 
-.post-proposed {
-}
 
 .post-taskName {
   font-weight: 600;
@@ -330,11 +301,6 @@ header li {
   height: 0;
 }
 
-/*.commentInput {
-  position: relative;
-  bottom: 0px;
-}*/
-
 .commentInput img {
   position: relative;
   bottom: 0px;
@@ -345,11 +311,6 @@ header li {
   line-height: 0;
 }
 
-/*.postDisplay .controls {
-  background: var(--offwhite);
-  padding: 1rem;
-  margin: 0 -1rem;
-}*/
 
 .postDisplay .Collapsible__contentInner > div:last-child {
   padding-bottom: 1rem;
@@ -387,11 +348,8 @@ header li {
 }
 
 form input {
-  /*width: 100%;*/
-  /*resize: none;*/
   outline: none;
   border:  none;
-  /*font-style: italic;*/
   border-bottom: 1px solid var(--blue);
   padding: 0;
   background: transparent;
@@ -417,6 +375,7 @@ form input {
 .error {
   color:  red;
 }
+
 
 /* PROFILE */
 
@@ -692,7 +651,6 @@ input[type="radio"] {
 
 
 .controls {
-  /*display: grid;*/
   display: flex !important;
   justify-content: space-around;
   position: relative;
@@ -733,13 +691,10 @@ input[type="radio"] {
 
 footer {
   /* for some reason footer was in front of date picker */
-  z-index: -1;
+  /*z-index: -1;*/
   text-align: center;
 }
 
-footer a {
-  z-index: 2;
-}
 
 button, input[type="submit"] {
   outline: none;
