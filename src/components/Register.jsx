@@ -51,7 +51,6 @@ class RegisterForm extends React.Component {
             passwordErrors.push ({msg: 'Passwords do not match.'})
          }
       }
-
       this.setState({"errors": [...errors,...passwordErrors]});
       return errors;
   }

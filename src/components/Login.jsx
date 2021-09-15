@@ -67,7 +67,6 @@ class Login extends React.Component {
       <div className="alerts"><div>{this.state.confirmation}</div></div> :
       (this.state.errors) ?
       <div className="alerts"><div className="error">{this.state.errors}</div></div> : null
-  // }
     return (
           <main id="login">
           <h2>Login</h2>

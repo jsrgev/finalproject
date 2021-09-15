@@ -127,7 +127,7 @@ router.get('/getUsers', async (req,res) => {
 })
 
 router.post('/updateProfile', (req,res) => {
-	let {userId, user} = req.body; 
+	let {userId, user} = req.body;
 	User.updateOne(
 		{ _id: userId },
   			user
@@ -141,6 +141,36 @@ router.post('/updateProfile', (req,res) => {
 	.catch(err => console.log(err));
 })
 
+router.post('/updateAccount', async (req,res) => {
+	let {userId, user} = req.body;
+	const {firstName, lastName, username, email, password, password2} = user;
+	let errors = [];
 
+	// Check for duplicate user data
+
+	let alreadyEmail = await User.findOne({email, _id: {$ne: userId}})
+	alreadyEmail && errors.push ({msg: 'There is already an account with that email.'})
+
+	let alreadyUsername = await User.findOne({username, _id: {$ne: userId}})
+	alreadyUsername && errors.push ({msg: 'That username is already in use.'})	
+
+	if (errors.length > 0) {
+		res.send({errors});
+		return;
+	} else {
+
+	User.updateOne(
+		{ _id: userId },
+  			user
+  		)
+	.then(results => {
+		return User.findOne({ _id: userId},{password:0})
+	})
+	.then(user => {
+		res.send(user);
+	})
+	.catch(err => console.log(err));
+	}
+})
 
 module.exports = router;

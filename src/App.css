@@ -317,28 +317,36 @@ header li {
 }
 
 
-/* REGISTER & LOGIN */
+/* REGISTER, LOGIN, ACCOUNT */
 
+label {
+  color:  var(--darkgray);
+}
 
-#register form, #login form {
+#register form, #login form, #account form, #accountGrid {
   width: min-content;
   display: grid;
   gap: .5rem 3rem;
   margin: auto;
 }
 
-#register form div:not(#submitDiv), #login form div:not(#submitDiv) {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 9rem 11rem;
+#accountGrid, #account form {
+  padding-bottom: 1rem;
 }
 
 
-#register form {
+#register form > div:not(#submitDiv), #login form > div:not(#submitDiv), #account form > div:not(#submitDiv), #accountGrid > div {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 9rem 16rem;
+}
+
+
+#register form, #accountGrid, #account form {
   grid-template-columns: 1fr 1fr;
 }
 
-#register form #submitDiv {
+#register form #submitDiv, #account .controls {
   grid-column: span 2;
 }
 
@@ -373,7 +381,7 @@ form input {
   text-align: center;
 }
 .error {
-  color:  red;
+  color:  var(--red);
 }
 
 
@@ -416,11 +424,6 @@ div[name="gender"] {
 input[type="radio"] {
     margin: 0 .5rem 0 0;
 }
-
-
-
-/* ACCOUNT */
-
 
 
 
