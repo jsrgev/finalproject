@@ -129,7 +129,7 @@ class RegisterForm extends React.Component {
               onChange={this.changeField}
               value={this.state.password}
               /></div>
-              <div><label>Confirm password</label>
+              <div><label>Confirm Password</label>
               <input type="password"
               name="password2"
               onChange={this.changeField}

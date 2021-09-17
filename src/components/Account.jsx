@@ -13,14 +13,15 @@ class Account extends React.Component {
 		}
 	}
 	editAccount = (value) => {
-		// console.log("editAccount " + value);
 		this.setState({editMode: value});
-		if (value) {this.setState({confirmation: ""})};
+		if (value) {
+			this.setState({confirmation: ""})
+		} else {
+			this.setState({errors: []});
+		};
 	}
 	addErrors = (array) => {
-		// console.log(array);
 		this.setState({errors: array})
-		// console.log(this.state.errors);
 	}
 	addConfirmation = (msg) => {
 		this.setState({confirmation:msg})
@@ -33,7 +34,7 @@ class Account extends React.Component {
 				<div><label>Last Name</label><div>{lastName}</div></div>
 				<div><label>Username</label><div>{username}</div></div>
 				<div><label>Email</label><div>{email}</div></div>
-				<div><label>Password</label><div>******</div></div>
+				<div><label>Password</label><div>* * * * * * * * * *</div></div>
 			</div>
 			<div className="controls">
 				<button onClick={()=>this.editAccount(true)}>Edit<i className="far fa-edit"></i></button>

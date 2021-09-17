@@ -13,7 +13,7 @@ dotenv.config();
 
 
 router.post('/register', async (req,res) => {
-	const {firstName, lastName, username, email, password, password2} = req.body;
+	const {firstName, lastName, username, email, password} = req.body;
 	let errors = [];
 
 	// Check for duplicate user data
@@ -23,7 +23,6 @@ router.post('/register', async (req,res) => {
 
 	let alreadyUsername = await User.findOne({username})
 	alreadyUsername && errors.push ({msg: 'That username is already in use.'})	
-
 
 	if (errors.length > 0) {
 		res.send({errors});
@@ -143,7 +142,8 @@ router.post('/updateProfile', (req,res) => {
 
 router.post('/updateAccount', async (req,res) => {
 	let {userId, user} = req.body;
-	const {firstName, lastName, username, email, password, password2} = user;
+	const {firstName, lastName, username, email} = user;
+	let {password, ...userData} = user;
 	let errors = [];
 
 	// Check for duplicate user data
@@ -159,9 +159,16 @@ router.post('/updateAccount', async (req,res) => {
 		return;
 	} else {
 
+	// encrypt password
+	if (password.length>0) {
+		const saltPassword = await bcrypt.genSalt(10);
+		const securePassword = await bcrypt.hash(password, saltPassword);
+		userData.password = securePassword;
+	}
+
 	User.updateOne(
 		{ _id: userId },
-  			user
+  			userData
   		)
 	.then(results => {
 		return User.findOne({ _id: userId},{password:0})

@@ -65,8 +65,8 @@ class ProfileEdit extends React.Component {
 	}
 	handleSubmit = () => {
 		let data = {
-			userId : this.props.user._id,
-			user :{...this.state}
+			userId: this.props.user._id,
+			user: {...this.state}
 		}
 		axios.post(`${BASE_API_URL}/user/updateProfile`, data)
 	    .then(res => {
@@ -121,8 +121,6 @@ const mapStateToProps = (state) => {
 
 const dispatchStateToProps = (dispatch) => {
   return {
-    // setUserTasks: (array) => dispatch(setUserTasks(array)),
-    // setAllPublicTasks: (array) => dispatch(setAllPublicTasks(array)),
     setUser: (info) => dispatch(setUser(info)),
   }
 }

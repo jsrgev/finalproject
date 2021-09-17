@@ -2,6 +2,7 @@
 :root {
   --blue: #2b97f7;
   --darkgray: #53575a;
+  --transparentgray: #53575a80;
   --transparentwhite: #ffffffe6 ;
   --red: #F05157;
   --background: #c1e9ec;
@@ -340,7 +341,6 @@ label {
   gap: 1rem;
   grid-template-columns: 9rem 16rem;
 }
-
 
 #register form, #accountGrid, #account form {
   grid-template-columns: 1fr 1fr;
@@ -709,7 +709,12 @@ button, input[type="submit"] {
   color: var(--darkgray);
 }
 
-button:hover, input[type="submit"]:hover {
+button:disabled {
+  color:  var(--transparentgray);
+  border-color:  var(--transparentgray);
+}
+
+button:hover:not(:disabled), input[type="submit"]:hover {
   box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
   color: var(--blue);
 }
