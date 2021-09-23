@@ -35,7 +35,7 @@ class Profile extends React.Component {
 					{locationDisplay}
 					{birthdateDisplay}
 					{linksDisplay}
-					<div>Member since</div><div>{formatDate(dateEntered,false)}</div>
+					<label>Member since</label><div>{formatDate(dateEntered,false)}</div>
 				</div>
 				<div className="controls">{editButton}</div>
 			</>
