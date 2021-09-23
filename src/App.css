@@ -636,7 +636,7 @@ input[type="radio"] {
   display: block;
 }
 
-#taskSection .completed {
+#taskSection .completed .Collapsible__trigger {
   color: var(--darkgray);
 }
 
