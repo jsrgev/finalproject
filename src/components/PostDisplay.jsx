@@ -90,71 +90,73 @@ class PostDisplay extends React.Component {
 		let taskId = this.props.id;
 		let item = this.props.allPublicTasks.find(a => a._id === taskId);
 		let {completed, dateCompleted, dateDue, description, penaltyText, taskName, userId, likes, comments, dateShared} = item;
-	    
-	    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
-	    let dateElement = formatDate(dateDue) ?
-	      <div>Due: {formatDate(dateDue)}</div> :
-	      null;
 
-	    let username = this.getUsername(userId);
+    // Null date will be interpreted as 1/Jan/1970 if passed thru formatter!
+    let dateElement = formatDate(dateDue) ?
+      <div>Due: {formatDate(dateDue)}</div> :
+      null;
 
-	    let likeCountDisplay;
-	    if (likes.length === 0) {
-	    	likeCountDisplay = "0 likes"
-	    } else if (likes.length === 1) {
-	    	likeCountDisplay = "1 like"
-	    } else {
-	    	likeCountDisplay = `${likes.length} likes`
-	    }
+    let username = this.getUsername(userId);
 
-	    let thisUserLiked = likes.some(a => a === this.props.user._id)
+    let likeCountDisplay;
+    if (likes.length === 0) {
+    	likeCountDisplay = "0 likes"
+    } else if (likes.length === 1) {
+    	likeCountDisplay = "1 like"
+    } else {
+    	likeCountDisplay = `${likes.length} likes`
+    }
 
-	    let likeUnlike = thisUserLiked ?
-		    <><i className="far fa-thumbs-down"></i></> :
-		    <><i className="far fa-thumbs-up"></i></>;
+    let thisUserLiked = likes.some(a => a === this.props.user._id)
 
-	    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
-	    let status;
-	    if (completed) {
-		    status = "completed"
-	    } else if (!dateDue) {
+    let likeUnlike = thisUserLiked ?
+	    <><i className="far fa-thumbs-down"></i></> :
+	    <><i className="far fa-thumbs-up"></i></>;
+
+    const trigger = <><div>Comments</div><div><i className="fas fa-chevron-down"></i></div></>;
+    let status;
+    if (completed) {
+	    status = "completed"
+    } else if (!dateDue) {
+    	status = "shared"
+    } else {
+    	if (isPast(new Date(dateDue))) {
+	    	status = "failed"
+    	} else {
 	    	status = "shared"
-	    } else {
-	    	if (isPast(new Date(dateDue))) {
-		    	status = "failed"
-	    	} else {
-		    	status = "shared"
-	    	}
-	    }
+    	}
+    }
 
-	    let headline = (status === "shared") ?
-	    	<>
+    let headline = (status === "shared") ?
+    	<>
+			<div>
+				<Link to={`/profile/${username}`}>
+					{this.getFullName(userId)}
+				</Link> shared a task.
+    	</div>
+
+    	<div>{formatDate(dateShared)}</div>
+    	</>
+    	:
+    	(status === "failed") ?
+    	<>
+			<div>
+				<Link to={`/profile/${username}`}>
+					{this.getFullName(userId)}
+				</Link> didn't finish a task on time!
+    	</div>
+
+    	<div>{formatDate(dateDue)}</div></>
+    	:
+    	<>
 				<div>
 					<Link to={`/profile/${username}`}>
 						{this.getFullName(userId)}
-					</Link> shared a task.
-	    	</div>
+					</Link> finished a task!</div>
+	    	<div>{formatDate(dateCompleted)}</div>
+    	</>
+		let isDisabled = (this.state.comment.length === 0) ? true : false;
 
-	    	<div>{formatDate(dateShared)}</div>
-	    	</>
-	    	:
-	    	(status === "failed") ?
-	    	<>
-				<div>
-					<Link to={`/profile/${username}`}>
-						{this.getFullName(userId)}
-					</Link> didn't finish a task on time!
-	    	</div>
-
-	    	<div>{formatDate(dateDue)}</div></>
-	    	:
-	    	<>
-					<div>
-						<Link to={`/profile/${username}`}>
-							{this.getFullName(userId)}
-						</Link> finished a task!</div>
-		    	<div>{formatDate(dateCompleted)}</div>
-	    	</>
 		return (
 			<div className={`postDisplay post-${status}`}>
 				<div className="postHeader">
@@ -175,10 +177,6 @@ class PostDisplay extends React.Component {
 	    		}
 	    		{dateElement}
 				</div>
-				{/*<div className="postBottom">*/}
-					{/*<div>{likeCountDisplay}</div>*/}
-					{/*<div>Added: {formatDate(dateEntered)}</div>*/}
-				{/*</div>*/}
 				<div className="commentInputWrapper">
 					<div className="commentInput">
 						<div>
@@ -191,16 +189,14 @@ class PostDisplay extends React.Component {
 			  </div>
 		    <div className="controls">
 					<div className="post-likes">
-		    		{/*{(likes.length>0) && `${likeCountDisplay}`}*/}
 		    		{likeCountDisplay}
 		    		<button onClick={() => this.handleClickLike(thisUserLiked)}>
 		    		{likeUnlike}
 		    		</button>
 	    		</div>
-			    <button onClick={this.handleClickComment}>Comment<i className="far fa-comment"></i></button>
+			    <button disabled={isDisabled} onClick={this.handleClickComment}>Comment<i className="far fa-comment"></i></button>
 			  </div>
 			    {comments.length>0 &&
-			    	// <div className="commentList">
 						<Collapsible trigger={trigger} transitionTime="70" transitionCloseTime="70">
 				      {comments.map((item,i) =>{
 				      	return <CommentDisplay avatarDisplay={this.avatarDisplay} item={item} key={i} />

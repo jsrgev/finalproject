@@ -139,7 +139,7 @@ class RegisterForm extends React.Component {
                 <input type="submit" value='Submit' />
               </div>
             </form>
-            <div>Already registered? <Link to='/login/'>Login</Link></div>
+            <div>Already registered? <Link to='/login/'>Log in</Link></div>
           </main>
       );
   }
