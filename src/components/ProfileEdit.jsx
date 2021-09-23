@@ -88,11 +88,11 @@ class ProfileEdit extends React.Component {
 				<div id="profileInput">
 					<div id="profileGrid">
 						{/*<div>Location</div><div><input value={this.state.location} name="location" onChange={this.updateField} /></div>*/}
-						<div>Avatar link</div><div><TextareaAutosize value={this.state.avatarUrl} name="avatarUrl" onChange={this.updateField} /></div>
+						<label>Avatar link</label><div><TextareaAutosize value={this.state.avatarUrl} name="avatarUrl" onChange={this.updateField} /></div>
 						{/*<div>Birthday</div><div><div>{this.state.birthdate}</div></div>*/}
 						{/*<div>Links</div><div><div>{this.state.links}</div></div>*/}
-						<div>About</div><div><TextareaAutosize value={this.state.about} name="about" onChange={this.updateField} /></div>
-						<div>Gender</div>
+						<label>About</label><div><TextareaAutosize value={this.state.about} name="about" onChange={this.updateField} /></div>
+						<label>Gender</label>
 				      <div name="gender" value={this.state.gender} onChange={this.updateField} >
 				        <span><input type="radio" checked={this.state.gender === "male"} onChange={this.updateGender} value="male" name="gender" />
 				        <label>Male</label></span>

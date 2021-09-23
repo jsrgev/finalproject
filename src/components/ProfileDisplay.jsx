@@ -13,16 +13,16 @@ class Profile extends React.Component {
 				<button onClick={()=>this.props.editProfile(true)}>Edit<i className="far fa-edit"></i></button>  :
 				null;
 		let genderDisplay = (gender === "male") ?
-						<><div>Gender</div><div>Male</div></> :
+						<><label>Gender</label><div>Male</div></> :
 					(gender === "male") ?
-						<><div>Gender</div><div>Female</div></> :
+						<><label>Gender</label><div>Female</div></> :
 						null;
 		let locationDisplay = location &&
-						<><div>Location</div><div>{location}</div></> ;
+						<><label>Location</label><div>{location}</div></> ;
 		let birthdateDisplay = birthdate &&
-						<><div>Birthday</div><div>{birthdate}</div></> ;
+						<><label>Birthday</label><div>{birthdate}</div></> ;
 		let linksDisplay = birthdate &&
-						<><div>Links</div><div>{links}</div></> ;
+						<><label>Links</label><div>{links}</div></> ;
 		return (
 			<>
 				<div className="profileHeader">
@@ -30,7 +30,7 @@ class Profile extends React.Component {
 					<img className="avatar-medium" src={avatarUrl} alt="avatar" />
 				</div>
 				<div id="profileGrid">
-					<div>About</div><div>{about}</div>
+					<label>About</label><div>{about}</div>
 					{genderDisplay}
 					{locationDisplay}
 					{birthdateDisplay}

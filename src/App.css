@@ -320,7 +320,7 @@ header li {
 
 /* REGISTER, LOGIN, ACCOUNT */
 
-label {
+label:not(input[type="radio"] + label) {
   color:  var(--darkgray);
 }
 
@@ -381,7 +381,7 @@ form input {
   text-align: center;
 }
 .error {
-  color:  var(--red);
+  color:  red;
 }
 
 
@@ -449,10 +449,6 @@ input[type="radio"] {
   border-bottom: 1px solid lightgray;
 }
 
-
-#taskSection .Collapsible__contentOuter {
-  color: var(--darkgray);
-}
 
 .sibling {
   display: inline-block;
@@ -626,7 +622,7 @@ input[type="radio"] {
   display: block;
 }
 
-#taskSection .past.uncompleted {
+#taskSection .past.uncompleted .Collapsible__trigger {
   color: red;
 }
 

@@ -5,7 +5,7 @@ class About extends React.Component {
 		return (
 	      <main id="profile">
 				<h2>About</h2>
-				<p>This site was created as a final project for Developers Institute Javascript bootcamp. It is a combined task manager and social network designed to motivate users to complete tasks and achieve goals, in two ways:</p>
+				<p>This site was created as a final project for the JavaScript course at Developers Institute. It is a combined task manager and social network designed to motivate users to complete tasks and achieve goals, in two ways:</p>
 				<ol>
 					<li>Tasks can be shared with other users, creating opportunities for discussion and support, but also pressure to follow through. When a shared task isn't completed on time, a post goes out saying so.</li>
 					<li>Users also have the option to set up a penalty on ifttt.com, to be triggered if a task is't completed on time. This can be anything from posting an embarrassing photo to Twitter, to donating to a cause the user disagrees with.</li>

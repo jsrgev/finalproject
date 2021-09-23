@@ -31,7 +31,7 @@ class Profile extends React.Component {
 	}
 	getUserId = () => {
 			let username = this.props.match.params.username;
-			return this.props.users.find(a => a.username === username)._id
+			return this.props.users.find(a => a.username === username)._id;
 	}
 	render () {
 			let userId = this.props.users.length>0 && this.getUserId();
