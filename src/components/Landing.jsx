@@ -41,7 +41,8 @@ class Landing extends React.Component {
           <main class="splitScreen">
             <div class="generic">
               <p>Welcome to Finish It!</p>
-              <p>Are you having trouble getting things done? This site allows you to keep track of your tasks and share your progress with the community. You can give and get feedback, and set penalties if you wish for tasks you haven't completed on time. <Link to='/about/'>Read more</Link></p>
+              <p>Are you having trouble getting things done? This site allows you to keep track of your tasks and share your progress with the community. You can give and get feedback, and set penalties if you wish for tasks you haven't completed on time.</p>
+               <p><Link to='/about/'>Read more</Link></p>
             </div>
             <div class="generic">
               <p>Already a member? <Link to='/login/'>Log In</Link></p>
@@ -50,7 +51,7 @@ class Landing extends React.Component {
               <div id="submitDiv">
                 <input onClick={this.onSubmit} type="submit" value="Guest Login" />
               </div>
-              <p>(As a guest you will be able to do anything except change account details, <strong>but</strong> your changes can be written over by written over by anyone else who uses this account.)</p>
+              <p>(As a guest you will be able to do anything except change account details, <strong>but</strong> tasks you add may be edited or deleted by anyone else who uses this account.)</p>
             </div>
           </main>
       );
