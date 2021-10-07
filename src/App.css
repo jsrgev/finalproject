@@ -370,7 +370,6 @@ form input {
 
 
 
-
 /* ERRORS */
 
 .alerts {
@@ -384,6 +383,11 @@ form input {
   color:  red;
 }
 
+.message {
+  margin: 1rem auto 0;
+  width: 55rem;
+  text-align: center;
+}
 
 /* PROFILE */
 

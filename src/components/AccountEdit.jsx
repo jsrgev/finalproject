@@ -99,13 +99,14 @@ class AccountEdit extends React.Component {
 		let {firstName, lastName, username, email} = this.state;
 		let {originalState, ...currentState} = this.state;
 		let isDisabled = (JSON.stringify(this.state.originalState) === JSON.stringify(currentState)) ? true : false;
-		return (
-			<>
-            <form>
-				<div><label>First Name</label>
-				<input value={this.state.firstName} name="firstName" onChange={this.changeField} /></div>
-				<div><label>Last Name</label>
-				<input value={this.state.lastName} name="lastName" onChange={this.changeField} /></div>
+		let conditionalDisplay = (this.props.user._id === "615ec31650cfa00b8de0f3dd") ?
+				<>
+					<div><label>Username</label><div>{username}</div></div>
+					<div><label>Email</label><div>{email}</div></div>
+					<div><label>Password</label><div>* * * * * * * * * *</div></div>
+				</>
+				:
+				<>
 				<div><label>Username</label>
 				<input value={this.state.username} name="username" onChange={this.changeField} /></div>
 				<div><label>Email</label>
@@ -114,11 +115,23 @@ class AccountEdit extends React.Component {
 				<input type="password" value={this.state.password} name="password" onChange={this.changeField} /></div>
 				<div><label>Confirm Password</label>
 				<input type="password" value={this.state.password2} name="password2" onChange={this.changeField} /></div>
+				</>
+		let guestMessage = (this.props.user._id === "615ec31650cfa00b8de0f3dd") ?
+			<div className="message">(Username, email, and password are not editable on guest account.)</div> : null;
+		return (
+			<>
+            <form>
+				<div><label>First Name</label>
+				<input value={this.state.firstName} name="firstName" onChange={this.changeField} /></div>
+				<div><label>Last Name</label>
+				<input value={this.state.lastName} name="lastName" onChange={this.changeField} /></div>
+				{conditionalDisplay}
 			</form>
 			<div className="controls">
 				<button onClick={()=>this.props.editAccount(false)}>Cancel<i className="fas fa-times"></i></button>
 				<button disabled={isDisabled} onClick={this.handleSubmit}>Save<i className="fas fa-check"></i></button>
 			</div>
+			{guestMessage}
 			</>
 		)
 	}
