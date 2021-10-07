@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 // import {formatDate} from '../functions';
+import AccountDisplay from './AccountDisplay';
 import AccountEdit from './AccountEdit';
 
 class Account extends React.Component {
@@ -27,19 +28,7 @@ class Account extends React.Component {
 		this.setState({confirmation:msg})
 	}
 	render () {
-		let {firstName, lastName, username, email, dateEntered} = this.props.user;
-		let accountInfo = <>
-			<div id="accountGrid">
-				<div><label>First Name</label><div>{firstName}</div></div>
-				<div><label>Last Name</label><div>{lastName}</div></div>
-				<div><label>Username</label><div>{username}</div></div>
-				<div><label>Email</label><div>{email}</div></div>
-				<div><label>Password</label><div>* * * * * * * * * *</div></div>
-			</div>
-			<div className="controls">
-				<button onClick={()=>this.editAccount(true)}>Edit<i className="far fa-edit"></i></button>
-			</div></>
-	    let alerts = (this.state.confirmation) ?
+    let alerts = (this.state.confirmation) ?
 		    <div className="alerts"><div>{this.state.confirmation}</div></div> :
 		    (this.state.errors.length>0) ?
 	        <div className="alerts">
@@ -55,7 +44,7 @@ class Account extends React.Component {
 			<main id="account">
 				<h2>My Account</h2>
 				{alerts}
-				{this.state.editMode ? <AccountEdit editAccount={this.editAccount} addErrors={this.addErrors} addConfirmation ={this.addConfirmation} /> : accountInfo}
+				{this.state.editMode ? <AccountEdit editAccount={this.editAccount} addErrors={this.addErrors} addConfirmation ={this.addConfirmation} /> : <AccountDisplay editAccount={this.editAccount} />}
 			</main>
 		)
 	}
