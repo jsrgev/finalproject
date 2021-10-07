@@ -3,7 +3,7 @@ import React from 'react';
 class About extends React.Component {
 	render () {
 		return (
-	      <main id="profile">
+	      <main class="generic">
 				<h2>About</h2>
 				<p>This site was created as a final project for the JavaScript course at Developers Institute. It is a combined task manager and social network designed to motivate users to complete tasks and achieve goals, in two ways:</p>
 				<ol>

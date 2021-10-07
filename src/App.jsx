@@ -5,6 +5,7 @@ import NavBar from './components/NavBar.jsx';
 import Home from './components/Home.jsx';
 import Profile from './components/Profile.jsx';
 import About from './components/About.jsx';
+import Landing from './components/Landing.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Account from './components/Account.jsx';
@@ -28,9 +29,10 @@ class App extends React.Component {
           {!this.props.loggedIn ?
             <>
         <Switch>
-              <Route path="/register" component={Register} />
+          <Route path="/register" component={Register} />
           <Route path="/about" component={About} />
-              <Route path="/" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/" component={Landing} />
        </Switch>
             </>
            :

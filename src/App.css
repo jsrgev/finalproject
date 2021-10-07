@@ -120,7 +120,7 @@ body {
   gap: 1.2rem;
 }
 
-footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen, .heading {
+footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingScreen, .heading, .generic {
   padding: 1rem;
   border-radius: 10px;
   -webkit-backdrop-filter: blur(20px);
@@ -128,7 +128,7 @@ footer, main:not(.splitScreen), #profile, #taskSection, .postDisplay, .loadingSc
   box-shadow: -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
 }
 
-footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen, .heading {
+footer, main:not(.splitScreen), #profile, .postDisplay, .loadingScreen, .heading, .generic {
   background-color: var(--transparentwhite);
 }
 
