@@ -7,15 +7,6 @@ import {setLoginStatus,setUser} from '../redux/actions';
 import { BASE_API_URL } from '../utils/constants';
 
 class Landing extends React.Component {
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //     username: "",
-  //     password: "",
-  //     errors: "",
-  //     confirmation: ""
-  //   }
-  // }
   onSubmit = (e) => {
     e.preventDefault();
     const login = {
@@ -40,8 +31,8 @@ class Landing extends React.Component {
     return (
           <main class="splitScreen">
             <div class="generic">
-              <p>Welcome to Finish It!</p>
-              <p>Are you having trouble getting things done? This site allows you to keep track of your tasks and share your progress with the community. You can give and get feedback, and set penalties if you wish for tasks you haven't completed on time.</p>
+              <p>Welcome to <em>Finish It!</em></p>
+              <p>Are you having trouble getting things done? This site allows you to keep track of your tasks and stay motivated by sharing your progress with the community! You can give and receive feedback, and set penalties if you wish for tasks you haven't completed on time.</p>
                <p><Link to='/about/'>Read more</Link></p>
             </div>
             <div class="generic">

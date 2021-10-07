@@ -5,14 +5,16 @@ class About extends React.Component {
 		return (
 	      <main class="generic">
 				<h2>About</h2>
-				<p>This site was created as a final project for the JavaScript course at Developers Institute. It is a combined task manager and social network designed to motivate users to complete tasks and achieve goals, in two ways:</p>
+				<p><em>Finish It!</em> is a combined task manager and social network designed to motivate users to complete tasks and achieve goals. I built it as a final project for the JavaScript course at Developers Institute. Feel free to register and try it out!</p>
+				<p><em>Please note! Any tasks set to private will not be shared, but do not enter any truly sensitive data, as this site is currently only a demo and is not secure.</em></p>
+				<p><em>Finish It!</em> helps you get tasks done in two ways:</p>
 				<ol>
 					<li>Tasks can be shared with other users, creating opportunities for discussion and support, but also pressure to follow through. When a shared task isn't completed on time, a post goes out saying so.</li>
 					<li>Users also have the option to set up a penalty on ifttt.com, to be triggered if a task is't completed on time. This can be anything from posting an embarrassing photo to Twitter, to donating to a cause the user disagrees with.</li>
 				</ol>
 				<h4>Features</h4>
 				<ul>
-					<li>Secure registration and login system.</li>
+					<li>Registration and login system.</li>
 					<li>Task list where user can enter, edit, and delete tasks, and change status to completed or back to uncompleted.</li>
 					<li>News feed showing all users' shared tasks. Each is displayed and sorted according to its most relevant status (just shared, completed, or uncompleted and past due).</li>
 					<li>Shared tasks can be liked and commented on.</li>
@@ -29,7 +31,7 @@ class About extends React.Component {
 					<li>Click on <em>Add</em> next to <em>Then That</em>, select a service, set up whatever event you would like to be carried out, and click <em>Create action</em>.</li>
 					<li>Click <em>Continue</em> and then <em>Finish</em>.</li>
 					<li>Go to the <a href="https://ifttt.com/maker_webhooks/">Webhooks page</a> and click on <em>Documentation.</em> Copy the key shown and paste it into your task's <em>IFTTT key</em> field.</li>
-					<li>That's it! If your task is not completed by the exact due date and time you set, the IFTTT event will automatically be triggered.</li>
+					<li>Save your task, and that's it! If the task is not completed by the exact due date and time you set, the IFTTT event will automatically be triggered.</li>
 				</ol>
 				<h4>Technical details</h4>
 				<p>The back end uses Node.js and MongoDB. JWTs keep user logged in for 30 days or until they log out. Passwords are encrypted with bcrypt.</p>
