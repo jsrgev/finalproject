@@ -12,7 +12,12 @@ class NavBar extends React.Component {
 	}
 	render () {
 		const username = this.props.user.username;
-			return (
+		// if user is guest, logout redirects to home(landing page). otherwise redirects to login page
+		let logout = (this.props.user._id === "615ec31650cfa00b8de0f3dd") ?
+			<li><NavLink exact to={{pathname: '/', loggedOut: true}} onClick={this.logout} activeClassName="">Log Out</NavLink></li>
+			:
+			<li><NavLink to={{pathname: '/login', loggedOut: true}} onClick={this.logout}>Log Out</NavLink></li>
+		return (
 			<header>
 				<div>
 					<NavLink exact to='/'><span id="title">Finish It!</span></NavLink>
@@ -32,7 +37,7 @@ class NavBar extends React.Component {
 					<>
 					<li><NavLink to={`/profile/${username}`}>Profile</NavLink></li>
 					<li><NavLink to='/account'>Account</NavLink></li>
-					<li><NavLink to={{ pathname: '/login/', loggedOut: true }} onClick={this.logout}>Log Out</NavLink></li>
+					{logout}
 					</>
 				}
 				</ul>
