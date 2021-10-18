@@ -44,6 +44,7 @@ mongoose.connect(process.env.DATABASE_ACCESS, {
 .then(()=>console.log("Database connected"))
 .catch(err=>console.log(err))
 
+
 app.use(express.json());
 app.use(cors());
 app.use('/user', userRoutes);
@@ -54,6 +55,7 @@ var CronJobManager = require('cron-job-manager');
 var manager = new CronJobManager();
 
 const startCronJobs = (req,res) => {
+  // console.log("startCronJobs");
 	axios.get(`http://localhost:${port}/task/startCronJobs`)
       .then(response=> {
         console.log(response.data);
@@ -61,7 +63,17 @@ const startCronJobs = (req,res) => {
       .catch(err => console.log(err))
   }
 
-startCronJobs()
+startCronJobs();
+
+// Below code to allow pages other than index.html to load when entered in address bar. Due to react router there are no other actual pages to load, so it's necessary to redirect to index.html
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"), (err) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));

@@ -46,22 +46,22 @@ class Login extends React.Component {
       }
     })
   }
-  handleClick = () => {
-    console.log(localStorage.getItem("token"));
-    axios.get(`${BASE_API_URL}/user/isUserAuthenticated`, {
-      headers: {
-        "x-access-token": localStorage.getItem("token")
-      }
-    })
-    .then(response => {
-      if (response) {
-        console.log(response);
-      } else {
-        console.log(response)
-      }
-    })
-    .catch(err =>console.log(err))
-  }
+  // handleClick = () => {
+  //   console.log(localStorage.getItem("token"));
+  //   axios.get(`${BASE_API_URL}/user/isUserAuthenticated`, {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token")
+  //     }
+  //   })
+  //   .then(response => {
+  //     if (response) {
+  //       console.log(response);
+  //     } else {
+  //       console.log(response)
+  //     }
+  //   })
+  //   .catch(err =>console.log(err))
+  // }
   render() {
     let alerts = (this.state.confirmation) ?
       <div className="alerts"><div>{this.state.confirmation}</div></div> :

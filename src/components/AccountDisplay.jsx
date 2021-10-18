@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 class AccountDisplay extends React.Component {
 	render () {
-		let {firstName, lastName, username, email, dateEntered} = this.props.user;
+		let {firstName, lastName, username, email} = this.props.user;
 		return (
 			<>
 				<div id="accountGrid">

@@ -96,9 +96,9 @@ class AccountEdit extends React.Component {
       return [...errors,...passwordErrors];
 	}
    	render () {
-		let {firstName, lastName, username, email} = this.state;
+		let {firstName, lastName, username, email, password, password2} = this.state;
 		let {originalState, ...currentState} = this.state;
-		let isDisabled = (JSON.stringify(this.state.originalState) === JSON.stringify(currentState)) ? true : false;
+		let isDisabled = (JSON.stringify(originalState) === JSON.stringify(currentState)) ? true : false;
 		let conditionalDisplay = (this.props.user._id === "615ec31650cfa00b8de0f3dd") ?
 				<>
 					<div><label>Username</label><div>{username}</div></div>
@@ -108,13 +108,13 @@ class AccountEdit extends React.Component {
 				:
 				<>
 				<div><label>Username</label>
-				<input value={this.state.username} name="username" onChange={this.changeField} /></div>
+				<input value={username} name="username" onChange={this.changeField} /></div>
 				<div><label>Email</label>
-				<input value={this.state.email} name="email" onChange={this.changeField} /></div>
+				<input value={email} name="email" onChange={this.changeField} /></div>
 				<div><label>New Password</label>
-				<input type="password" value={this.state.password} name="password" onChange={this.changeField} /></div>
+				<input type="password" value={password} name="password" onChange={this.changeField} /></div>
 				<div><label>Confirm Password</label>
-				<input type="password" value={this.state.password2} name="password2" onChange={this.changeField} /></div>
+				<input type="password" value={password2} name="password2" onChange={this.changeField} /></div>
 				</>
 		let guestMessage = (this.props.user._id === "615ec31650cfa00b8de0f3dd") ?
 			<div className="message">(Username, email, and password are not editable on guest account.)</div> : null;
@@ -122,9 +122,9 @@ class AccountEdit extends React.Component {
 			<>
             <form>
 				<div><label>First Name</label>
-				<input value={this.state.firstName} name="firstName" onChange={this.changeField} /></div>
+				<input value={firstName} name="firstName" onChange={this.changeField} /></div>
 				<div><label>Last Name</label>
-				<input value={this.state.lastName} name="lastName" onChange={this.changeField} /></div>
+				<input value={lastName} name="lastName" onChange={this.changeField} /></div>
 				{conditionalDisplay}
 			</form>
 			<div className="controls">

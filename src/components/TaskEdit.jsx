@@ -23,7 +23,7 @@ class TaskEdit extends React.Component {
 		}
 	}
 	componentDidMount = () => {
-		let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared, dateShared, completed, open} = this.props.task;
+		let {taskName, dateDue, description, penaltyText, penaltyName, penaltyKey, shared, dateShared, completed} = this.props.task;
 		this.setState({
 			taskName,
       dateDue,
