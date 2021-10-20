@@ -716,13 +716,15 @@ button:disabled {
 }
 
 button:hover:not(:disabled), input[type="submit"]:hover {
-  box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
+  /*box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;*/
+  box-shadow: inset -1px -1px 1px #d3d3d3b8, inset 1px 1px 1px #ffffffb8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8;
   color: var(--blue);
+  background: #fffa0040;
 }
 
 button:active,  input[type="submit"]:active {
   color: var(--blue);
-  box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8;
+  box-shadow: inset -1px -1px 1px #ffffffb8, inset 1px 1px 1px #d3d3d3b8, -1px -1px 1px #ffffffb8, 1px 1px 1px #d3d3d3b8 !important;
 }
 
 button i {
